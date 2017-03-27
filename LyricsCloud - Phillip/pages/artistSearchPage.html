@@ -1,0 +1,48 @@
+<div id="artistSearchPage">
+	   
+    <h1>Lyrics Cloud</h1>
+	<div id="artistSearchBar"></div>
+
+	<input type="button" id="search" class="button" value="Search" disabled="true"  />
+
+ 
+</div>
+
+<style>
+
+#artistSearchPage {
+	text-align: center;
+	margin: auto;
+	
+	vertical-align: middle;
+	display: table-cell;
+	padding-bottom: 20%;
+}
+
+#artistSearchBar {
+	width: 33%;
+	padding: 1em;
+}
+
+</style>
+
+<script>
+
+	$("#artistSearchBar")
+		.load("components/artistSearchBar.html")
+		.on("yesSelection", function() {		
+			$("#search").removeProp("disabled");
+		})
+		.on("noSelection", function() {
+			$("#search").attr("disabled", true);
+		});
+
+	$("#search").click(function() {
+		
+		var artistID = $("#artistSearchBar").attr("value");
+		artists = [allArtists[artistID]]
+	
+		loadPage("wordCloud");
+	});
+
+</script>

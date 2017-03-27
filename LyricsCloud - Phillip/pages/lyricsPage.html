@@ -1,0 +1,63 @@
+<div id="lyricsPage">
+    
+    <a id="backToWordCloud">Back to Word Cloud</a>
+	<a id="backToSongList">Back to Song List</a>
+    <h1 id="lyricsTitle">Lyrics Page</h1>
+    <div id="lyrics"></div>
+    
+</div>
+
+<style>
+
+#lyricsPage {
+	text-align: center;
+	margin-top: 25px;
+}
+
+#backToWordCloud {
+	margin-right: 25px;
+}
+
+#lyricsTitle {
+	margin-top: 25px;
+}
+
+#lyrics {
+	/*
+	background-color: white;
+	border: 2px black solid;
+	width: 800px;
+	*/
+	margin: auto;
+	padding: 10px;
+	line-height: 150%;
+}
+
+.highlight {
+	background-color: yellow;
+}
+
+</style>
+
+<script>
+
+	// Set the title (of document and header)
+	var title = song.title + " by " + song.artist;
+	document.title = title;
+	$("#lyricsTitle").text(title);
+
+	// Highlight the words
+	var highlightedLyrics = song.lyrics.replace(regexForWord(word), function(match) {	
+		return "<span class='highlight'>" + match + "</span>";
+	});
+	$("#lyrics").html(highlightedLyrics);
+	
+	// Set up back buttons
+	$("#backToWordCloud").click(function() {
+		loadPage("wordCloud");
+	});
+	$("#backToSongList").click(function() {
+		loadPage("songList");
+	});
+	
+</script>

@@ -1,0 +1,103 @@
+<html>
+	<head>
+		<title>Lyrics Cloud</title>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="scripts/helper.js"></script>
+		<script src="scripts/postImageToFacebook.js"></script>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="scripts/d3.layout.cloud.js"></script>
+		<script type="text/javascript" src="http://canvg.github.io/canvg/rgbcolor.js"></script> 
+		<script type="text/javascript" src="http://canvg.github.io/canvg/StackBlur.js"></script>
+		<script type="text/javascript" src="http://canvg.github.io/canvg/canvg.js"></script> 
+		<script>
+					
+			///
+			// Init Facebook:
+			///
+			window.fbAsyncInit = function() {				
+				FB.init({
+					appId      : '1273352139424003',
+					cookie     : true,  // enable cookies to allow the server to access 
+										// the session
+					xfbml      : true,  // parse social plugins on this page
+					version    : 'v2.8' // use graph api version 2.8
+				});
+			};
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+						
+			////
+			// Page Loading Infrastructure:
+			////
+			
+			var pages = {};
+			
+			// Load HTML into memory to be used later
+			function preparePage(name, location) {
+				
+				$.get({
+					url: location,
+					async: false,
+					success: function( data ) {					
+					  pages[name] = data;
+					}
+				});
+			}
+			
+			// Display a page by loading its HTML into the body element
+			function loadPage(name) {
+								
+				if (name in pages) {
+					$('#page').html(pages[name]);
+				} else {
+					alert("No such page: " + name + "!");
+				}
+			}
+			
+			////
+			// Global Variables:
+			////
+			
+			var allArtists = {}; // the metadata of all the artists
+			
+			var artists = []; // required by Word Cloud Page and on
+			var songs = []; // required by Word Cloud Page and on
+			var word = ""; // required by Song List Page and on
+			var song = {}; // required by Lyrics Page and on
+			
+			////
+			// Prepare everything, then load the first page:
+			////
+			
+			$(function() {
+				// Prepare all the pages
+				preparePage("artistSearch", "pages/artistSearchPage.html");
+				preparePage("wordCloud", "pages/wordCloudPage.html");
+				preparePage("songList", "pages/songListPage.html");
+				preparePage("lyrics", "pages/lyricsPage.html");
+				
+				$.ajax({ // Load all artist metadata from the server
+					url: "ajax/allArtistMetadata.php",
+					dataType: "json",
+					async: false,
+					success: function(data) {
+						allArtists = data;
+					}
+				});
+				
+				loadPage("artistSearch"); // Display the first page
+			});
+			
+		</script>
+	</head>
+	<body>
+		<div id="page"></div>
+	</body>
+</html>
