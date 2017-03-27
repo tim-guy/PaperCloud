@@ -5,17 +5,7 @@
 	<div id="wordCloud">
 		<div id="wordCloudLoading" style="display:none"><h3 style="color:red">Loading...</h3></div>
 		<svg id="wordCloudSVG"></svg>
-		<canvas id="lyricsCloudCanvas" width="1200" height="500" style="display:none"></canvas>
-    </div>
-    
-	<div id="searchControls">
-		<div id="artistSearchBar"></div>
-		
-		<input type="button" id="search" class="button"  value="Search"  disabled="true" />
-		
-		<input type="button" id="add"  class="button" value="Add" disabled="true" />
-		
-		<input type="button" id="share" class="button" value="Share" disabled="true" />
+		<canvas id="wordCloudCanvas" width="1200" height="500" style="display:none"></canvas>
     </div>
     
 </div>
@@ -35,26 +25,6 @@
 	height: 500;
 	border: 2px black solid;
 	background-color: white;
-}
-
-#searchControls {
-	width: 33%;
-	margin: auto;
-	padding: 1em;
-}
-
-#search {
-	float: left;
-	width: 32%;
-}
-
-#add {
-	width: 32%;
-}
-
-#share {
-	float: right;
-	width: 32%;
 }
 
 </style>
@@ -82,10 +52,11 @@
 	function generateLyricsCloud() {
 				
 		// count words
+		// TODO: change this to work with the papers
 		var words = {};
-		$.each(songs, function(index, song) { // foreach song
-			var songWords = song.lyrics.match(/\b[a-zA-Z']+\b/g);
-			$.each(songWords, function(index, word) { // foreach word
+		$.each(papers, function(index, paper) { // foreach paper
+			var paperWords = paper.abstract.match(/\b[a-zA-Z']+\b/g);
+			$.each(paperWords, function(index, word) { // foreach word
 				word = validateWord(word);
 				if (word) { // if this is a word to include
 					words[word] = words[word] ? words[word] + 1 : 1;
@@ -150,13 +121,11 @@
 				.text(function(d) { return d.text; })
 				.on("click", function(d, i) {
 					word = d.text;
-					loadPage("songList");
+					loadPage("paperList");
 				});
 				
 				// draw in the canvas tag
-				canvg('lyricsCloudCanvas', $("#wordCloudSVG").html());
-				
-				$("#share").removeProp("disabled");
+				canvg('wordCloudCanvas', $("#wordCloudSVG").html());
 		  })
 		  .start();
 	}
@@ -164,88 +133,37 @@
 	// call this function when the page first loads, then whenever the artist list changes
 	function setTitle() {
 		// Set the title (of document and header)
-		var title = ""
-		$.each(artists, function(index, artist) {
-			title += ", " + artist.name;
-		});
-		title = title.substring(2);
+
+		var title = "Author: \"" + name + "\"";
 		
 		document.title = title;
 		$("#wordCloudTitle").text(title);
 	}
 	
-	// Call this function when the page first loads and then whenever an artist is searched/added
-	function queryArtists(artistsToQuery) {
+	// Call this function when the page first loads
+	function queryPapers(name) {
 	
 		setTitle();
 	
 		// TODO: set a good loading animation (like a spinning wheel)
 		$("#wordCloudLoading").show(0);
 		$("#wordCloudSVG").html("");
-		$("#share").attr("disabled", true);
 			
-		// Make the parameter object
-				
-		var ids = [];
-		$.each(artistsToQuery, function(key, value) {
-			ids.push(value.chartLyricsID);
-		})
-			
-		// Load the lyrics and generate the word cloud
+		// Load the papers and generate the word cloud
 		$.ajax({ // Load artist lyrics
-			url: "ajax/artistSongs.php",
-			data: {ids: ids},
+			url: "ajax/queryPapers.php",
+			data: {
+				name: name,
+				limit: limit
+			},
 			dataType: "json",
-			success: function(data) {
+			success: function(returnedPapers) {
 				
-				// save the results
-				$.each(data, function(index, song) {
-					songs.push(song);
-				})
+				papers = returnedPapers;
 				
 				generateLyricsCloud()
 			}
 		});
-	}
-	
-	// Call this function when the page first loads and then whenever an artist searched
-	function searchArtists(a) {
-		
-		artists = a;
-		songs = [];
-		
-		queryArtists(a);
-	}
-
-	// Call this function whenever an artist is added
-	function addArtist(a) {
-	
-		// Don't add an artist that we already have
-		if ($.inArray(a, artists) >= 0) {
-			return;
-		}
-	
-		artists.push(a);
-		
-		queryArtists([a]);
-	}
-	
-	//
-	// Post the image to Facebook!
-	//
-	// @param authToken: the FB authToken to use
-	//
-	function shareWordCloud(authToken) {
-		
-		var c = document.getElementById('lyricsCloudCanvas').toDataURL('image/png');
-		var encodedPng = c.substring(c.indexOf(',')+1,c.length);
-		var imageData = Base64Binary.decode(encodedPng);
-		
-		var caption = 'I used Lyrics Cloud to make this cloud for the artist(s): ' + $("#wordCloudTitle").text() + "!";
-		
-		postImageToFacebook(authToken, 'lyricsCloud.png', 'image/png', caption, imageData);
-		
-		FB.logout(); // log the app out of Facebook
 	}
 	
 	///
@@ -253,65 +171,12 @@
 	///
 	
 	// Initialize the lyrics cloud
-	if (songs.length > 0) { // we're coming back to this page
+	if (papers.length > 0) { // we're coming back to this page
 		setTitle();
 		generateLyricsCloud();
 	} else { // first time to this page
-		searchArtists(artists);
+		queryPapers(name);
 	}
-	
-	// Set up the Artist Search Bar
-	$("#artistSearchBar")
-		.load("components/artistSearchBar.html")
-		.on("yesSelection", function() {		
-			$("#search").removeProp("disabled");
-			$("#add").removeProp("disabled");
-		})
-		.on("noSelection", function() {
-			$("#search").attr("disabled", true);
-			$("#add").attr("disabled", true);
-		});
 
-	// Set up the Search Button
-	$('#search').click(function() {
-		
-		$("#artistSearchBar").trigger('clear');
-		
-		var artistID = $("#artistSearchBar").attr("value");
-		searchArtists([allArtists[artistID]]);
-	});
-	
-	// Set up the Add Button
-	$('#add').click(function() {
-		
-		$("#artistSearchBar").trigger('clear');
-		
-		var artistID = $("#artistSearchBar").attr("value");
-		addArtist(allArtists[artistID]);
-	});
-
-	
-	// Set up the Share Button
-	$("#share").click(function() {
-				
-		FB.getLoginStatus(function(response) { // Check if the user is already logged in
-			 			 
-			 if (response.status === 'connected') {
-				shareWordCloud(response.authResponse.accessToken);
-			 } else {
-				FB.login(function(response) { // Prompt Facebook login
-					FB.getLoginStatus(function(response) { // Check if the user successfully logged in
-						 
-						 if (response.status === 'connected') {
-							shareWordCloud(response.authResponse.accessToken);
-						 }
-						 
-						 // If the user didn't log in, then forget about it!
-					});
-				}, {scope: 'public_profile,email,publish_actions'});
-			}
-		});
-		
-	});
 		
 </script>

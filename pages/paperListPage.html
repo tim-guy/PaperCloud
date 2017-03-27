@@ -1,0 +1,124 @@
+<div id="paperListPage">
+
+	<a id="backToWordCloud">Back to Word Cloud</a>
+	
+	<h1 id="paperListTitle">Paper List Page</h1>
+	
+	<table id="paperList">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Authors</th>
+				<th>Publication/Conference</th>
+				<th>Frequency</th>
+				<th>Full Text</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+</div>
+
+<style>
+
+#paperListPage {
+	
+	width: 75%;
+	margin: auto;
+	text-align: center;
+	
+	margin-top: 25px;
+}
+
+#paperListTitle {
+	margin-top: 25px;
+}
+
+table {
+	background-color: black;
+	text-align: left;
+	font-family: arial;
+}
+
+th {
+	border: 1px solid white;
+	padding: 4px;
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+	
+	background-color: #ddd;
+}
+
+.header {
+	background-image: url(images/bg.gif);
+}
+
+.headerSortDown {
+	background-color: #8dbdd8;
+	background-image: url(images/desc.gif);
+}
+
+.headerSortUp {
+	background-color: #8dbdd8;
+	background-image: url(images/asc.gif);
+}
+
+td {
+	padding: 4px;
+	background-color: #eee;
+	vertical-align: top;
+}
+
+
+</style>
+
+<script>
+
+	// Set the title (of document and header)
+	var title = word.charAt(0).toUpperCase() + word.substring(1);
+	document.title = title;
+	$("#songListTitle").text(title);
+	
+	// Set up Paper List
+	
+	$.each(papers, function(index, paper) { // count the word in each paper
+		
+		// Count the occurances of the word
+		var wordMatches = paper.abstract.match(regexForWord(word));
+		paper.wordCount = 0;
+		if (wordMatches != null) {
+			paper.wordCount = wordMatches.length;
+		}
+	})
+	
+	papers.sort(function(a, b) { // sort songs by word count, descending
+		return b.wordCount - a.wordCount;
+	});
+	
+	// Add each paper to the #paperList
+	$.each(papers, function(index, paper) {
+		if (paper.wordCount > 0) {
+			var tr = $("<tr></tr>");
+			
+			tr.append("<td>" + paper.title + "</td>");
+			tr.append("<td>" + paper.authors + "</td>");
+			tr.append("<td>" + paper.publication + "</td>");
+			tr.append("<td>" + paper.wordCount + "</td>");
+			tr.append("<td><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
+			
+			console.log("check");
+			$("#paperList > tbody").append(tr);
+		}
+	});
+	
+	// Set up table sorting
+	$("#paperList").tablesorter();
+		
+	// Set up back button
+	$("#backToWordCloud").click(function() {
+		loadPage("wordCloud");
+	});
+
+</script>

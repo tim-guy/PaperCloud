@@ -1,0 +1,61 @@
+<div id="searchPage">
+	   
+    <h1>Paper Cloud</h1>
+	
+	<div id="searchBar">
+		<input type="text" id="searchTextField" />
+		<input type="text" id="limitTextField" />
+	</div>
+	
+	<input type="button" id="search" class="button" value="Search" disabled="true"  />
+ 
+</div>
+
+<style>
+
+#searchPage {
+	text-align: center;
+	margin: auto;
+	
+	vertical-align: middle;
+	display: table-cell;
+	padding-bottom: 20%;
+}
+
+#searchBar {
+	text-align: center;
+	padding: 1em;
+}
+
+</style>
+
+<script>
+	
+	$("#searchTextField").on('input propertychange paste', function() {
+		name = $("#searchTextField").val();
+		
+		checkInputs();
+	})
+	$("#limitTextField").on('input propertychange paste', function() {
+		limit = parseInt($("#limitTextField").val());
+	
+		checkInputs();
+	});
+	
+	function checkInputs() {
+	
+		if (name != "" && limit > 0) { // Good Inputs
+			$("#search").removeProp("disabled");
+		} else { // Bad Inputs
+			$("#search").attr("disabled", true);
+		}
+	}
+
+	$("#search").click(function() {
+		
+		name = $("#searchTextField").val();
+	
+		loadPage("wordCloud");
+	});
+
+</script>
