@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -m
+
+java -jar ~/selenium &> /dev/null &
+sleep 5
+
+vendor/bin/behat
+
+fg
