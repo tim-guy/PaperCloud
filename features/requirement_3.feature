@@ -1,4 +1,4 @@
-Feature: Paper List Sorting
+Feature: requirement_3 Paper List Sorting
 	In order to view the paper list sorted in a specified order 
 	As a user
 	I nees to be able to sort the table by clicking on the first four column headers
