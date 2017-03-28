@@ -44,11 +44,11 @@ h1 {
 
 .button:enabled {
 	cursor: pointer;
-	background-color: #D00BE6;
+	background-color: #16A5F5;
 }
 
 .button:disabled {
-	background-color: #8F7A91;
+	background-color: #6391AB;
 }
 
 /* here put styles that need to apply to all pages */
