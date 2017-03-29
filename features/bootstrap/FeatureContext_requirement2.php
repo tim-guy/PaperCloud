@@ -51,10 +51,59 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Line from .feature file
+	* @Given X is set to 10 before searching
 	*/
-	public function nameOfFunction()
+	public function XSetTo10BeforeSearching()
 	{
-        //insert
+
 	}
+
+	/**
+	* @Then number of items in the word cloud is 10
+	*/
+	public function numberItemsInWordCloud10()
+	{
+
+	}
+
+	/**
+	* @Given that the user searches for a valid last name
+	*/
+	public function searchForValidLastName()
+	{
+
+	}
+
+	/**
+	* @Then the appropriate top papers in the ACM and IEEE libraries are shown in the word cloud
+	*/
+	public function topPapersShownInWordCloud()
+	{
+
+	}
+
+	/**
+	* @And there are no papers in the word cloud that do not belong to a user with that last name
+	*/
+	public function allPapersInWordCloudBelongToThatLastName()
+	{
+
+	}
+
+	/**
+	* @Given that the user searches for an invalid last name
+	*/
+	public function searchForInvalidLastName()
+	{
+
+	}
+
+	/**
+	* @Then a label is shown where the word cloud would be that there are no papers for this user
+	*/
+	public function errosMessageLabelShown()
+	{
+
+	}
+
 }

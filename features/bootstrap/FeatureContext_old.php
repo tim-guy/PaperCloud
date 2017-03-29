@@ -187,4 +187,5 @@ class FeatureContext implements Context
     {
         assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
     }
+
 }
