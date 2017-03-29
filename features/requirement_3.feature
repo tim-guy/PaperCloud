@@ -10,7 +10,7 @@ Feature: requirement_3 Paper List Sorting
 
 	Scenario: Sorting the paper list in ascending order of the "Title" Column
 		Given the paper list is generated
-		when the "Title" column header is clicked
+		When the "Title" column header is clicked
 		Then the paper list is sorted in the ascending order of the "Title" column
 
 	Scenario: Sorting the paper list in ascending order of the "Author" Column

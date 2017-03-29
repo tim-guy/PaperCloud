@@ -51,10 +51,123 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Line from .feature file
+	* @Given the Paper Cloud is generated
 	*/
-	public function nameOfFunction()
+	public function thePaperCloudGenerated()
 	{
-        //insert
+
 	}
-}
+
+	/**
+	* @When a word in the Paper Cloud is clicked
+	*/
+	public function wordInThePaperCloudClicked()
+	{
+
+	}
+
+	/**
+	* @Then the paper list is displayed, and ranked by the word frequency
+	*/
+	public function paperListDisplayedAndRankedByWordFrequency()
+	{
+
+	}
+
+	/**
+	* @Given the paper list is generated
+	*/
+	public function thePaperListGenerated()
+	{
+
+	}
+
+	/**
+	* @When the "Title" column header is clicked
+	*/
+	public function titleColumnHeaderClicked()
+	{
+
+	}
+
+	/**
+	* @Then the paper list is sorted in the ascending order of the "Title" column
+	*/
+	public function paperListsortInAscendingOrderOfTitleColumn()
+	{
+
+	}
+
+	/**
+	* @Given the paper list is generated
+	*/
+	public function thePaperListGenerated()
+	{
+
+	}
+
+	/**
+	* @When the "Author" column header is clicked
+	*/
+	public function authorColumnHeaderClicked()
+	{
+
+	}
+
+	/**
+	* @Then the paper list is sorted in the ascending order of the "Author" column
+	*/
+	public function paperListsortInAscendingOrderOfAuthorColumn()
+	{
+
+	}
+
+	/**
+	* @Given the paper list is generated
+	*/
+	public function thePaperListGenerated()
+	{
+
+	}
+
+	/**
+	* @When the "Conference" column header is clicked
+	*/
+	public function conferenceColumnHeaderClicked()
+	{
+
+	}
+
+	/**
+	* @Then the paper list is sorted in the ascending order of the "Conference" column
+	*/
+	public function paperListsortInAscendingOrderOfConferenceColumn()
+	{
+
+	}
+
+	/**
+	* @Given the paper list is generated
+	*/
+	public function thePaperListGenerated()
+	{
+
+	}
+
+	/**
+	* @When the "Frequency" column header is clicked
+	*/
+	public function frequencyColumnHeaderClicked()
+	{
+
+	}
+
+	/**
+	* @Then the paper list is sorted in the descending order of the "Frequency" column
+	*/
+	public function paperListsortInDescendingOrderOfFrequencyColumn()
+	{
+
+	}
+	
+}	
