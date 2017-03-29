@@ -3,7 +3,7 @@ Feature: requirement_3 Paper List Sorting
 	As a user
 	I need to be able to generate a word cloud of the names of papers when I search for a last name
 
-	Scenario: Changing the number of papers, X, to be shown before searching returns a word cloud with exactl that many papers
+	Scenario: Changing the number of papers, X, to be shown before searching returns a word cloud with exactly that many papers
 		Given X is set to 10 before searching
 		Then number of items in the word cloud is 10
 

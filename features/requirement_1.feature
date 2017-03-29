@@ -10,4 +10,3 @@ Feature: requirement_1
 	Scenario: Clicking the search textfield
 		Given that the user clicks at the search textfield
 		The textfield becomes editable and input that the user types shows up in the textfield.
-
