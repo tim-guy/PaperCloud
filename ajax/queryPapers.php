@@ -33,12 +33,11 @@ if ($limit <= 0 || $limit > 1000) { // max limit of 1000
 	$limit = 1000;
 }
 
-/*
 $ieee = new IEEELibraryAdapter();
-$papers = $ieee->getPapersWithAuthorName($name, $limit);
-echo json_encode($papers);
-*/
+$ieeePapers = $ieee->getPapersWithAuthorName($name, $limit);
 
 $acm = new ACMLibraryAdapter();
-$papers = $acm->getPapersWithAuthorName($name, $limit);
-echo json_encode($papers);
+$acmPapers = $acm->getPapersWithAuthorName($name, $limit);
+
+$allPapers = array_merge($ieeePapers, $acmPapers);
+echo json_encode($allPapers);

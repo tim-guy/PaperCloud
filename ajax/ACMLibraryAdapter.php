@@ -2,14 +2,20 @@
 
 require_once("CSVParser.php");
 
-class IEEELibraryAdapter {
+class ACMLibraryAdapter {
+	
+	var $requestManager;
+	
+	function __construct() {
+		$this->requestManager = new HTTPRequestManager();
+	}
 	
 	function getPapersWithAuthorName($name, $limit)
 	{	
 		$papers = array();
 
 		$acmURL = 'http://dl.acm.org/exportformats_search.cfm?query=persons%2Eauthors%2EpersonName%3A%28%252B' . urlencode($name) . '%29&srt=%5Fscore&expformat=csv';
-		$acmCSV = file_get_contents($acmURL); // this request is a bottleneck
+		$acmCSV = $this->requestManager->request($acmURL); // this request is a bottleneck
 
 		$lines = CSVParser::parse($acmCSV);
 		
@@ -34,7 +40,7 @@ class IEEELibraryAdapter {
 			$paper["abstract"] = "";
 			
 			// Query the keyword terms
-			$paper["keywords"] = $line["keywords"]
+			$paper["keywords"] = $line["title"] . ' ' . $line["keywords"];
 			
 			$papers[] = $paper;
 		}

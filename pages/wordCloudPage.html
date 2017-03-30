@@ -49,7 +49,7 @@
 		return word;
 	}
 	
-	function generateLyricsCloud() {
+	function generateWordCloud() {
 				
 		// count words
 		// TODO: change this to work with the papers
@@ -161,7 +161,7 @@
 				
 				papers = returnedPapers;
 				
-				generateLyricsCloud()
+				generateWordCloud()
 			}
 		});
 	}
@@ -173,7 +173,7 @@
 	// Initialize the lyrics cloud
 	if (papers.length > 0) { // we're coming back to this page
 		setTitle();
-		generateLyricsCloud();
+		generateWordCloud();
 	} else { // first time to this page
 		queryPapers(name);
 	}

@@ -1,13 +1,21 @@
 <?php
 
+require_once 'HTTPRequestManager.php';
+
 class IEEELibraryAdapter {
+	
+	var $requestManager;
+	
+	function __construct() {
+		$this->requestManager = new HTTPRequestManager();
+	}
 	
 	function getPapersWithAuthorName($name, $limit)
 	{	
 		$papers = array();
 
 		$ieeeURL = 'http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?hc=' . $limit . '&au=' . urlencode($name);
-		$ieeeXML = file_get_contents($ieeeURL); // this request is a bottleneck
+		$ieeeXML = $this->requestManager->request($ieeeURL); // this request is a bottleneck
 
 		$doc = new DOMDocument();
 		$doc->loadXML($ieeeXML); // the response is well-formed XML
@@ -64,7 +72,7 @@ class IEEELibraryAdapter {
 			
 			// Query the keyword terms
 			$terms = $xpath->query("./*/term", $document);
-			$paper["keywords"] = "";
+			$paper["keywords"] = $paper["title"];
 			foreach ($terms as $term) {
 				$paper["keywords"] .= " " . $term->textContent;
 			}

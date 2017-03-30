@@ -11,9 +11,12 @@ class CSVParser
 		$out = array();
 		foreach (array_slice($lines, 1) as $line)
 		{
-			$out[] = array_combine($keys, str_getcsv($line));
+			$values = str_getcsv($line);
+			if (count($keys) == count($values)) {
+				$out[] = array_combine($keys, $values);
+			}
 		}
 		
-		return out;
+		return $out;
 	}
 }
