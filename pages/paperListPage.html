@@ -86,7 +86,7 @@ td {
 	$.each(papers, function(index, paper) { // count the word in each paper
 		
 		// Count the occurances of the word
-		var wordMatches = paper.abstract.match(regexForWord(word));
+		var wordMatches = paper.keywords.match(regexForWord(word));
 		paper.wordCount = 0;
 		if (wordMatches != null) {
 			paper.wordCount = wordMatches.length;

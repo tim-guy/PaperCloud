@@ -55,7 +55,7 @@
 		// TODO: change this to work with the papers
 		var words = {};
 		$.each(papers, function(index, paper) { // foreach paper
-			var paperWords = paper.abstract.match(/\b[a-zA-Z']+\b/g);
+			var paperWords = paper.keywords.match(/\b[a-zA-Z']+\b/g);
 			$.each(paperWords, function(index, word) { // foreach word
 				word = validateWord(word);
 				if (word) { // if this is a word to include
