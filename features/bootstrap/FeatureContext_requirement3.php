@@ -22,6 +22,15 @@ class FeatureContext implements Context
 	public $artistSearchTextField;
     public $searchButton;
 
+    // added for requirement_3 black-box testing
+    public $paperListPage;
+    public $paperListTable;
+    public $titleColmunHeader;
+    public $authorColumnHeader;
+    public $conferenceColumnHeader;
+    public $frequencyColumnHeader;
+    public $tableData;
+
 	/**
 	* Initializes context.
 	*
@@ -43,6 +52,14 @@ class FeatureContext implements Context
 		$this->artistSearchTextField = $this->artistSearchBar->find("css", "#artistSearchTextField");
 
         $this->searchButton = $this->page->find("css", "#search");
+
+        // added for requirement_3 black-box testing
+       	$this->paperListPage; // TODO
+       	$this->paperListTable = $this->paperListPage->find("css", "#paperList");
+       	$this->titleColmunHeader = $this->paperListPage->find("css", "#titleColmunHeader");
+       	$this->authorColumnHeader = $this->paperListPage->find("css", "#authorColumnHeader");
+       	$this->conferenceColumnHeader = $this->paperListPage->find("css", "#conferenceColumnHeader");
+       	$this->frequencyColumnHeader = $this->paperListPage->find("css", "#frequencyColumnHeader");
 	}
 
 	public function __destruct()
@@ -87,7 +104,7 @@ class FeatureContext implements Context
 	*/
 	public function titleColumnHeaderClicked()
 	{
-
+		$this->titleColmunHeader->click();
 	}
 
 	/**
@@ -95,7 +112,7 @@ class FeatureContext implements Context
 	*/
 	public function paperListsortInAscendingOrderOfTitleColumn()
 	{
-
+		
 	}
 
 	/**
