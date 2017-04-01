@@ -29,7 +29,6 @@ class FeatureContext implements Context
     public $authorColumnHeader;
     public $conferenceColumnHeader;
     public $frequencyColumnHeader;
-    public $tableData;
 
 	/**
 	* Initializes context.
@@ -112,7 +111,26 @@ class FeatureContext implements Context
 	*/
 	public function paperListsortInAscendingOrderOfTitleColumn()
 	{
-		
+		$dom = new domDocument;
+		$dom->loadHTML($page);
+		$dom->preserveWhiteSpace = false;
+
+		$tableArray = array();
+		$table = $dom->getElementsByTagName('table');
+		$rows = $table->item(1)->getElementsByTagName('tr');
+
+		foreach ($rows as $row) {
+			$rowArray = array();
+			$cols = $row->getElementsByTagName('td');
+
+			foreach ($cols as $col) {
+				array_push($rowArray, $col);
+			}
+
+			array_push($tableArray, $rowArray);
+		}
+
+		assertEquals(true, $tableArray[0][0] < $tableArray[1][0]);
 	}
 
 	/**
@@ -128,7 +146,7 @@ class FeatureContext implements Context
 	*/
 	public function authorColumnHeaderClicked()
 	{
-
+		$this->authorColmunHeader->click();
 	}
 
 	/**
@@ -136,7 +154,26 @@ class FeatureContext implements Context
 	*/
 	public function paperListsortInAscendingOrderOfAuthorColumn()
 	{
+		$dom = new domDocument;
+		$dom->loadHTML($page);
+		$dom->preserveWhiteSpace = false;
 
+		$tableArray = array();
+		$table = $dom->getElementsByTagName('table');
+		$rows = $table->item(1)->getElementsByTagName('tr');
+
+		foreach ($rows as $row) {
+			$rowArray = array();
+			$cols = $row->getElementsByTagName('td');
+
+			foreach ($cols as $col) {
+				array_push($rowArray, $col);
+			}
+
+			array_push($tableArray, $rowArray);
+		}
+
+		assertEquals(true, $tableArray[0][1] < $tableArray[1][1]);
 	}
 
 	/**
@@ -152,7 +189,7 @@ class FeatureContext implements Context
 	*/
 	public function conferenceColumnHeaderClicked()
 	{
-
+		$this->conferenceColmunHeader->click();
 	}
 
 	/**
@@ -160,7 +197,26 @@ class FeatureContext implements Context
 	*/
 	public function paperListsortInAscendingOrderOfConferenceColumn()
 	{
+		$dom = new domDocument;
+		$dom->loadHTML($page);
+		$dom->preserveWhiteSpace = false;
 
+		$tableArray = array();
+		$table = $dom->getElementsByTagName('table');
+		$rows = $table->item(1)->getElementsByTagName('tr');
+
+		foreach ($rows as $row) {
+			$rowArray = array();
+			$cols = $row->getElementsByTagName('td');
+
+			foreach ($cols as $col) {
+				array_push($rowArray, $col);
+			}
+
+			array_push($tableArray, $rowArray);
+		}
+
+		assertEquals(true, $tableArray[0][2] < $tableArray[1][2]);
 	}
 
 	/**
@@ -176,7 +232,7 @@ class FeatureContext implements Context
 	*/
 	public function frequencyColumnHeaderClicked()
 	{
-
+		$this->refquencyColmunHeader->click();
 	}
 
 	/**
@@ -184,7 +240,28 @@ class FeatureContext implements Context
 	*/
 	public function paperListsortInDescendingOrderOfFrequencyColumn()
 	{
+		$dom = new domDocument;
+		$dom->loadHTML($page);
+		$dom->preserveWhiteSpace = false;
 
+		$tableArray = array();
+		$table = $dom->getElementsByTagName('table');
+		$rows = $table->item(1)->getElementsByTagName('tr');
+
+		foreach ($rows as $row) {
+			$rowArray = array();
+			$cols = $row->getElementsByTagName('td');
+
+			foreach ($cols as $col) {
+				array_push($rowArray, $col);
+			}
+
+			array_push($tableArray, $rowArray);
+		}
+
+		assertEquals(true, $tableArray[0][3] > $tableArray[1][3]);
 	}
 	
-}	
+}
+
+?>
