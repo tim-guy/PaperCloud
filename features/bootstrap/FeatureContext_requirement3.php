@@ -53,7 +53,7 @@ class FeatureContext implements Context
         $this->searchButton = $this->page->find("css", "#search");
 
         // added for requirement_3 black-box testing
-       	$this->paperListPage; // TODO
+       	$this->paperListPage = $this->page->find("css", "#paperListPage"); // TODO: we may need to check this
        	$this->paperListTable = $this->paperListPage->find("css", "#paperList");
        	$this->titleColmunHeader = $this->paperListPage->find("css", "#titleColmunHeader");
        	$this->authorColumnHeader = $this->paperListPage->find("css", "#authorColumnHeader");
@@ -87,7 +87,7 @@ class FeatureContext implements Context
 	*/
 	public function paperListDisplayedAndRankedByWordFrequency()
 	{
-
+		assertNotEquals(null, $this->page->find("css", "#paperListPage"));
 	}
 
 	/**
