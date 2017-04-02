@@ -39,9 +39,8 @@ class FeatureContext implements Context
 		$this->session->visit('http://localhost:80/LyricsCloud/');
 		$this->page = $this->session->getPage();
 
-		$this->artistSearchBar = $this->page->find("css", "#artistSearchBar");
-		$this->artistSearchTextField = $this->artistSearchBar->find("css", "#artistSearchTextField");
-
+		$this->searchField = $this->artistSearchBar->find("css", "#searchTextField");
+		$this->sizeField = $this->page->find("css", "#limitTextField");
         $this->searchButton = $this->page->find("css", "#search");
 	}
 
@@ -55,8 +54,9 @@ class FeatureContext implements Context
 	*/
 	public function XSetTo10BeforeSearching()
 	{        
-		$this->sizeField = $this->page->find("css", "#limitTextField");
 		$this->sizeField.setValue('10');
+		$this->searchField.setValue('Rihanna');
+		$this->searchButton.click();
 	}
 
 	/**
@@ -64,7 +64,7 @@ class FeatureContext implements Context
 	*/
 	public function numberItemsInWordCloud10()
 	{
-
+		$this->wordCloud = $this->session->getPage()->find("css", "#wordCloudSVG");
 	}
 
 	/**
@@ -72,7 +72,8 @@ class FeatureContext implements Context
 	*/
 	public function searchForValidLastName()
 	{
-
+		$this->searchField.setValue('Rihanna');
+		$this->searchButton.click();
 	}
 
 	/**
@@ -80,7 +81,7 @@ class FeatureContext implements Context
 	*/
 	public function topPapersShownInWordCloud()
 	{
-
+		
 	}
 
 	/**
