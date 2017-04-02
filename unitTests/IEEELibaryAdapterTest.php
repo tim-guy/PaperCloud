@@ -3,10 +3,10 @@ require_once "cache/CacheArtistMBIDs.php";
 
 use PHPUnit\Framework\TestCase;
 
-class GetPapersList extends TestCase
+class IEEELibraryAdapterTest extends TestCase
 {
 	private function testFunction()
 	{
-
+		
 	}
 }

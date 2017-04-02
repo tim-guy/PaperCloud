@@ -54,8 +54,9 @@ class FeatureContext implements Context
 	* @Given X is set to 10 before searching
 	*/
 	public function XSetTo10BeforeSearching()
-	{
-
+	{        
+		$this->sizeField = $this->page->find("css", "#limitTextField");
+		$this->sizeField.setValue('10');
 	}
 
 	/**

@@ -3,7 +3,7 @@ require_once "cache/CacheArtistMBIDs.php";
 
 use PHPUnit\Framework\TestCase;
 
-class GetnerateWordCloudTest extends TestCase
+class queryPapersTest extends TestCase
 {
 	private function testFunction()
 	{
