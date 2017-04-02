@@ -5,8 +5,9 @@ Feature: requirement_1
 
 	Scenario: Openning the webpage with a web browser
 		Given that the user opens the webpage with a web browser
-		A textfield for search is shown near the search button
+		When the artist search bar should be empty
+		Then the search button is not clickable
 
-	Scenario: Clicking the search textfield
-		Given that the user clicks at the search textfield
-		The textfield becomes editable and input that the user types shows up in the textfield.
+	Scenario: Typing in the search textfield
+		Given there are three characters in the textbox
+		Then the search button is clickable

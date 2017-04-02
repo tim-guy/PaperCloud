@@ -51,10 +51,39 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Line from .feature file
+	* @Given that the user opens the webpage with a web browser
 	*/
-	public function nameOfFunction()
+	public function thereIsAnArtistSearchBar()
 	{
-        //insert
+		assertNotEquals(null, $this->artistSearchBar);
 	}
+	/**
+	* @When the artist search bar should be empty
+	*/
+	public function theArtistSearchBarShouldBeEmpty()
+	{
+		assertEquals("", $this->artistSearchTextField->getValue());
+	}
+	/**
+	* @Then the search button is not clickable
+	*/
+	public function theSearchButtonIsNotClickable()
+    {
+        assertNotEquals(null, $this->searchButton->getAttribute('disabled'));
+    }
+	/**
+    * @Given there are three characters in the textbox
+    */
+    public function thereAreMoreThanThreeCharactersInTheTextbox()
+    {
+    	$this->artistSearchTextField->setValue('Leo');
+        sleep(3);
+    }
+    /**
+     * @Then the search button is clickable
+     */
+    public function theSearchButtonIsClickable()
+    {
+        assertEquals(null, $this->searchButton->getAttribute('disabled'));
+    }
 }
