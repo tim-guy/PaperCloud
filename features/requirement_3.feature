@@ -3,10 +3,10 @@ Feature: requirement_3 Paper List Sorting
 	As a user
 	I need to be able to sort the table by clicking on the first four column headers
 
-	Scenario: Clicking on a word in the Paper Cloud return a list of papers that mention that word, ranked by the word frequency
+	Scenario: Clicking on a word in the Paper Cloud return a list of papers that mention that word
 		Given the Paper Cloud is generated
 		When a word in the Paper Cloud is clicked
-		Then the paper list is displayed, and ranked by the word frequency
+		Then the paper list is displayed
 
 	Scenario: Sorting the paper list in ascending order of the "Title" Column
 		Given the paper list is generated

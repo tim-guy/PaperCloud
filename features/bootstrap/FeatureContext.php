@@ -10,6 +10,11 @@ use Behat\Gherkin\Node\TableNode;
  */
 class FeatureContext implements Context
 {
+    public $driver;
+    public $session;
+    
+    public $page;
+
     /**
      * Initializes context.
      *
@@ -19,6 +24,11 @@ class FeatureContext implements Context
      */
     public function __construct()
     {
+        $this->driver = new \Behat\Mink\Driver\Selenium2Driver();
+        $this->session = new \Behat\Mink\Session($this->driver);
+
+        $this->session->start();
+        
     }
 
     /**

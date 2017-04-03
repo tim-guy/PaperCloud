@@ -83,9 +83,9 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Then the paper list is displayed, and ranked by the word frequency
+	* @Then the paper list is displayed
 	*/
-	public function paperListDisplayedAndRankedByWordFrequency()
+	public function paperListDisplayed()
 	{
 		assertNotEquals(null, $this->page->find("css", "#paperListPage"));
 	}
