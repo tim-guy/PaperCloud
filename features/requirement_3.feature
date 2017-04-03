@@ -26,4 +26,4 @@ Feature: requirement_3 Paper List Sorting
 	Scenario: Sorting the paper list in ascending order of the "Frequency" Column
 		Given the paper list is generated for the "Frequency" column
 		When the "Frequency" column header is clicked
-		Then the paper list is is sorted in the ascending order of the "Frequency" column
+		Then the paper list is sorted in the ascending order of the "Frequency" column

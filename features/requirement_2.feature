@@ -12,5 +12,5 @@ Feature: requirement_2
 		Then a label is shown where the word cloud would be that there are no papers for this user
 
 	Scenario: Changing the number of papers, X, to be shown before searching returns a word cloud with exactly that many papers
-		Given X is set to 10 before searching
-		Then number of papers in the word cloud is 10
+		Given X is set to 20 before searching
+		Then number of papers in the word cloud is 20

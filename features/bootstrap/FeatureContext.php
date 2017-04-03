@@ -113,26 +113,26 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given X is set to :arg1 before searching
+     * @Given X is set to 20 before searching
      */
-    public function xIsSetToBeforeSearching($arg1)
+    public function xIsSetToBeforeSearching()
     {
-        $this->sizeField->setValue('10');
-        $this->searchField->setValue('Halfond');
+        $this->sizeField->setValue('20');
+        $this->searchField->setValue('Johnson');
         $this->searchButton->click();
         sleep(10);
     }
 
     /**
-     * @Then number of papers in the word cloud is :arg1
+     * @Then number of papers in the word cloud is 20
      */
-    public function numberOfPapersInTheWordCloudIs($arg1)
+    public function numberOfPapersInTheWordCloudIs()
     {
         $papersLength = $this->session->evaluateScript(
             "return papers.length;"
         );
 
-        assertEquals($papersLength, 10);
+        assertEquals(20, $papersLength);
     }
 
     /**
@@ -141,7 +141,7 @@ class FeatureContext implements Context
     public function thatTheUserSearchesForAValidLastName()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Halfond');
+        $this->searchField->setValue('Johnson');
         $this->searchButton->click();
         sleep(10);
     }
@@ -163,7 +163,7 @@ class FeatureContext implements Context
 
         $author = array_pop($this->authors);
 
-        $containsAuthor = strpos($author->getText(), "Halfond");
+        $containsAuthor = strpos($author->getText(), "Johnson");
         assertEquals(true, $containsAuthor);
     }
 
@@ -195,7 +195,7 @@ class FeatureContext implements Context
     public function thePaperCloudGenerated()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Miller');
+        $this->searchField->setValue('Johnson');
         $this->searchButton->click();
         sleep(10);
     }
@@ -227,7 +227,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForTitleColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Miller');
+        $this->searchField->setValue('Johnson');
         $this->searchButton->click();
         sleep(10);
 
@@ -260,7 +260,7 @@ class FeatureContext implements Context
         $firstTitle = $rows[0]->find("css", "#title");
         $secondTitle = $rows[1]->find("css", "#title");
 
-        assertEquals(true, ($firstTitle < $secondTitle) || ($firstTitle == $secondTitle));
+        assertEquals(true, $firstTitle <= $secondTitle);
     }
 
     /**
@@ -269,7 +269,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForAuthorColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Miller');
+        $this->searchField->setValue('Johnson');
         $this->searchButton->click();
         sleep(10);
 
@@ -304,7 +304,7 @@ class FeatureContext implements Context
         $firstAuthor = $rows[0]->find("css", "#author");
         $secondAuthor = $rows[1]->find("css", "#author");
 
-        assertEquals(true, ($firstAuthor < $secondAuthor) || ($firstAuthor == $secondAuthor));
+        assertEquals(true, $firstAuthor <= $secondAuthor);
     }
 
     /**
@@ -313,7 +313,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForConferenceColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Miller');
+        $this->searchField->setValue('Johnson');
         $this->searchButton->click();
         sleep(10);
 
@@ -348,7 +348,7 @@ class FeatureContext implements Context
         $firstConference = $rows[0]->find("css", "#conference");
         $secondConference = $rows[1]->find("css", "#conference");
 
-        assertEquals(true, ($firstConference < $secondConference) || ($firstConference == $secondConference));
+        assertEquals(true, $firstConference <= $secondConference);
     }
 
     /**
@@ -357,7 +357,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForFrequencyColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Miller');
+        $this->searchField->setValue('Johnson');
         $this->searchButton->click();
         sleep(10);
 
@@ -394,7 +394,7 @@ class FeatureContext implements Context
         $firstFrequency = $rows[0]->find("css", "#frequency");
         $secondFrequency = $rows[1]->find("css", "#frequency");
 
-        assertEquals(true, ($firstFrequency < $secondFrequency) || ($firstFrequency == $secondFrequency));
+        assertEquals(true, $firstFrequency <= $secondFrequency);
     }
 
 }
