@@ -1,5 +1,5 @@
 <?php
-require_once "cache/CacheArtistMBIDs.php";
+//require_once "cache/CacheArtistMBIDs.php";
 
 use PHPUnit\Framework\TestCase;
 

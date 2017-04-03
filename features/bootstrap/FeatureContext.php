@@ -175,6 +175,7 @@ class FeatureContext implements Context
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Banananana');
         $this->searchButton->click();
+        sleep(10);
     }
 
     /**
@@ -183,9 +184,9 @@ class FeatureContext implements Context
     public function aLabelIsShownWhereTheWordCloudWouldBeThatThereAreNoPapersForThisUser()
     {
         $this->wordCloudPage = $this->session->getPage();
-        $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloudSVG");
-        
-        assertEquals(true, $containsAuthor);
+        $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloud");
+        $this->noResultsLabel = $this->wordCloud->find("css", "#noResultsID");
+        assertEquals("No Results Found", $this->noResultsLabel->getText());
     }
 
     /**
