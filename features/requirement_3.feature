@@ -14,16 +14,16 @@ Feature: requirement_3 Paper List Sorting
 		Then the paper list is sorted in the ascending order of the "Title" column
 
 	Scenario: Sorting the paper list in ascending order of the "Author" Column
-		Given the paper list is generated
+		Given the paper list is generated (1)
 		When the "Author" column header is clicked
 		Then the paper list is sorted in the ascending order of the "Author" column
 
 	Scenario: Sorting the paper list in ascending order of the "Conference" Column
-		Given the paper list is generated
+		Given the paper list is generated (2)
 		When the "Conference" column header is clicked
 		Then the paper list is sorted in the ascending order of the "Conference" column
 
 	Scenario: Sorting the paper list in ascending order of the "Frequency" Column
-		Given the paper list is generated
+		Given the paper list is generated (3)
 		When the "Frequency" column header is clicked
 		Then the paper list is is sorted in the ascending order of the "Frequency" column

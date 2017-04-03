@@ -268,7 +268,7 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated
+    * @Given the paper list is generated (1)
     */
     public function thePaperListGenerated_1()
     {
@@ -324,7 +324,7 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated
+    * @Given the paper list is generated (2)
     */
     public function thePaperListGenerated_2()
     {
@@ -380,7 +380,7 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated
+    * @Given the paper list is generated (3)
     */
     public function thePaperListGenerated_3()
     {
