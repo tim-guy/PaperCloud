@@ -163,7 +163,7 @@ class FeatureContext implements Context
 
         $author = array_pop($this->authors);
 
-        $containsAuthor = (strpos($author, "Halfond") !== false);
+        $containsAuthor = (strpos($author . '', "Halfond") !== false);
         assertEquals(true, $containsAuthor);
     }
 
