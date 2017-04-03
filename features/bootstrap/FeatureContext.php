@@ -26,7 +26,7 @@ class FeatureContext implements Context
      */
     public function thatTheUserOpensTheWebpageWithAWebBrowser()
     {
-        throw new PendingException();
+        assertNotEquals(null, $this->artistSearchBar);
     }
 
     /**
@@ -34,7 +34,7 @@ class FeatureContext implements Context
      */
     public function theArtistSearchBarShouldBeEmpty()
     {
-        throw new PendingException();
+        assertEquals("", $this->artistSearchTextField->getValue());
     }
 
     /**
@@ -42,7 +42,7 @@ class FeatureContext implements Context
      */
     public function theSearchButtonIsNotClickable()
     {
-        throw new PendingException();
+        assertNotEquals(null, $this->searchButton->getAttribute('disabled'));
     }
 
     /**
@@ -50,7 +50,8 @@ class FeatureContext implements Context
      */
     public function thereAreThreeCharactersInTheTextbox()
     {
-        throw new PendingException();
+        $this->artistSearchTextField->setValue('Leo');
+        sleep(3);
     }
 
     /**
@@ -58,7 +59,7 @@ class FeatureContext implements Context
      */
     public function theSearchButtonIsClickable()
     {
-        throw new PendingException();
+        assertEquals(null, $this->searchButton->getAttribute('disabled'));
     }
 
     /**
