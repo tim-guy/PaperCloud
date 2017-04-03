@@ -76,7 +76,7 @@ class FeatureContext implements Context
      */
     public function thatTheUserOpensTheWebpageWithAWebBrowser()
     {
-        asser tNotEquals(null, $this->searchBar);
+        assertNotEquals(null, $this->searchBar);
     }
 
     /**
@@ -156,8 +156,15 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         array_pop($this->words)->click();
-        sleep(10);
-        assertEquals();
+        sleep(1);
+        $this->paperListPage = $this->session->getPage();
+        $this->table = $this->paperListPage->find("css", "#paperList");
+        $this->authors = $this->table->findAll("css", "#author");
+
+        $author = array_pop($this->authors);
+
+        $containsAuthor = (strpos($author, "Halfond") !== false);
+        assertEquals(true, $containsAuthor);
     }
 
     /**
