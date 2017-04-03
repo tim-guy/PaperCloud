@@ -15,16 +15,16 @@ class FeatureContext implements Context
     
     public $page;
 
-
-
-
     // added for requirement_1 black-box testing
     public $searchBar;
     public $searchField;
     public $sizeField;
     public $searchButton;
+    public $wordCloud;
+    public $words;
+
     // added for requirement_3 black-box testing    
-    public $paperListPage;
+    //public $paperListPage;
     public $paperListTable;
     public $titleColmunHeader;
     public $authorColumnHeader;
@@ -48,18 +48,19 @@ class FeatureContext implements Context
         $this->session->visit('http://localhost:80/PaperCloud');
         $this->page = $this->session->getPage();
 
+        // added for requirement_1 black-box testing, reference: searchPage
         $this->searchBar = $this->page->find("css", "#searchBar");
         $this->searchField = $this->searchBar->find("css", "#searchTextField");
         $this->sizeField = $this->searchBar->find("css", "#limitTextField");
         $this->searchButton = $this->page->find("css", "#search");
 
-        // added for requirement_3 black-box testing
-        //$this->paperListPage = $this->page->find("css", "#paperListPage"); // TODO: we may need to check this
-        //$this->paperListTable = $this->paperListPage->find("css", "#paperList");
-        //$this->titleColmunHeader = $this->paperListPage->find("css", "#titleColmunHeader");
-        //$this->authorColumnHeader = $this->paperListPage->find("css", "#authorColumnHeader");
-        //$this->conferenceColumnHeader = $this->paperListPage->find("css", "#conferenceColumnHeader");
-        //$this->frequencyColumnHeader = $this->paperListPage->find("css", "#frequencyColumnHeader");
+        // added for requirement_3 black-box testing, reference: paperListPage
+        //$this->paperListPage = $this->page->find("css", "#paperListPage");
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColmunHeader");
+        $this->authorColumnHeader = $this->paperListTable->find("css", "#authorColumnHeader");
+        $this->conferenceColumnHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
+        $this->frequencyColumnHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
     }
 
     public function __destruct()
@@ -97,7 +98,6 @@ class FeatureContext implements Context
     {
         $this->searchField->setValue('Johnson');
         sleep(3);
-
     }
 
     /**
@@ -116,6 +116,7 @@ class FeatureContext implements Context
         $this->sizeField.setValue($arg1);
         $this->searchField.setValue('Johnson');
         $this->searchButton.click();
+        sleep(5);
     }
 
     /**
@@ -123,7 +124,11 @@ class FeatureContext implements Context
      */
     public function numberOfItemsInTheWordCloudIs($arg1)
     {
-        throw new PendingException();
+        $this->wordCloudPage = $this->session->getPage();
+        $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloudSVG");
+        $this->words = $this->wordCloud->findAll("css", "text");
+
+
     }
 
     /**
