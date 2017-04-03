@@ -71,7 +71,7 @@ class FeatureContext implements Context
      */
     public function thatTheUserOpensTheWebpageWithAWebBrowser()
     {
-        assertNotEquals(null, $this->artistSearchBar);
+        assertNotEquals(null, $this->searchBar);
     }
 
     /**
@@ -79,7 +79,7 @@ class FeatureContext implements Context
      */
     public function theArtistSearchBarShouldBeEmpty()
     {
-        assertEquals("", $this->artistSearchTextField->getValue());
+        assertEquals("", $this->searchField->getValue());
     }
 
     /**
@@ -95,7 +95,7 @@ class FeatureContext implements Context
      */
     public function thereAreThreeCharactersInTheTextbox()
     {
-        $this->artistSearchTextField->setValue('Leo');
+        $this->searchField->setValue('Johnson');
         sleep(3);
 
     }
