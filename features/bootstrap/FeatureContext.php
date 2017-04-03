@@ -72,7 +72,7 @@ class FeatureContext implements Context
      */
     public function thatTheUserOpensTheWebpageWithAWebBrowser()
     {
-        assertNotEquals(null, $this->searchBar);
+        asser tNotEquals(null, $this->searchBar);
     }
 
     /**
