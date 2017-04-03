@@ -258,7 +258,7 @@ class FeatureContext implements Context
         $this->page = $this->session->getPage();
 
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
@@ -316,7 +316,7 @@ class FeatureContext implements Context
         $this->page = $this->session->getPage();
 
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
@@ -374,7 +374,7 @@ class FeatureContext implements Context
         $this->page = $this->session->getPage();
 
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
@@ -430,9 +430,9 @@ class FeatureContext implements Context
     public function paperListsortInAscendingOrderOfFrequencyColumn()
     {
         $this->page = $this->session->getPage();
-        
+
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
