@@ -43,7 +43,7 @@ class FeatureContext implements Context
         $this->session->visit('http://localhost:80/PaperCloud');
         $this->page = $this->session->getPage();
 
-        // added for requirement_3 black-box testing, reference: paperListPage
+        // added for requirement_3 black-box testing, reference: paperListPage.html
         //$this->paperListPage = $this->page->find("css", "#paperListPage");
         $this->paperListTable = $this->page->find("css", "#paperList");
         $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColmunHeader");
