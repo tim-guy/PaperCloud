@@ -88,6 +88,7 @@ class FeatureContext implements Context
     {
         $this->artistSearchTextField->setValue('Leo');
         sleep(3);
+        
     }
 
     /**
