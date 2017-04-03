@@ -152,10 +152,11 @@ class FeatureContext implements Context
     {
         $this->wordCloudPage = $this->session->getPage();
         $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloudSVG");
-        $this->g = $this->wordCloud->find("css", "g");
-        $this->words = $this->g->findAll("css", "text");
-
-        assertEquals(250, sizeof($this->words));
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        array_pop($this->words)->click();
+        sleep(10);
+        assertEquals();
     }
 
     /**
