@@ -15,6 +15,17 @@ class FeatureContext implements Context
     
     public $page;
 
+
+
+
+    // added for requirement_3 black-box testing
+    public $paperListPage;
+    public $paperListTable;
+    public $titleColmunHeader;
+    public $authorColumnHeader;
+    public $conferenceColumnHeader;
+    public $frequencyColumnHeader;
+
     /**
      * Initializes context.
      *
@@ -28,6 +39,9 @@ class FeatureContext implements Context
         $this->session = new \Behat\Mink\Session($this->driver);
 
         $this->session->start();
+
+        $this->session->visit('http://localhost:80/PaperCloud/');
+        $this->page = $this->session->getPage();
 
 
 
