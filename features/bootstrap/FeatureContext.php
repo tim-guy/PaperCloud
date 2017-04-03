@@ -57,12 +57,12 @@ class FeatureContext implements Context
 
 
         // added for requirement_3 black-box testing, reference: paperListPage.html
-        //$this->paperListPage = $this->page->find("css", "#paperListPage");
-        $this->paperListTable = $this->page->find("css", "#paperList");
-        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColmunHeader");
-        $this->authorColumnHeader = $this->paperListTable->find("css", "#authorColumnHeader");
-        $this->conferenceColumnHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
-        $this->frequencyColumnHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
+        // $this->paperListPage = $this->page->find("css", "#paperListPage");
+        // $this->paperListTable = $this->page->find("css", "#paperList");
+        // $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColmunHeader");
+        // $this->authorColumnHeader = $this->paperListTable->find("css", "#authorColumnHeader");
+        // $this->conferenceColumnHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
+        // $this->frequencyColumnHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
     }
 
     public function __destruct()
