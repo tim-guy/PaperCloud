@@ -19,6 +19,9 @@ class FeatureContext implements Context
 
 
     // added for requirement_3 black-box testing
+    public $searchField;
+    public $sizeField;
+    public $searchButton;
     public $paperListPage;
     public $paperListTable;
     public $titleColmunHeader;
@@ -40,23 +43,26 @@ class FeatureContext implements Context
 
         $this->session->start();
 
-        $this->session->visit('http://localhost:80');
+        $this->session->visit('http://localhost:80/PaperCloud');
         $this->page = $this->session->getPage();
 
 
-
-
-
-
+        $this->searchField = $this->artistSearchBar->find("css", "#searchTextField");
+        $this->sizeField = $this->page->find("css", "#limitTextField");
+        $this->searchButton = $this->page->find("css", "#search");
         // added for requirement_3 black-box testing
-        $this->paperListPage = $this->page->find("css", "#paperListPage"); // TODO: we may need to check this
-        $this->paperListTable = $this->paperListPage->find("css", "#paperList");
-        $this->titleColmunHeader = $this->paperListPage->find("css", "#titleColmunHeader");
-        $this->authorColumnHeader = $this->paperListPage->find("css", "#authorColumnHeader");
-        $this->conferenceColumnHeader = $this->paperListPage->find("css", "#conferenceColumnHeader");
-        $this->frequencyColumnHeader = $this->paperListPage->find("css", "#frequencyColumnHeader");
+        //$this->paperListPage = $this->page->find("css", "#paperListPage"); // TODO: we may need to check this
+        //$this->paperListTable = $this->paperListPage->find("css", "#paperList");
+        //$this->titleColmunHeader = $this->paperListPage->find("css", "#titleColmunHeader");
+        //$this->authorColumnHeader = $this->paperListPage->find("css", "#authorColumnHeader");
+        //$this->conferenceColumnHeader = $this->paperListPage->find("css", "#conferenceColumnHeader");
+        //$this->frequencyColumnHeader = $this->paperListPage->find("css", "#frequencyColumnHeader");
     }
 
+    public function __destruct()
+    {
+        $this->session->stop();
+    }
     /**
      * @Given that the user opens the webpage with a web browser
      */
@@ -104,7 +110,9 @@ class FeatureContext implements Context
      */
     public function xIsSetToBeforeSearching($arg1)
     {
-        throw new PendingException();
+        $this->sizeField.setValue($arg1);
+        $this->searchField.setValue('Johnson');
+        $this->searchButton.click();
     }
 
     /**
@@ -120,7 +128,9 @@ class FeatureContext implements Context
      */
     public function thatTheUserSearchesForAValidLastName()
     {
-        throw new PendingException();
+        $this->sizeField.setValue('10');
+        $this->searchField.setValue('Johnson');
+        $this->searchButton.click();
     }
 
     /**
@@ -144,7 +154,9 @@ class FeatureContext implements Context
      */
     public function thatTheUserSearchesForAnInvalidLastName()
     {
-        throw new PendingException();
+        $this->sizeField.setValue('10');
+        $this->searchField.setValue('Banananana');
+        $this->searchButton.click();
     }
 
     /**
