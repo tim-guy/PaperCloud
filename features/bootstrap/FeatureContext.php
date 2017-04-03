@@ -196,7 +196,7 @@ class FeatureContext implements Context
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -209,7 +209,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -228,14 +228,14 @@ class FeatureContext implements Context
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -255,6 +255,8 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfTitleColumn()
     {
+        $this->page = $this->session->getPage();
+
         $dom = new domDocument;
         $dom->loadHTML($page);
         $dom->preserveWhiteSpace = false;
@@ -285,14 +287,14 @@ class FeatureContext implements Context
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -311,6 +313,8 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfAuthorColumn()
     {
+        $this->page = $this->session->getPage();
+
         $dom = new domDocument;
         $dom->loadHTML($page);
         $dom->preserveWhiteSpace = false;
@@ -341,14 +345,14 @@ class FeatureContext implements Context
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -367,6 +371,8 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfConferenceColumn()
     {
+        $this->page = $this->session->getPage();
+
         $dom = new domDocument;
         $dom->loadHTML($page);
         $dom->preserveWhiteSpace = false;
@@ -397,14 +403,14 @@ class FeatureContext implements Context
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -423,6 +429,8 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfFrequencyColumn()
     {
+        $this->page = $this->session->getPage();
+        
         $dom = new domDocument;
         $dom->loadHTML($page);
         $dom->preserveWhiteSpace = false;
