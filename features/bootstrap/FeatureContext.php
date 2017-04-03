@@ -40,7 +40,7 @@ class FeatureContext implements Context
 
         $this->session->start();
 
-        $this->session->visit('http://localhost:80/PaperCloud/');
+        $this->session->visit('http://localhost:80');
         $this->page = $this->session->getPage();
 
         //for requirement_1 blackbox testing
