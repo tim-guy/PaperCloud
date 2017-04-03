@@ -5,7 +5,7 @@ Feature: requirement_3 Paper List Sorting
 
 	Scenario: Changing the number of papers, X, to be shown before searching returns a word cloud with exactly that many papers
 		Given X is set to 10 before searching
-		Then number of items in the word cloud is 10
+		Then number of papers in the word cloud is 10
 
 	Scenario: Searching for a specific last name that does have corresponding papers in IEEE and ACM libraries
 		Given that the user searches for a valid last name

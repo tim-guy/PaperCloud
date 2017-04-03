@@ -18,10 +18,12 @@ class FeatureContext implements Context
 
 
 
-    // added for requirement_3 black-box testing
+    // added for requirement_1 black-box testing
+    public $searchBar;
     public $searchField;
     public $sizeField;
     public $searchButton;
+    // added for requirement_3 black-box testing    
     public $paperListPage;
     public $paperListTable;
     public $titleColmunHeader;
@@ -46,8 +48,9 @@ class FeatureContext implements Context
         $this->session->visit('http://localhost:80/PaperCloud');
         $this->page = $this->session->getPage();
 
-        $this->searchField = $this->artistSearchBar->find("css", "#searchTextField");
-        $this->sizeField = $this->page->find("css", "#limitTextField");
+        $this->searchBar = $this->page->find("css", "#searchBar");
+        $this->searchField = $this->searchBar->find("css", "#searchTextField");
+        $this->sizeField = $this->searchBar->find("css", "#limitTextField");
         $this->searchButton = $this->page->find("css", "#search");
 
         // added for requirement_3 black-box testing
@@ -116,7 +119,7 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Then number of items in the word cloud is :arg1
+     * @Then number of papers in the word cloud is :arg1
      */
     public function numberOfItemsInTheWordCloudIs($arg1)
     {
