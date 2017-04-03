@@ -23,6 +23,8 @@ class FeatureContext implements Context
     public $searchField;
     public $sizeField;
     public $searchButton;
+    public $wordCloud;
+    public $words;
     // added for requirement_3 black-box testing    
     public $paperListPage;
     public $paperListTable;
@@ -97,7 +99,6 @@ class FeatureContext implements Context
     {
         $this->artistSearchTextField->setValue('Leo');
         sleep(3);
-
     }
 
     /**
@@ -116,6 +117,7 @@ class FeatureContext implements Context
         $this->sizeField.setValue($arg1);
         $this->searchField.setValue('Johnson');
         $this->searchButton.click();
+        sleep(5);
     }
 
     /**
@@ -123,7 +125,11 @@ class FeatureContext implements Context
      */
     public function numberOfItemsInTheWordCloudIs($arg1)
     {
-        throw new PendingException();
+        $this->wordCloudPage = $this->session->getPage();
+        $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloudSVG");
+        $this->words = $this->wordCloud->findAll("css", "text");
+
+
     }
 
     /**
