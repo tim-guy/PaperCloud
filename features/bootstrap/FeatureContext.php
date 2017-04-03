@@ -270,7 +270,7 @@ class FeatureContext implements Context
     /**
     * @Given the paper list is generated
     */
-    public function thePaperListGenerated()
+    public function thePaperListGenerated_1()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
@@ -326,7 +326,7 @@ class FeatureContext implements Context
     /**
     * @Given the paper list is generated
     */
-    public function thePaperListGenerated()
+    public function thePaperListGenerated_2()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
@@ -382,7 +382,7 @@ class FeatureContext implements Context
     /**
     * @Given the paper list is generated
     */
-    public function thePaperListGenerated()
+    public function thePaperListGenerated_3()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
