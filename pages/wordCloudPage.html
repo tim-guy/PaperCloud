@@ -4,6 +4,7 @@
     
 	<div id="wordCloud">
 		<div id="wordCloudLoading" style="display:none"><h3 style="color:red">Loading...</h3></div>
+		<div id="noResults" style="display:none"><h3 style="color:blue">No Results Found</h3></div>
 		<svg id="wordCloudSVG"></svg>
 		<canvas id="wordCloudCanvas" width="1200" height="500" style="display:none"></canvas>
     </div>
@@ -52,7 +53,6 @@
 	function generateWordCloud() {
 				
 		// count words
-		// TODO: change this to work with the papers
 		var words = {};
 		$.each(papers, function(index, paper) { // foreach paper
 			var paperWords = paper.keywords.match(/\b[a-zA-Z']+\b/g);
@@ -130,6 +130,11 @@
 		  .start();
 	}
 	
+	function noResults() {
+		$("#wordCloudLoading").hide(0);
+		$("#noResults").show(0);
+	}
+	
 	// call this function when the page first loads, then whenever the artist list changes
 	function setTitle() {
 		// Set the title (of document and header)
@@ -147,6 +152,7 @@
 	
 		// TODO: set a good loading animation (like a spinning wheel)
 		$("#wordCloudLoading").show(0);
+		$("#noResults").hide(0);
 		$("#wordCloudSVG").html("");
 			
 		// Load the papers and generate the word cloud
@@ -161,7 +167,14 @@
 				
 				papers = returnedPapers;
 				
-				generateWordCloud()
+				if (papers.length > 0)
+				{
+					generateWordCloud();
+				}
+				else
+				{
+					noResults();
+				}				
 			}
 		});
 	}
