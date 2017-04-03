@@ -10,6 +10,22 @@ use Behat\Gherkin\Node\TableNode;
  */
 class FeatureContext implements Context
 {
+    public $driver;
+    public $session;
+    
+    public $page;
+
+
+
+
+    // added for requirement_3 black-box testing
+    public $paperListPage;
+    public $paperListTable;
+    public $titleColmunHeader;
+    public $authorColumnHeader;
+    public $conferenceColumnHeader;
+    public $frequencyColumnHeader;
+
     /**
      * Initializes context.
      *
@@ -19,6 +35,26 @@ class FeatureContext implements Context
      */
     public function __construct()
     {
+        $this->driver = new \Behat\Mink\Driver\Selenium2Driver();
+        $this->session = new \Behat\Mink\Session($this->driver);
+
+        $this->session->start();
+
+        $this->session->visit('http://localhost:80/PaperCloud/');
+        $this->page = $this->session->getPage();
+
+
+
+
+
+
+        // added for requirement_3 black-box testing
+        $this->paperListPage = $this->page->find("css", "#paperListPage"); // TODO: we may need to check this
+        $this->paperListTable = $this->paperListPage->find("css", "#paperList");
+        $this->titleColmunHeader = $this->paperListPage->find("css", "#titleColmunHeader");
+        $this->authorColumnHeader = $this->paperListPage->find("css", "#authorColumnHeader");
+        $this->conferenceColumnHeader = $this->paperListPage->find("css", "#conferenceColumnHeader");
+        $this->frequencyColumnHeader = $this->paperListPage->find("css", "#frequencyColumnHeader");
     }
 
     /**
@@ -135,9 +171,9 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Then the paper list is displayed, and ranked by the word frequency
+     * @Then the paper list is displayed
      */
-    public function thePaperListIsDisplayedAndRankedByTheWordFrequency()
+    public function thePaperListIsDisplayed()
     {
         throw new PendingException();
     }
