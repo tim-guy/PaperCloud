@@ -23,6 +23,7 @@ class FeatureContext implements Context
     public $sizeField;
     public $searchButton;
     public $wordCloud;
+    public $g;
     public $words;
 
     // added for requirement_3 black-box testing    
@@ -115,10 +116,10 @@ class FeatureContext implements Context
      */
     public function xIsSetToBeforeSearching($arg1)
     {
-        $this->sizeField.setValue($arg1);
-        $this->searchField.setValue('Johnson');
-        $this->searchButton.click();
-        sleep(5);
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
     }
 
     /**
@@ -138,9 +139,10 @@ class FeatureContext implements Context
      */
     public function thatTheUserSearchesForAValidLastName()
     {
-        $this->sizeField.setValue('10');
-        $this->searchField.setValue('Johnson');
-        $this->searchButton.click();
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
     }
 
     /**
@@ -148,15 +150,12 @@ class FeatureContext implements Context
      */
     public function theAppropriateTopPapersInTheAcmAndIeeeLibrariesAreShownInTheWordCloud()
     {
-        throw new PendingException();
-    }
+        $this->wordCloudPage = $this->session->getPage();
+        $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "g");
+        $this->words = $this->g->findAll("css", "text");
 
-    /**
-     * @Then there are no papers in the word cloud that do not belong to a user with that last name
-     */
-    public function thereAreNoPapersInTheWordCloudThatDoNotBelongToAUserWithThatLastName()
-    {
-        throw new PendingException();
+        assertEquals(250, sizeof($this->words));
     }
 
     /**
@@ -164,9 +163,9 @@ class FeatureContext implements Context
      */
     public function thatTheUserSearchesForAnInvalidLastName()
     {
-        $this->sizeField.setValue('10');
-        $this->searchField.setValue('Banananana');
-        $this->searchButton.click();
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Banananana');
+        $this->searchButton->click();
     }
 
     /**

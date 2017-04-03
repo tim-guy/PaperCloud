@@ -10,7 +10,6 @@ Feature: requirement_2
 	Scenario: Searching for a specific last name that does have corresponding papers in IEEE and ACM libraries
 		Given that the user searches for a valid last name
 		Then the appropriate top papers in the ACM and IEEE libraries are shown in the word cloud
-		And there are no papers in the word cloud that do not belong to a user with that last name
 
 	Scenario: Searching for a last name that does not have any papers in the IEEE and ACM libararies
 		Given that the user searches for an invalid last name

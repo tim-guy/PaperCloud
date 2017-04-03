@@ -108,6 +108,7 @@
 				.attr("height", 500)
 			  .append("g")
 				.attr("transform", "translate(600,250)")
+				.attr("id", "g")
 			  .selectAll("text")
 				.data(words)
 			  .enter().append("text")
@@ -115,6 +116,7 @@
 				.style("font-family", "serif")
 				.style("fill", function(d, i) { return colors[Math.floor(Math.random() * colors.length)]; })
 				.attr("text-anchor", "middle")
+				.attr("id", "text")
 				.attr("transform", function(d) {
 				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 				})
