@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class IEEELibraryAdapterTest extends TestCase
 {
-	private function testFunction()
+	public function testFunction()
 	{
 		
 	}

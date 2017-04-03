@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class ACMLibraryAdapterTest extends TestCase
 {
-	private function testFunction()
+	public function testFunction()
 	{
 		
 	}

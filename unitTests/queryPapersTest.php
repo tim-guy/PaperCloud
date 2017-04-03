@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class queryPapersTest extends TestCase
 {
-	private function testFunction()
+	public function testFunction()
 	{
 		
 	}
