@@ -51,19 +51,20 @@ class FeatureContext implements Context
         $this->session->visit('http://localhost:80/PaperCloud');
         $this->page = $this->session->getPage();
 
-        // added for requirement_1 black-box testing, reference: searchPage
+        // added for requirement_1 black-box testing, reference: searchPage.html
         $this->searchBar = $this->page->find("css", "#searchBar");
         $this->searchField = $this->page->find("css", "#searchTextField");
         $this->sizeField = $this->page->find("css", "#limitTextField");
         $this->searchButton = $this->page->find("css", "#search");
 
-        // added for requirement_3 black-box testing, reference: paperListPage
-        //$this->paperListPage = $this->page->find("css", "#paperListPage");
-        //$this->paperListTable = $this->page->find("css", "#paperList");
-        //$this->titleColmunHeader = $this->paperListTable->find("css", "#titleColmunHeader");
-        //$this->authorColumnHeader = $this->paperListTable->find("css", "#authorColumnHeader");
-        //$this->conferenceColumnHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
-        //$this->frequencyColumnHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
+        // added for requirement_3 black-box testing, reference: paperListPage.html
+        // $this->paperListPage = $this->page->find("css", "#paperListPage");
+        // $this->paperListTable = $this->page->find("css", "#paperList");
+        // $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColmunHeader");
+        // $this->authorColumnHeader = $this->paperListTable->find("css", "#authorColumnHeader");
+        // $this->conferenceColumnHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
+        // $this->frequencyColumnHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
+
     }
 
     public function __destruct()
@@ -75,7 +76,7 @@ class FeatureContext implements Context
      */
     public function thatTheUserOpensTheWebpageWithAWebBrowser()
     {
-        assertNotEquals(null, $this->searchBar);
+        asser tNotEquals(null, $this->searchBar);
     }
 
     /**

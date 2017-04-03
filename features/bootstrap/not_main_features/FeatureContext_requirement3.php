@@ -43,13 +43,13 @@ class FeatureContext implements Context
         $this->session->visit('http://localhost:80/PaperCloud');
         $this->page = $this->session->getPage();
 
-        // added for requirement_3 black-box testing, reference: paperListPage
-        //$this->paperListPage = $this->page->find("css", "#paperListPage");
-        $this->paperListTable = $this->page->find("css", "#paperList");
-        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColmunHeader");
-        $this->authorColumnHeader = $this->paperListTable->find("css", "#authorColumnHeader");
-        $this->conferenceColumnHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
-        $this->frequencyColumnHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
+        // added for requirement_3 black-box testing, reference: paperListPage.html
+        // $this->paperListPage = $this->page->find("css", "#paperListPage");
+        // $this->paperListTable = $this->page->find("css", "#paperList");
+        // $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
+        // $this->authorColumnHeader = $this->paperListTable->find("css", "#authorColumnHeader");
+        // $this->conferenceColumnHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
+        // $this->frequencyColumnHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
 	}
 
 	public function __destruct()
@@ -94,6 +94,10 @@ class FeatureContext implements Context
 	*/
 	public function titleColumnHeaderClicked()
 	{
+		$this->page = $this->session->getPage();
+		$this->paperListTable = $this->page->find("css", "#paperList");
+        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
+
 		$this->titleColmunHeader->click();
 	}
 
@@ -137,6 +141,9 @@ class FeatureContext implements Context
 	*/
 	public function authorColumnHeaderClicked()
 	{
+		$this->page = $this->session->getPage();
+		$this->paperListTable = $this->page->find("css", "#paperList");
+        $this->authorColmunHeader = $this->paperListTable->find("css", "#authorColumnHeader");
 		$this->authorColmunHeader->click();
 	}
 
@@ -180,6 +187,9 @@ class FeatureContext implements Context
 	*/
 	public function conferenceColumnHeaderClicked()
 	{
+		$this->page = $this->session->getPage();
+		$this->paperListTable = $this->page->find("css", "#paperList");
+        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
 		$this->conferenceColmunHeader->click();
 	}
 
@@ -223,6 +233,9 @@ class FeatureContext implements Context
 	*/
 	public function frequencyColumnHeaderClicked()
 	{
+		$this->page = $this->session->getPage();
+		$this->paperListTable = $this->page->find("css", "#paperList");
+        $this->frequencyColmunHeader = $this->paperListTable->find("css", "#requencyColumnHeader");
 		$this->refquencyColmunHeader->click();
 	}
 
