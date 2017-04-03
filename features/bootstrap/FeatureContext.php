@@ -28,7 +28,19 @@ class FeatureContext implements Context
         $this->session = new \Behat\Mink\Session($this->driver);
 
         $this->session->start();
-        
+
+
+
+
+
+
+        // added for requirement_3 black-box testing
+        $this->paperListPage = $this->page->find("css", "#paperListPage"); // TODO: we may need to check this
+        $this->paperListTable = $this->paperListPage->find("css", "#paperList");
+        $this->titleColmunHeader = $this->paperListPage->find("css", "#titleColmunHeader");
+        $this->authorColumnHeader = $this->paperListPage->find("css", "#authorColumnHeader");
+        $this->conferenceColumnHeader = $this->paperListPage->find("css", "#conferenceColumnHeader");
+        $this->frequencyColumnHeader = $this->paperListPage->find("css", "#frequencyColumnHeader");
     }
 
     /**
