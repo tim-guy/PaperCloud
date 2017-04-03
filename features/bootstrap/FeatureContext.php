@@ -197,7 +197,7 @@ class FeatureContext implements Context
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -210,7 +210,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -222,21 +222,21 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated
+    * @Given the paper list is generated for the "Title" column
     */
-    public function thePaperListGenerated()
+    public function thePaperListGeneratedForTitleColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -256,8 +256,10 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfTitleColumn()
     {
+        $this->page = $this->session->getPage();
+
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
@@ -279,21 +281,21 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated (1)
+    * @Given the paper list is generated for the "Author" column
     */
-    public function thePaperListGenerated_1()
+    public function thePaperListGeneratedForAuthorColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -312,8 +314,10 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfAuthorColumn()
     {
+        $this->page = $this->session->getPage();
+
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
@@ -335,21 +339,21 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated (2)
+    * @Given the paper list is generated for the "Conference" column
     */
-    public function thePaperListGenerated_2()
+    public function thePaperListGeneratedForConferenceColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -368,8 +372,10 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfConferenceColumn()
     {
+        $this->page = $this->session->getPage();
+
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
@@ -391,21 +397,21 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated (3)
+    * @Given the paper list is generated for the "Frequency" column
     */
-    public function thePaperListGenerated_3()
+    public function thePaperListGeneratedForFrequencyColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
         $this->searchButton->click();
-        sleep(5);
+        sleep(10);
 
         $this->page = $this->session->getPage();
         $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(5);
+        sleep(10);
     }
 
     /**
@@ -424,8 +430,10 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfFrequencyColumn()
     {
+        $this->page = $this->session->getPage();
+
         $dom = new domDocument;
-        $dom->loadHTML($page);
+        $dom->loadHTML($this->page);
         $dom->preserveWhiteSpace = false;
 
         $tableArray = array();
