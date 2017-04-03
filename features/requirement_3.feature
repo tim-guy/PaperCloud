@@ -23,7 +23,7 @@ Feature: requirement_3 Paper List Sorting
 		When the "Conference" column header is clicked
 		Then the paper list is sorted in the ascending order of the "Conference" column
 
-	Scenario: Sorting the paper list in descending order of the "Frequency" Column
+	Scenario: Sorting the paper list in ascending order of the "Frequency" Column
 		Given the paper list is generated
 		When the "Frequency" column header is clicked
-		Then the paper list is is sorted in the descending order of the "Frequency" column
+		Then the paper list is is sorted in the ascending order of the "Frequency" column

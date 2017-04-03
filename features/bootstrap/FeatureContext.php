@@ -179,58 +179,260 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given the Paper Cloud is generated
-     */
-    public function thePaperCloudIsGenerated()
+    * @Given the Paper Cloud is generated
+    */
+    public function thePaperCloudGenerated()
     {
-        throw new PendingException();
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Miller');
+        $this->searchButton->click();
+        sleep(5);
     }
 
     /**
-     * @When a word in the Paper Cloud is clicked
-     */
-    public function aWordInThePaperCloudIsClicked()
+    * @When a word in the Paper Cloud is clicked
+    */
+    public function wordInThePaperCloudClicked()
     {
-        throw new PendingException();
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(5);
     }
 
     /**
-     * @Then the paper list is displayed
-     */
-    public function thePaperListIsDisplayed()
+    * @Then the paper list is displayed
+    */
+    public function paperListDisplayed()
     {
-        throw new PendingException();
+        assertNotEquals(null, $this->page->find("css", "#paperListPage"));
     }
 
     /**
-     * @Given the paper list is generated
-     */
-    public function thePaperListIsGenerated()
+    * @Given the paper list is generated
+    */
+    public function thePaperListGenerated()
     {
-        throw new PendingException();
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Miller');
+        $this->searchButton->click();
+        sleep(5);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(5);
     }
 
     /**
-     * @When the :arg1 column header is clicked
-     */
-    public function theColumnHeaderIsClicked($arg1)
+    * @When the "Title" column header is clicked
+    */
+    public function titleColumnHeaderClicked()
     {
-        throw new PendingException();
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
+
+        $this->titleColmunHeader->click();
     }
 
     /**
-     * @Then the paper list is sorted in the ascending order of the :arg1 column
-     */
-    public function thePaperListIsSortedInTheAscendingOrderOfTheColumn($arg1)
+    * @Then the paper list is sorted in the ascending order of the "Title" column
+    */
+    public function paperListsortInAscendingOrderOfTitleColumn()
     {
-        throw new PendingException();
+        $dom = new domDocument;
+        $dom->loadHTML($page);
+        $dom->preserveWhiteSpace = false;
+
+        $tableArray = array();
+        $table = $dom->getElementsByTagName('table');
+        $rows = $table->item(1)->getElementsByTagName('tr');
+
+        foreach ($rows as $row) {
+            $rowArray = array();
+            $cols = $row->getElementsByTagName('td');
+
+            foreach ($cols as $col) {
+                array_push($rowArray, $col);
+            }
+
+            array_push($tableArray, $rowArray);
+        }
+
+        assertEquals(true, $tableArray[0][0] < $tableArray[1][0]);
     }
 
     /**
-     * @Then the paper list is is sorted in the descending order of the :arg1 column
-     */
-    public function thePaperListIsIsSortedInTheDescendingOrderOfTheColumn($arg1)
+    * @Given the paper list is generated
+    */
+    public function thePaperListGenerated()
     {
-        throw new PendingException();
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Miller');
+        $this->searchButton->click();
+        sleep(5);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(5);
     }
+
+    /**
+    * @When the "Author" column header is clicked
+    */
+    public function authorColumnHeaderClicked()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $this->authorColmunHeader = $this->paperListTable->find("css", "#authorColumnHeader");
+        $this->authorColmunHeader->click();
+    }
+
+    /**
+    * @Then the paper list is sorted in the ascending order of the "Author" column
+    */
+    public function paperListsortInAscendingOrderOfAuthorColumn()
+    {
+        $dom = new domDocument;
+        $dom->loadHTML($page);
+        $dom->preserveWhiteSpace = false;
+
+        $tableArray = array();
+        $table = $dom->getElementsByTagName('table');
+        $rows = $table->item(1)->getElementsByTagName('tr');
+
+        foreach ($rows as $row) {
+            $rowArray = array();
+            $cols = $row->getElementsByTagName('td');
+
+            foreach ($cols as $col) {
+                array_push($rowArray, $col);
+            }
+
+            array_push($tableArray, $rowArray);
+        }
+
+        assertEquals(true, $tableArray[0][1] < $tableArray[1][1]);
+    }
+
+    /**
+    * @Given the paper list is generated
+    */
+    public function thePaperListGenerated()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Miller');
+        $this->searchButton->click();
+        sleep(5);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(5);
+    }
+
+    /**
+    * @When the "Conference" column header is clicked
+    */
+    public function conferenceColumnHeaderClicked()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
+        $this->conferenceColmunHeader->click();
+    }
+
+    /**
+    * @Then the paper list is sorted in the ascending order of the "Conference" column
+    */
+    public function paperListsortInAscendingOrderOfConferenceColumn()
+    {
+        $dom = new domDocument;
+        $dom->loadHTML($page);
+        $dom->preserveWhiteSpace = false;
+
+        $tableArray = array();
+        $table = $dom->getElementsByTagName('table');
+        $rows = $table->item(1)->getElementsByTagName('tr');
+
+        foreach ($rows as $row) {
+            $rowArray = array();
+            $cols = $row->getElementsByTagName('td');
+
+            foreach ($cols as $col) {
+                array_push($rowArray, $col);
+            }
+
+            array_push($tableArray, $rowArray);
+        }
+
+        assertEquals(true, $tableArray[0][2] < $tableArray[1][2]);
+    }
+
+    /**
+    * @Given the paper list is generated
+    */
+    public function thePaperListGenerated()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Miller');
+        $this->searchButton->click();
+        sleep(5);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(5);
+    }
+
+    /**
+    * @When the "Frequency" column header is clicked
+    */
+    public function frequencyColumnHeaderClicked()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $this->frequencyColmunHeader = $this->paperListTable->find("css", "#requencyColumnHeader");
+        $this->refquencyColmunHeader->click();
+    }
+
+    /**
+    * @Then the paper list is sorted in the ascending order of the "Frequency" column
+    */
+    public function paperListsortInAscendingOrderOfFrequencyColumn()
+    {
+        $dom = new domDocument;
+        $dom->loadHTML($page);
+        $dom->preserveWhiteSpace = false;
+
+        $tableArray = array();
+        $table = $dom->getElementsByTagName('table');
+        $rows = $table->item(1)->getElementsByTagName('tr');
+
+        foreach ($rows as $row) {
+            $rowArray = array();
+            $cols = $row->getElementsByTagName('td');
+
+            foreach ($cols as $col) {
+                array_push($rowArray, $col);
+            }
+
+            array_push($tableArray, $rowArray);
+        }
+
+        assertEquals(true, $tableArray[0][3] > $tableArray[1][3]);
+    }
+
 }
