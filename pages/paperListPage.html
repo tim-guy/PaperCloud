@@ -5,7 +5,7 @@
 	<h1 id="paperListTitle">Paper List Page</h1>
 	
 	<table id="paperList">
-		<thead>
+		<thead id="tableHead">
 			<tr>
 				<th id="titleColumnHeader" style="width:40%">Title</th>
 				<th id="authorColumnHeader" style="width:20%">Authors</th>
@@ -14,7 +14,7 @@
 				<th id="downloadColumnHeader" style="width:10%">Full Text</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tableBody">
 		</tbody>
 	</table>
 	
@@ -98,10 +98,10 @@ td {
 		if (paper.wordCount > 0) {
 			var tr = $("<tr id=\"row\"></tr>");
 			
-			tr.append("<td>" + paper.title + "</td>");
+			tr.append("<td id=\"title\">" + paper.title + "</td>");
 			tr.append("<td id=\"author\">" + paper.authors + "</td>");
-			tr.append("<td>" + paper.publication + "</td>");
-			tr.append("<td>" + paper.wordCount + "</td>");
+			tr.append("<td id=\"conference\">" + paper.publication + "</td>");
+			tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
 			tr.append("<td><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
 			
 			console.log("check");

@@ -246,8 +246,8 @@ class FeatureContext implements Context
         $this->page = $this->session->getPage();
         $this->paperListTable = $this->page->find("css", "#paperList");
         $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
-
         $this->titleColmunHeader->click();
+        sleep(10);
     }
 
     /**
@@ -255,28 +255,11 @@ class FeatureContext implements Context
     */
     public function paperListsortInAscendingOrderOfTitleColumn()
     {
-        $this->page = $this->session->getPage();
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstTitle = $rows[0]->find("css", "#title");
+        $secondTitle = $rows[1]->find("css", "#title");
 
-        $dom = new domDocument;
-        $dom->loadHTML($this->page);
-        $dom->preserveWhiteSpace = false;
-
-        $tableArray = array();
-        $table = $dom->getElementsByTagName('table');
-        $rows = $table->item(1)->getElementsByTagName('tr');
-
-        foreach ($rows as $row) {
-            $rowArray = array();
-            $cols = $row->getElementsByTagName('td');
-
-            foreach ($cols as $col) {
-                array_push($rowArray, $col);
-            }
-
-            array_push($tableArray, $rowArray);
-        }
-
-        assertEquals(true, $tableArray[0][0] < $tableArray[1][0]);
+        assertEquals(true, ($firstTitle < $secondTitle) || ($firstTitle == $secondTitle));
     }
 
     /**
@@ -306,6 +289,7 @@ class FeatureContext implements Context
         $this->paperListTable = $this->page->find("css", "#paperList");
         $this->authorColmunHeader = $this->paperListTable->find("css", "#authorColumnHeader");
         $this->authorColmunHeader->click();
+        sleep(10);
     }
 
     /**
@@ -314,27 +298,12 @@ class FeatureContext implements Context
     public function paperListsortInAscendingOrderOfAuthorColumn()
     {
         $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstAuthor = $rows[0]->find("css", "#author");
+        $secondAuthor = $rows[1]->find("css", "#author");
 
-        $dom = new domDocument;
-        $dom->loadHTML($this->page);
-        $dom->preserveWhiteSpace = false;
-
-        $tableArray = array();
-        $table = $dom->getElementsByTagName('table');
-        $rows = $table->item(1)->getElementsByTagName('tr');
-
-        foreach ($rows as $row) {
-            $rowArray = array();
-            $cols = $row->getElementsByTagName('td');
-
-            foreach ($cols as $col) {
-                array_push($rowArray, $col);
-            }
-
-            array_push($tableArray, $rowArray);
-        }
-
-        assertEquals(true, $tableArray[0][1] < $tableArray[1][1]);
+        assertEquals(true, ($firstAuthor < $secondAuthor) || ($firstAuthor == $secondAuthor));
     }
 
     /**
@@ -362,8 +331,9 @@ class FeatureContext implements Context
     {
         $this->page = $this->session->getPage();
         $this->paperListTable = $this->page->find("css", "#paperList");
-        $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
+        $this->conferenceColmunHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
         $this->conferenceColmunHeader->click();
+        sleep(10);
     }
 
     /**
@@ -372,27 +342,12 @@ class FeatureContext implements Context
     public function paperListsortInAscendingOrderOfConferenceColumn()
     {
         $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstConference = $rows[0]->find("css", "#conference");
+        $secondConference = $rows[1]->find("css", "#conference");
 
-        $dom = new domDocument;
-        $dom->loadHTML($this->page);
-        $dom->preserveWhiteSpace = false;
-
-        $tableArray = array();
-        $table = $dom->getElementsByTagName('table');
-        $rows = $table->item(1)->getElementsByTagName('tr');
-
-        foreach ($rows as $row) {
-            $rowArray = array();
-            $cols = $row->getElementsByTagName('td');
-
-            foreach ($cols as $col) {
-                array_push($rowArray, $col);
-            }
-
-            array_push($tableArray, $rowArray);
-        }
-
-        assertEquals(true, $tableArray[0][2] < $tableArray[1][2]);
+        assertEquals(true, ($firstConference < $secondConference) || ($firstConference == $secondConference));
     }
 
     /**
@@ -420,8 +375,11 @@ class FeatureContext implements Context
     {
         $this->page = $this->session->getPage();
         $this->paperListTable = $this->page->find("css", "#paperList");
-        $this->frequencyColmunHeader = $this->paperListTable->find("css", "#requencyColumnHeader");
-        $this->refquencyColmunHeader->click();
+        $this->conferenceColmunHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
+        $this->conferenceColmunHeader->click();
+        $this->frequencyColmunHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
+        $this->frequencyColmunHeader->click();
+        sleep(10);
     }
 
     /**
@@ -430,27 +388,12 @@ class FeatureContext implements Context
     public function paperListsortInAscendingOrderOfFrequencyColumn()
     {
         $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstFrequency = $rows[0]->find("css", "#frequency");
+        $secondFrequency = $rows[1]->find("css", "#frequency");
 
-        $dom = new domDocument;
-        $dom->loadHTML($this->page);
-        $dom->preserveWhiteSpace = false;
-
-        $tableArray = array();
-        $table = $dom->getElementsByTagName('table');
-        $rows = $table->item(1)->getElementsByTagName('tr');
-
-        foreach ($rows as $row) {
-            $rowArray = array();
-            $cols = $row->getElementsByTagName('td');
-
-            foreach ($cols as $col) {
-                array_push($rowArray, $col);
-            }
-
-            array_push($tableArray, $rowArray);
-        }
-
-        assertEquals(true, $tableArray[0][3] > $tableArray[1][3]);
+        assertEquals(true, ($firstFrequency < $secondFrequency) || ($firstFrequency == $secondFrequency));
     }
 
 }
