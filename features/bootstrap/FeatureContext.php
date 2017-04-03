@@ -43,9 +43,10 @@ class FeatureContext implements Context
         $this->session->visit('http://localhost:80/PaperCloud/');
         $this->page = $this->session->getPage();
 
-
-
-
+        //for requirement_1 blackbox testing
+        $this->artistSearchBar = $this->page->find("css", "#artistSearchBar");
+        $this->artistSearchTextField = $this->artistSearchBar->find("css", "#artistSearchTextField");
+        $this->searchButton = $this->page->find("css", "#search");
 
 
         // added for requirement_3 black-box testing
@@ -88,7 +89,7 @@ class FeatureContext implements Context
     {
         $this->artistSearchTextField->setValue('Leo');
         sleep(3);
-        
+
     }
 
     /**
