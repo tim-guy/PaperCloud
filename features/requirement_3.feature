@@ -9,21 +9,21 @@ Feature: requirement_3 Paper List Sorting
 		Then the paper list is displayed
 
 	Scenario: Sorting the paper list in ascending order of the "Title" Column
-		Given the paper list is generated
+		Given the paper list is generated for the "Title" column
 		When the "Title" column header is clicked
 		Then the paper list is sorted in the ascending order of the "Title" column
 
 	Scenario: Sorting the paper list in ascending order of the "Author" Column
-		Given the paper list is generated
+		Given the paper list is generated for the "Author" column
 		When the "Author" column header is clicked
 		Then the paper list is sorted in the ascending order of the "Author" column
 
 	Scenario: Sorting the paper list in ascending order of the "Conference" Column
-		Given the paper list is generated
+		Given the paper list is generated for the "Conference" column
 		When the "Conference" column header is clicked
 		Then the paper list is sorted in the ascending order of the "Conference" column
 
-	Scenario: Sorting the paper list in descending order of the "Frequency" Column
-		Given the paper list is generated
+	Scenario: Sorting the paper list in ascending order of the "Frequency" Column
+		Given the paper list is generated for the "Frequency" column
 		When the "Frequency" column header is clicked
-		Then the paper list is is sorted in the descending order of the "Frequency" column
+		Then the paper list is is sorted in the ascending order of the "Frequency" column
