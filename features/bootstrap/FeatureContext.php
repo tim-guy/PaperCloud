@@ -163,7 +163,7 @@ class FeatureContext implements Context
 
         $author = array_pop($this->authors);
 
-        $containsAuthor = (strpos($author, "Halfond") !== false);
+        $containsAuthor = strpos($author->getText(), "Halfond");
         assertEquals(true, $containsAuthor);
     }
 
@@ -182,7 +182,10 @@ class FeatureContext implements Context
      */
     public function aLabelIsShownWhereTheWordCloudWouldBeThatThereAreNoPapersForThisUser()
     {
-        throw new PendingException();
+        $this->wordCloudPage = $this->session->getPage();
+        $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloudSVG");
+        
+        assertEquals(true, $containsAuthor);
     }
 
     /**
