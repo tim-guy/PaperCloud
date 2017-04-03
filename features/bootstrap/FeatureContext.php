@@ -218,9 +218,9 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated
+    * @Given the paper list is generated for the "Title" column
     */
-    public function thePaperListGenerated()
+    public function thePaperListGeneratedForTitleColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
@@ -275,9 +275,9 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated (1)
+    * @Given the paper list is generated for the "Author" column
     */
-    public function thePaperListGenerated_1()
+    public function thePaperListGeneratedForAuthorColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
@@ -331,9 +331,9 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated (2)
+    * @Given the paper list is generated for the "Conference" column
     */
-    public function thePaperListGenerated_2()
+    public function thePaperListGeneratedForConferenceColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
@@ -387,9 +387,9 @@ class FeatureContext implements Context
     }
 
     /**
-    * @Given the paper list is generated (3)
+    * @Given the paper list is generated for the "Frequency" column
     */
-    public function thePaperListGenerated_3()
+    public function thePaperListGeneratedForFrequencyColumn()
     {
         $this->sizeField->setValue('10');
         $this->searchField->setValue('Miller');
