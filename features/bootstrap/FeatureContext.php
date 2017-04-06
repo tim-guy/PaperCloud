@@ -100,7 +100,7 @@ class FeatureContext implements Context
      */
     public function thereAreThreeCharactersInTheTextbox()
     {
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         sleep(3);
     }
 
@@ -118,7 +118,7 @@ class FeatureContext implements Context
     public function xIsSetToBeforeSearching()
     {
         $this->sizeField->setValue('20');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
     }
@@ -141,7 +141,7 @@ class FeatureContext implements Context
     public function thatTheUserSearchesForAValidLastName()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
     }
@@ -163,7 +163,7 @@ class FeatureContext implements Context
 
         $author = array_pop($this->authors);
 
-        $containsAuthor = strpos($author->getText(), "Johnson");
+        $containsAuthor = strpos($author->getText(), "Halfond");
         assertEquals(true, $containsAuthor);
     }
 
@@ -195,7 +195,7 @@ class FeatureContext implements Context
     public function thePaperCloudGenerated()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
     }
@@ -227,7 +227,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForTitleColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -269,7 +269,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForAuthorColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -313,7 +313,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForConferenceColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -357,7 +357,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForFrequencyColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
