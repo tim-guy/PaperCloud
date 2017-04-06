@@ -1,17 +1,12 @@
 <?php
 
+require_once 'LibraryAdapter.php';
 require_once 'HTTPRequestManager.php';
 
-class IEEELibraryAdapter {
-	
-	var $requestManager;
-	
-	function __construct() {
-		$this->requestManager = new HTTPRequestManager();
-	}
-	
+class IEEELibraryAdapter extends LibraryAdapter {
+
 	function getPapersWithAuthorName($name, $limit)
-	{	
+	{
 		$papers = array();
 
 		$ieeeURL = 'http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?hc=' . $limit . '&au=' . urlencode($name);
@@ -59,9 +54,6 @@ class IEEELibraryAdapter {
 				continue;
 			}
 			
-			// TODO: How to get Bibtex URL???
-			$paper["bibtexURL"] = "";
-			
 			// Query the paper abstract
 			$abstracts = $xpath->query("./abstract", $document);
 			if ($abstracts->length > 0) {
@@ -82,5 +74,5 @@ class IEEELibraryAdapter {
 		
 		return $papers;
 	}
-	
 }
+LibraryAdapter::registerLibrary(new IEEELibraryAdapter());

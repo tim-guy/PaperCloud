@@ -1,15 +1,10 @@
 <?php
 
+require_once "LibraryAdapter.php";
 require_once("CSVParser.php");
 
-class ACMLibraryAdapter {
-	
-	var $requestManager;
-	
-	function __construct() {
-		$this->requestManager = new HTTPRequestManager();
-	}
-	
+class ACMLibraryAdapter extends LibraryAdapter {
+
 	function getPapersWithAuthorName($name, $limit)
 	{	
 		$papers = array();
@@ -43,9 +38,14 @@ class ACMLibraryAdapter {
 			$paper["keywords"] = $line["title"] . ' ' . $line["keywords"];
 			
 			$papers[] = $paper;
+			
+			if (count($papers) >= $limit) {
+				break;
+			}
 		}
 		
 		return $papers;
 	}
 	
 }
+LibraryAdapter::registerLibrary(new ACMLibraryAdapter());

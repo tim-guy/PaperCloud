@@ -5,16 +5,17 @@
 	<h1 id="paperListTitle">Paper List Page</h1>
 	
 	<table id="paperList">
-		<thead id="tableHead">
+		<thead>
 			<tr>
-				<th id="titleColumnHeader" style="width:40%">Title</th>
-				<th id="authorColumnHeader" style="width:20%">Authors</th>
+				<th id="titleColumnHeader" style="width:35%">Title</th>
+				<th id="authorColumnHeader" style="width:15%">Authors</th>
 				<th id="conferenceColumnHeader" style="width:20%">Publication/Conference</th>
 				<th id="frequencyColumnHeader" style="width:10%">Frequency</th>
-				<th id="downloadColumnHeader" style="width:10%">Full Text</th>
+				<th id="fullTextColumnHeader" style="width:10%">Full Text</th>
+				<th id="bibtexColumnHeader" style="width:10%">Bibtex</th>
 			</tr>
 		</thead>
-		<tbody id="tableBody">
+		<tbody>
 		</tbody>
 	</table>
 	
@@ -71,6 +72,9 @@ td {
 	vertical-align: top;
 }
 
+a {
+	cursor: pointer;
+}
 
 </style>
 
@@ -96,23 +100,35 @@ td {
 	// Add each paper to the #paperList
 	$.each(papers, function(index, paper) {
 		if (paper.wordCount > 0) {
-			var tr = $("<tr id=\"row\"></tr>");
+			var tr = $("<tr></tr>");
 			
-			tr.append("<td id=\"title\">" + paper.title + "</td>");
-			tr.append("<td id=\"author\">" + paper.authors + "</td>");
-			tr.append("<td id=\"conference\">" + paper.publication + "</td>");
-			tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
+			tr.append("<td>" + paper.title + "</td>");
+			tr.append("<td>" + paper.authors + "</td>");
+			tr.append("<td>" + paper.publication + "</td>");
+			tr.append("<td>" + paper.wordCount + "</td>");
 			tr.append("<td><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
+			tr.append("<td><a target='_blank' class='bibtexLink' paperIndex='" + index + "'>Bibtex</a></td>");
 			
 			console.log("check");
 			$("#paperList > tbody").append(tr);
 		}
 	});
 	
+	$("a.bibtexLink").click(function() {
+		var index = $(this).attr("paperIndex");
+		
+		$.post('bibtex.php', papers[index], function(data) {
+			var w = window.open('about:blank', '_blank');
+			w.document.write(data);
+			w.document.close();
+		}, 'text');
+	});
+	
 	// Set up table sorting
 	$("#paperList").tablesorter({
-		headers: { // disable sorting by full text column
-			4: {sorter: false}
+		headers: { // disable sorting by full text and bibtex columns
+			4: {sorter: false},
+			5: {sorter: false}
 		},
 		sortList: [[3, 1]] // default sort by frequency, descending
 	});
