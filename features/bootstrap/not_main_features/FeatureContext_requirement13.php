@@ -73,19 +73,33 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given
+	* @Given the word cloud is generated for checking the Download button
 	*/
-	public function given()
+	public function givenWordCloudGeneratedForCheckingDownloadButton()
+	{
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Johnson');
+        $this->searchButton->click();
+        sleep(10);
+	}
+
+	/**
+	* @Then a Download button exists on the Word Cloud Page
+	*/
+	public function thenDownloadButtonExistsOnWordCloudPage()
 	{
 		
 	}
 
 	/**
-	* @When
+	* @Given the word cloud is generated for clicking the Download button
 	*/
-	public function when()
+	public function givenWordCloudGeneratedForClickingDownloadButton()
 	{
-		
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Johnson');
+        $this->searchButton->click();
+        sleep(10);
 	}
 
 	/**

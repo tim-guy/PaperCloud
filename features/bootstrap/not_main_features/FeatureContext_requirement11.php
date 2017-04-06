@@ -73,25 +73,44 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given
+	* @Given the search page is opened to see previous search
 	*/
-	public function given()
+	public function givenSearchPageOpenedToSeePreviousSearch()
+	{
+		assertNotEquals(null, $this->searchBar);
+	}
+
+	/**
+	* @Then the list of previous search exists
+	*/
+	public function thenPreviousSearchListExists()
 	{
 		
 	}
 
 	/**
-	* @When
+	* @Given the last search is "Redekopp"
 	*/
-	public function when()
+	public function givenLastSearchRedekopp()
+	{
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Redekopp');
+        $this->searchButton->click();
+        sleep(10);
+	}
+
+	/**
+	* @When the Search Page is reopened
+	*/
+	public function whenSearchPageReopened()
 	{
 		
 	}
 
 	/**
-	* @Then
+	* @Then the list of previous search shows "Redekopp" on the top
 	*/
-	public function then()
+	public function thenPreviousSearchListShowsRedekopp()
 	{
 		
 	}

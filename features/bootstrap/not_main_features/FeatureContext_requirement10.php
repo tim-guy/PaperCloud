@@ -73,11 +73,55 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given
+	* @Given the paper list is generated for exporting as PDFs
 	*/
-	public function given()
+	public function givenPaperListGeneratedForExportingPDF()
+	{
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Johnson');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(10);
+	}
+
+	/**
+	* @When
+	*/
+	public function when()
 	{
 		
+	}
+
+	/**
+	* @Then
+	*/
+	public function then()
+	{
+		
+	}
+
+	/**
+	* @Given the paper list is generated for exporting as plain text
+	*/
+	public function givenPaperListGeneratedForExportingPlainText()
+	{
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Johnson');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(10);
 	}
 
 	/**
