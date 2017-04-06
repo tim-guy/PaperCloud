@@ -8,14 +8,17 @@ class ACMLibraryAdapterTest extends TestCase
 {
 	public function testValidGetPapersWithAuthorName()
 	{
-		$expectedOutputFileName = "unitTests/expected_output/testValidACMGetPapersWithAuthorNameOutput.json";
+		//$expectedOutputFileName = "unitTests/expected_output/testValidACMGetPapersWithAuthorNameOutput.json";
 		$ACM = new ACMLibraryAdapter();
-		$ACMPapers = $ACM->getPapersWithAuthorName("Johnson", "10");
+		$acmPapers = $ACM->getPapersWithAuthorName("Johnson", "10");
 
-		$ACMPapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
-		$this->assertEquals(10, sizeof($ACMPapers));
-		$this->assertEquals($ACMPapersExpected, $ACMPapers);
+		//$ACMPapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
+		$this->assertEquals(10, sizeof($acmPapers));
+		//$this->assertEquals($ACMPapersExpected, $ACMPapers);
 
+		foreach ($acmPapers as $paper) {
+			$this->assertContains("Johnson", $paper['authors']);
+		}
 	}
 
 	public function testInvalidGetPapersWithAuthorName()
