@@ -100,14 +100,14 @@ a {
 	// Add each paper to the #paperList
 	$.each(papers, function(index, paper) {
 		if (paper.wordCount > 0) {
-			var tr = $("<tr></tr>");
+			var tr = $("<tr id=\"row\"></tr>");
 			
-			tr.append("<td>" + paper.title + "</td>");
-			tr.append("<td>" + paper.authors + "</td>");
-			tr.append("<td>" + paper.publication + "</td>");
-			tr.append("<td>" + paper.wordCount + "</td>");
-			tr.append("<td><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
-			tr.append("<td><a target='_blank' class='bibtexLink' paperIndex='" + index + "'>Bibtex</a></td>");
+			tr.append("<td id=\"title\">" + paper.title + "</td>");
+			tr.append("<td id=\"author\">" + paper.authors + "</td>");
+			tr.append("<td id=\"conference\">" + paper.publication + "</td>");
+			tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
+			tr.append("<td id=\"fullText\"><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
+			tr.append("<td id=\"bibtex\"><a target='_blank' class='bibtexLink' paperIndex='" + index + "'>Bibtex</a></td>");
 			
 			console.log("check");
 			$("#paperList > tbody").append(tr);

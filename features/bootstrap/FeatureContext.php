@@ -100,7 +100,7 @@ class FeatureContext implements Context
      */
     public function thereAreThreeCharactersInTheTextbox()
     {
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         sleep(3);
     }
 
@@ -118,7 +118,7 @@ class FeatureContext implements Context
     public function xIsSetToBeforeSearching()
     {
         $this->sizeField->setValue('20');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
     }
@@ -141,7 +141,7 @@ class FeatureContext implements Context
     public function thatTheUserSearchesForAValidLastName()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
     }
@@ -163,7 +163,7 @@ class FeatureContext implements Context
 
         $author = array_pop($this->authors);
 
-        $containsAuthor = strpos($author->getText(), "Johnson");
+        $containsAuthor = strpos($author->getText(), "Halfond");
         assertEquals(true, $containsAuthor);
     }
 
@@ -195,7 +195,7 @@ class FeatureContext implements Context
     public function thePaperCloudGenerated()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
     }
@@ -227,7 +227,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForTitleColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -269,7 +269,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForAuthorColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -313,7 +313,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForConferenceColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -357,7 +357,7 @@ class FeatureContext implements Context
     public function thePaperListGeneratedForFrequencyColumn()
     {
         $this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -395,6 +395,48 @@ class FeatureContext implements Context
         $secondFrequency = $rows[1]->find("css", "#frequency");
 
         assertEquals(true, $firstFrequency <= $secondFrequency);
+    }
+
+    /**
+    * @Given the paper list is generated for the "Full Text" column
+    */
+    public function givenPaperListGeneratedForFullTextColumn()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(10);
+    }
+
+    /**
+    * @Then the paper list contains a "Full Text" column
+    */
+    public function thenPaperListContainsFullTextColumn()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $fullTextColumnHeader = $this->paperListTable->find("css", "#fullTextColumnHeader");
+        assertNotEquals(null, $fullTextColumnHeader);
+    }
+
+    /**
+    * @Then each paper has a link for its full text
+    */
+    public function thenEachPaperHasLinkForItsFullText()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstFullText = $rows[0]->find("css", "#fullText");
+        $firstFullTextLink = $firstFullText->find("css", "a");
+        assertNotEquals(null, $firstFullTextLink);
     }
 
 }

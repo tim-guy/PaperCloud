@@ -73,27 +73,66 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given
+	* @Given the paper list is generated for checking each paper selectable
 	*/
-	public function given()
+	public function givenPaperListGeneratedForCheckingEachPaperSelectable()
+	{
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(10);
+	}
+
+	/**
+	* @Then each paper is selectable on the Paper List Page
+	*/
+	public function thenEachPaperSelectableOnPaperListPage()
 	{
 		
 	}
 
 	/**
-	* @When
+	* @Given the paper list is generated for selecting papers
 	*/
-	public function when()
+	public function givenPaperListGeneratedForSelectingPapers()
 	{
-		
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(10);
 	}
 
 	/**
-	* @Then
+	* @When the first paper is selected
 	*/
-	public function then()
+	public function whenFirstPaperSelected()
 	{
 		
+
+
+		sleep(10);
+	}
+
+	/**
+	* @Then a new Paper Cloud is generated
+	*/
+	public function thenNewPaperCloudGenerated()
+	{
+		assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
 	}
 	
 }

@@ -9,4 +9,4 @@ Feature: requirement_13 Download Word Cloud Image
 
 	Scenario: clicking the Download button on the Word Cloud Page
 		Given the word cloud is generated for clicking the Download button
-		Then 
+		Then the image of the word cloud is downloaded
