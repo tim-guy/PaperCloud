@@ -102,9 +102,9 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Then each paper contains a download link for its full text
+	* @Then each paper has a link for its full text
 	*/
-	public function thenEachPaperContainsDownloadLinkForItsFullText()
+	public function thenEachPaperHasLinkForItsFullText()
 	{
 		$this->page = $this->session->getPage();
         $this->paperListTable = $this->page->find("css", "#paperList");

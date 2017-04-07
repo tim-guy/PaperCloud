@@ -3,7 +3,7 @@ Feature: requirement_4 Full Text Link
 	As a user
 	I need to be able to see a download link for each paper in the paper list
 
-	Scenario: the paper list contains a "Full Text" column
+	Scenario: each paper has a link for its full text
 		Given the paper list is generated for the "Full Text" column
 		Then the paper list contains a "Full Text" column
-		Then each paper contains a download link for its full text
+		Then each paper has a link for its full text

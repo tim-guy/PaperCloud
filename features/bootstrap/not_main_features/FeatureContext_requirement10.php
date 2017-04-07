@@ -91,19 +91,27 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @When
+	* @When the "Export as PDF" button is clicked
 	*/
-	public function when()
+	public function whenexportPDFButtonClicked()
 	{
-		
+		$this->page = $this->session->getPage();
+
+
+
+		assertEquals(true, true);
 	}
 
 	/**
-	* @Then
+	* @Then the paper is exported as PDF
 	*/
-	public function then()
+	public function thenPaperExportedPDF()
 	{
-		
+		$this->page = $this->session->getPage();
+
+
+
+		assertEquals(true, true);
 	}
 
 	/**
@@ -125,19 +133,27 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @When
+	* @When the "Export as Plain Text" button is clicked
 	*/
-	public function when()
+	public function whenExportPlainTextButtonClicked()
 	{
-		
+		$this->page = $this->session->getPage();
+
+
+
+		assertEquals(true, true);
 	}
 
 	/**
-	* @Then
+	* @Then the paper is exported as plain text
 	*/
-	public function then()
+	public function thenPaperExportedPlainText()
 	{
-		
+		$this->page = $this->session->getPage();
+
+
+
+		assertEquals(true, true);
 	}
 	
 }
