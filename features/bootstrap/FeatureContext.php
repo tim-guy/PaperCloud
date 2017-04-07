@@ -120,7 +120,6 @@ class FeatureContext implements Context
         $this->sizeField->setValue('20');
         $this->searchField->setValue('Halfond');
         $this->searchButton->click();
-        sleep(10);
     }
 
     /**
@@ -128,6 +127,11 @@ class FeatureContext implements Context
      */
     public function numberOfPapersInTheWordCloudIs()
     {
+        $this->session->wait(
+            10000,
+            "papers.length"
+        );
+
         $papersLength = $this->session->evaluateScript(
             "return papers.length;"
         );
