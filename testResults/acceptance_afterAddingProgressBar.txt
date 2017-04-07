@@ -69,7 +69,83 @@ Feature: requirement_4 Full Text Link
     Then the paper list contains a "Full Text" column            # FeatureContext::thenPaperListContainsFullTextColumn()
     Then each paper has a link for its full text                 # FeatureContext::thenEachPaperHasLinkForItsFullText()
 
+Feature: requirement_5 Bibtext Link
+  In order to view the bibtext for each paper from the paper list
+  As a user
+  I need to be able to see a bibtex link for each paper in the paper list
+
+Feature: requirement_6 Status Bar for Generating Word Cloud
+  In order to visualized the current process in generating the word cloud
+  As a user
+  I need to be able to see a status bar for generating word cloud on the Word Cloud Page
+
+Feature: requirement_6 Clicking Author
+  In order to do a new search
+  As a user
+  I need to be able to click on an author in the "Author" list from the paper list
+
+Feature: requirement_5 Clicking Conference
+  In order to view all the paper from the same conference
+  As a user
+  I need to be able to click on a conference in the "Conference" list from the paper list
+
+Feature: requirement_9 Clicking Title
+  In order to view the abstract of the same paper with word(s) highlighted
+  As a user
+  I need to be able to click on a title in the "Title" list from the paper list
+
+Feature: requirement_10 Export Paper List
+  In order to export the paper list as PDFs and plain text
+  As a user
+  I need to be able to click the Export button
+
+  Scenario: exporting the paper list as PDFs                # features/requirement_10.feature:6
+    Given the paper list is generated for exporting as PDFs
+    When the "Export as PDF" button is clicked
+    Then the paper is exported as PDF
+
+  Scenario: exporting he paper list as plain text                 # features/requirement_10.feature:11
+    Given the paper list is generated for exporting as plain text
+    When the "Export as Plain Text" button is clicked
+    Then the paper is exported as plain text
+
+Feature: requirement_11 Access Previous Search
+  In order to access previously entered searches
+  As a user
+  I need to be able to see a list of previous search on the Search Page
+
+  Scenario: exisitng a list of previous search                 # features/requirement_11.feature:6
+    Given the search page is opened to see previous search
+    Then the list of previous search exists on the Search Page
+
+Feature: requirement_12 Subset Selection
+  In order to generate a new word cloud from the exisitng paper list
+  As a user
+  I need to be able to select a subset from the existing paper list
+
+  Scenario: each paper is selectable on the Paper List Page              # features/requirement_12.feature:6
+    Given the paper list is generated for checking each paper selectable
+    Then each paper is selectable on the Paper List Page
+
+  Scenario: selecting papers to generate a new word cloud  # features/requirement_12.feature:10
+    Given the paper list is generated for selecting papers
+    When the first paper is selected
+    Then a new Paper Cloud is generated
+
+Feature: requirement_13 Download Word Cloud Image
+  In order to download an image of the generateed word cloud
+  As a user
+  I need to be able to click the Download button on the World Cloud Page
+
+  Scenario: existing a Download button on the Word Cloud Page          # features/requirement_13.feature:6
+    Given the word cloud is generated for checking the Download button
+    Then a Download button exists on the Word Cloud Page
+
+  Scenario: clicking the Download button on the Word Cloud Page        # features/requirement_13.feature:10
+    Given the word cloud is generated for clicking the Download button
+    Then the image of the word cloud is downloaded
+
 18 scenarios (11 passed, 7 undefined)
 46 steps (29 passed, 17 undefined)
-5m30.24s (9.80Mb)
+5m36.77s (10.55Mb)
 
