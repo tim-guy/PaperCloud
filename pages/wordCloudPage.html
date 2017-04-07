@@ -3,7 +3,7 @@
     <h1 id="wordCloudTitle">Word Cloud Page</h1>
     
 	<div id="wordCloud">
-		<div id="wordCloudLoading" style="display:none"><h3 style="color:red">Loading...</h3></div>
+		<div id="wordCloudLoading" style="display:none"></div>
 		<div id="noResults" style="display:none"><h3 id ="noResultsID" style="color:blue">No Results Found</h3></div>
 		<svg id="wordCloudSVG"></svg>
 		<canvas id="wordCloudCanvas" width="1200" height="500" style="display:none"></canvas>
@@ -11,13 +11,25 @@
     
 </div>
 
-
 <style>
 
 #wordCloudPage {
 	text-align: center;
 	margin: auto;
 	margin-top: 50px;
+}
+
+.ui-progressbar {
+	background: #4CE346;
+}
+
+#wordCloudLoading {
+	margin: auto;
+	margin-top: 150px;
+	width: 600px;
+	height: 50px;
+	
+	border: black 1px solid;
 }
 
 #wordCloud {
@@ -100,41 +112,45 @@
 		  .fontSize(function(d) { return d.size; })
 		  .on("end", function (words) {
 		  
-				$("#wordCloudLoading").hide(0);
-		  
-				// draw in the svg tag
-			  d3.select("#wordCloudSVG")
-				.attr("width", 1200)
-				.attr("height", 500)
-			  .append("g")
-				.attr("transform", "translate(600,250)")
-				.attr("id", "g")
-			  .selectAll("text")
-				.data(words)
-			  .enter().append("text")
-				.style("font-size", function(d) { return d.size + "px"; })
-				.style("font-family", "serif")
-				.style("fill", function(d, i) { return colors[Math.floor(Math.random() * colors.length)]; })
-				.attr("text-anchor", "middle")
-				.attr("id", "text")
-				.attr("transform", function(d) {
-				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-				})
-				.text(function(d) { return d.text; })
-				.on("click", function(d, i) {
-					word = d.text;
-					loadPage("paperList");
-				});
-				
-				// draw in the canvas tag
-				canvg('wordCloudCanvas', $("#wordCloudSVG").html());
+				completionHandler = function() {
+						$("#wordCloudLoading").hide(0);
+				  
+						// draw in the svg tag
+					  d3.select("#wordCloudSVG")
+						.attr("width", 1200)
+						.attr("height", 500)
+					  .append("g")
+						.attr("transform", "translate(600,250)")
+						.attr("id", "g")
+					  .selectAll("text")
+						.data(words)
+					  .enter().append("text")
+						.style("font-size", function(d) { return d.size + "px"; })
+						.style("font-family", "serif")
+						.style("fill", function(d, i) { return colors[Math.floor(Math.random() * colors.length)]; })
+						.attr("text-anchor", "middle")
+						.attr("id", "text")
+						.attr("transform", function(d) {
+						  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+						})
+						.text(function(d) { return d.text; })
+						.on("click", function(d, i) {
+							word = d.text;
+							loadPage("paperList");
+						});
+						
+						// draw in the canvas tag
+						canvg('wordCloudCanvas', $("#wordCloudSVG").html());
+				}
 		  })
 		  .start();
 	}
 	
 	function noResults() {
-		$("#wordCloudLoading").hide(0);
-		$("#noResults").show(0);
+		completionHandler = function() {
+			$("#wordCloudLoading").hide(0);
+			$("#noResults").show(0);
+		}
 	}
 	
 	// call this function when the page first loads, then whenever the artist list changes
@@ -149,14 +165,7 @@
 	
 	// Call this function when the page first loads
 	function queryPapers(name) {
-	
-		setTitle();
-	
-		// TODO: set a good loading animation (like a spinning wheel)
-		$("#wordCloudLoading").show(0);
-		$("#noResults").hide(0);
-		$("#wordCloudSVG").html("");
-			
+				
 		// Load the papers and generate the word cloud
 		$.ajax({ // Load artist lyrics
 			url: "ajax/queryPapers.php",
@@ -181,17 +190,50 @@
 		});
 	}
 	
+	var completionHandler = false;
+	function startProgressBar(estimatedTime)
+	{
+		var progressbar = $("#wordCloudLoading");
+		progressbar.progressbar({
+			value: 0
+		});
+		progressbar.show(0);
+		
+		var t = 0, dt = 40;
+		completionHandler = false;
+		function progress() {	
+			var val = progressbar.progressbar("value");
+			
+			progressbar.progressbar("value", completionHandler ? (val+5) : (25*Math.log(t/estimatedTime) + 100));
+			
+			if (val < 99 || !completionHandler) {
+				t += dt;
+				setTimeout(progress, dt);
+			} else {
+				completionHandler();
+			}
+		}
+		progress();
+	}
+	
 	///
 	//ON LOAD:
 	///
 	
+	startProgressBar(Math.max(10000, limit * 35));
+	$("#noResults").hide(0);
+	$("#wordCloudSVG").html("");
+	
+	setTitle();
+	
 	// Initialize the lyrics cloud
-	if (papers.length > 0) { // we're coming back to this page
-		setTitle();
-		generateWordCloud();
-	} else { // first time to this page
-		queryPapers(name);
-	}
-
-		
+	window.setTimeout(function() {
+	
+		if (papers.length > 0) { // we're coming back to this page
+			generateWordCloud();
+		} else { // first time to this page
+			queryPapers(name);
+		}
+	}, 100);
+	
 </script>
