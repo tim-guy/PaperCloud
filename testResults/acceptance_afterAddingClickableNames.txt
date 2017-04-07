@@ -1,0 +1,75 @@
+Feature: requirement_1
+  In order to be able to input a last name as search criteria
+  As a user
+  I need to be able to type in a author's last name when I click the search textfield
+
+  Scenario: Openning the webpage with a web browser          # features/requirement_1.feature:6
+    Given that the user opens the webpage with a web browser # FeatureContext::thatTheUserOpensTheWebpageWithAWebBrowser()
+    When the artist search bar should be empty               # FeatureContext::theArtistSearchBarShouldBeEmpty()
+    Then the search button is not clickable                  # FeatureContext::theSearchButtonIsNotClickable()
+
+  Scenario: Typing in the search textfield          # features/requirement_1.feature:11
+    Given there are three characters in the textbox # FeatureContext::thereAreThreeCharactersInTheTextbox()
+    Then the search button is clickable             # FeatureContext::theSearchButtonIsClickable()
+
+Feature: requirement_2
+  In order to view the papers that are associated with a specific last name
+  As a user
+  I need to be able to generate a word cloud of the names of papers when I search for a last name
+
+  Scenario: Searching for a specific last name that does have corresponding papers in IEEE and ACM libraries # features/requirement_2.feature:6
+    Given that the user searches for a valid last name                                                       # FeatureContext::thatTheUserSearchesForAValidLastName()
+    Then the appropriate top papers in the ACM and IEEE libraries are shown in the word cloud                # FeatureContext::theAppropriateTopPapersInTheAcmAndIeeeLibrariesAreShownInTheWordCloud()
+
+  Scenario: Searching for a last name that does not have any papers in the IEEE and ACM libararies # features/requirement_2.feature:10
+    Given that the user searches for an invalid last name                                          # FeatureContext::thatTheUserSearchesForAnInvalidLastName()
+    Then a label is shown where the word cloud would be that there are no papers for this user     # FeatureContext::aLabelIsShownWhereTheWordCloudWouldBeThatThereAreNoPapersForThisUser()
+
+  Scenario: Changing the number of papers, X, to be shown before searching returns a word cloud with exactly that many papers # features/requirement_2.feature:14
+    Given X is set to 20 before searching                                                                                     # FeatureContext::xIsSetToBeforeSearching()
+    Then number of papers in the word cloud is 20                                                                             # FeatureContext::numberOfPapersInTheWordCloudIs()
+
+Feature: requirement_3 Paper List Sorting
+  In order to view the paper list sorted in a specified order
+  As a user
+  I need to be able to sort the table by clicking on the first four column headers
+
+  Scenario: Clicking on a word in the Paper Cloud return a list of papers that mention that word # features/requirement_3.feature:6
+    Given the Paper Cloud is generated                                                           # FeatureContext::thePaperCloudGenerated()
+    When a word in the Paper Cloud is clicked                                                    # FeatureContext::wordInThePaperCloudClicked()
+    Then the paper list is displayed                                                             # FeatureContext::paperListDisplayed()
+
+  Scenario: Sorting the paper list in ascending order of the "Title" Column    # features/requirement_3.feature:11
+    Given the paper list is generated for the "Title" column                   # FeatureContext::thePaperListGeneratedForTitleColumn()
+    When the "Title" column header is clicked                                  # FeatureContext::titleColumnHeaderClicked()
+    Then the paper list is sorted in the ascending order of the "Title" column # FeatureContext::paperListsortInAscendingOrderOfTitleColumn()
+
+  Scenario: Sorting the paper list in ascending order of the "Author" Column    # features/requirement_3.feature:16
+    Given the paper list is generated for the "Author" column                   # FeatureContext::thePaperListGeneratedForAuthorColumn()
+    When the "Author" column header is clicked                                  # FeatureContext::authorColumnHeaderClicked()
+    Then the paper list is sorted in the ascending order of the "Author" column # FeatureContext::paperListsortInAscendingOrderOfAuthorColumn()
+
+  Scenario: Sorting the paper list in ascending order of the "Conference" Column    # features/requirement_3.feature:21
+    Given the paper list is generated for the "Conference" column                   # FeatureContext::thePaperListGeneratedForConferenceColumn()
+    When the "Conference" column header is clicked                                  # FeatureContext::conferenceColumnHeaderClicked()
+    Then the paper list is sorted in the ascending order of the "Conference" column # FeatureContext::paperListsortInAscendingOrderOfConferenceColumn()
+
+  Scenario: Sorting the paper list in ascending order of the "Frequency" Column    # features/requirement_3.feature:26
+    Given the paper list is generated for the "Frequency" column                   # FeatureContext::thePaperListGeneratedForFrequencyColumn()
+    When the "Frequency" column header is clicked                                  # FeatureContext::frequencyColumnHeaderClicked()
+    Then the paper list is sorted in the ascending order of the "Frequency" column # FeatureContext::paperListsortInAscendingOrderOfFrequencyColumn()
+
+Feature: requirement_4 Full Text Link
+  In order to view the actual text of each paper from the paper list
+  As a user
+  I need to be able to see a download link for each paper in the paper list
+
+  Scenario: each paper has a link for its full text              # features/requirement_4.feature:6
+    Given the paper list is generated for the "Full Text" column # FeatureContext::givenPaperListGeneratedForFullTextColumn()
+    Then the paper list contains a "Full Text" column            # FeatureContext::thenPaperListContainsFullTextColumn()
+    Then each paper has a link for its full text                 # FeatureContext::thenEachPaperHasLinkForItsFullText()
+
+18 scenarios (11 passed, 7 undefined)
+46 steps (29 passed, 17 undefined)
+5m37.09s (10.54Mb)
+

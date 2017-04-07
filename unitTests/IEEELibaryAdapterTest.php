@@ -8,11 +8,9 @@ class IEEELibraryAdapterTest extends TestCase
 {
 	public function testValidGetPapersWithAuthorName()
 	{
-		//$expectedOutputFileName = "unitTests/expected_output/testValidGetPapersWithAuthorNameOutput.json";
 		$ieee = new IEEELibraryAdapter();
-		$ieeePapers = $ieee->getPapersWithAuthorName("Johnson", 10);
+		$ieeePapers = $ieee->getPapersWithAuthorName("Johnson", false, 10);
 
-		//$ieeePapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
 		$this->assertEquals(10, sizeof($ieeePapers));
 
 		foreach ($ieeePapers as $paper) {
@@ -20,11 +18,27 @@ class IEEELibraryAdapterTest extends TestCase
 		}
 
 	}
+
+	public function testValidGetPapersWithExactAuthorName()
+	{
+		$ieee = new IEEELibraryAdapter();
+		$ieeePapers = $ieee->getPapersWithAuthorName("Barry Boehm", true, 10);
+
+		$this->assertLessThanOrEqual(10, sizeof($ieeePapers));
+
+		foreach ($ieeePapers as $paper) {
+			$this->assertContains("Barry Boehm", $paper['authors']);
+		}
+
+	}
+
+	
+
 	public function testInvalidGetPapersWithAuthorName()
 	{
 		$expectedOutputFileName = "unitTests/expected_output/testInvalidGetPapersWithAuthorNameOutput.json";
 		$ieee = new IEEELibraryAdapter();
-		$ieeePapers = $ieee->getPapersWithAuthorName("Banananana", 10);
+		$ieeePapers = $ieee->getPapersWithAuthorName("Banananana", false, 10);
 
 		$ieeePapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
 		$this->assertEquals($ieeePapersExpected, $ieeePapers);

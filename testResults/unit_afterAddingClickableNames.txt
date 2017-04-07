@@ -1,0 +1,29 @@
+PHPUnit 6.0.8 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.0.15-0ubuntu0.16.04.4 with Xdebug 2.5.1
+
+........                                                            8 / 8 (100%)
+
+Time: 26.83 seconds, Memory: 10.00MB
+
+OK (8 tests, 33 assertions)
+
+
+Code Coverage Report:     
+  2017-04-07 05:11:27     
+                          
+ Summary:                 
+  Classes: 40.00% (2/5)   
+  Methods: 40.00% (4/10)  
+  Lines:   62.62% (67/107)
+
+ACMLibraryAdapter
+  Methods:  50.00% ( 1/ 2)   Lines:  83.33% ( 20/ 24)
+CSVParser
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  8/  8)
+HTTPRequestManager
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
+IEEELibraryAdapter
+  Methods:   0.00% ( 0/ 2)   Lines:  80.00% ( 36/ 45)
+LibraryAdapter
+  Methods:  25.00% ( 1/ 4)   Lines:  10.00% (  2/ 20)
