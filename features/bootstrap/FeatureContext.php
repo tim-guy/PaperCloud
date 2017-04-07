@@ -397,4 +397,46 @@ class FeatureContext implements Context
         assertEquals(true, $firstFrequency <= $secondFrequency);
     }
 
+    /**
+    * @Given the paper list is generated for the "Full Text" column
+    */
+    public function givenPaperListGeneratedForFullTextColumn()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(10);
+    }
+
+    /**
+    * @Then the paper list contains a "Full Text" column
+    */
+    public function thenPaperListContainsFullTextColumn()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $fullTextColumnHeader = $this->paperListTable->find("css", "#fullTextColumnHeader");
+        assertNotEquals(null, $fullTextColumnHeader);
+    }
+
+    /**
+    * @Then each paper contains a download link for its full text
+    */
+    public function thenEachPaperContainsDownloadLinkForItsFullText()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstFullText = $rows[0]->find("css", "#fullText");
+        $firstFullTextLink = $firstFullText->find("css", "a");
+        assertNotEquals(null, $firstFullTextLink);
+    }
+
 }
