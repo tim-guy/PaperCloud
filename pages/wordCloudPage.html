@@ -171,6 +171,7 @@
 			url: "ajax/queryPapers.php",
 			data: {
 				name: name,
+				exactName: exactName,
 				limit: limit
 			},
 			dataType: "json",
@@ -220,7 +221,7 @@
 	//ON LOAD:
 	///
 	
-	startProgressBar(Math.max(10000, limit * 35));
+	startProgressBar(Math.max(10000, (papers.length > 0) ? (papers.length * 10) : (limit * 35)));
 	$("#noResults").hide(0);
 	$("#wordCloudSVG").html("");
 	

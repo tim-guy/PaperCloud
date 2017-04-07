@@ -5,11 +5,11 @@ require_once 'HTTPRequestManager.php';
 
 class IEEELibraryAdapter extends LibraryAdapter {
 
-	function getPapersWithAuthorName($name, $limit)
+	function getPapersWithAuthorName($name, $exactName, $limit)
 	{
 		$papers = array();
 
-		$ieeeURL = 'http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?hc=' . $limit . '&au=' . urlencode($name);
+		$ieeeURL = 'http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?hc=' . $limit . '&au=' . urlencode(str_replace(",", " ", $name));
 		$ieeeXML = $this->requestManager->request($ieeeURL); // this request is a bottleneck
 
 		$doc = new DOMDocument();
@@ -42,6 +42,10 @@ class IEEELibraryAdapter extends LibraryAdapter {
 			$authorss = $xpath->query("./authors", $document);
 			if ($authorss->length > 0) {
 				$paper["authors"] = $authorss[0]->textContent;
+				
+				if ($exactName && (stripos($paper["authors"], $name) === false)) {
+					continue; // This entry doesn't contain the full author name.
+				}
 			} else {
 				continue;
 			}

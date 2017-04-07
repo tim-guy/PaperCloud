@@ -5,10 +5,10 @@ require_once("CSVParser.php");
 
 class ACMLibraryAdapter extends LibraryAdapter {
 
-	function getPapersWithAuthorName($name, $limit)
+	function getPapersWithAuthorName($name, $exactName, $limit)
 	{	
 		$papers = array();
-
+		
 		$acmURL = 'http://dl.acm.org/exportformats_search.cfm?query=persons%2Eauthors%2EpersonName%3A%28%252B' . urlencode($name) . '%29&srt=%5Fscore&expformat=csv';
 		$acmCSV = $this->requestManager->request($acmURL); // this request is a bottleneck
 
@@ -26,7 +26,10 @@ class ACMLibraryAdapter extends LibraryAdapter {
 			
 			// Query the paper authors
 			$paper["authors"] = $line["author"];
-			
+			if ($exactName && stripos($paper["authors"], $name) === false) {
+				continue; // This entry doesn't contain the full author name.
+			}
+
 			// Query the paper publication name
 			$paper["publication"] = $line["booktitle"];
 			

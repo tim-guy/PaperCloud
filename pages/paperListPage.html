@@ -103,10 +103,19 @@ a {
 			var tr = $("<tr id=\"row\"></tr>");
 			
 			tr.append("<td id=\"title\">" + paper.title + "</td>");
-			tr.append("<td id=\"author\">" + paper.authors + "</td>");
+			
+			// Insert <a> tags around each author name
+			var authorsHTML = paper.authors.replace(/((and|;|^)\W*)?(.+?)(?=and|;|$)/g, function($0, $1, $2, $3){
+				return ($1 ? $1 : "") + '<a class="authorSearch">' + $3 + '</a>';
+			});
+			tr.append("<td id=\"author\">" + authorsHTML + "</td>");
+			
 			tr.append("<td id=\"conference\">" + paper.publication + "</td>");
+			
 			tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
+			
 			tr.append("<td id=\"fullText\"><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
+			
 			tr.append("<td id=\"bibtex\"><a target='_blank' class='bibtexLink' paperIndex='" + index + "'>Bibtex</a></td>");
 			
 			console.log("check");
@@ -114,6 +123,16 @@ a {
 		}
 	});
 	
+	// Connect author links
+	$("a.authorSearch").click(function(event) {
+		name = $(this).text();
+		exactName = true;
+		papers = [];
+	
+		loadPage("wordCloud");
+	});
+	
+	// Connect BibTeX links
 	$("a.bibtexLink").click(function(event) {
 		var index = $(this).attr("paperIndex");
 		

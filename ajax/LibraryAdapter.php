@@ -19,19 +19,19 @@ abstract class LibraryAdapter
 		self::$libraryAdapters[$key] = $library;
 	}
 	
-	static function getPapersWithAuthorNameFromAllLibraries($name, $limit)
+	static function getPapersWithAuthorNameFromAllLibraries($name, $exactName, $limit)
 	{
 		$allPapers = array(); // an array of arrays of the papers returned by each library
 		$count = 0;
 		foreach (self::$libraryAdapters as $library)
 		{
-			$papers = $library->getPapersWithAuthorName($name, $limit);
+			$papers = $library->getPapersWithAuthorName($name, $exactName, $limit);
 			
 			$count += count($papers);
 			$allPapers[] = $papers;
 		}
 		
-		$fraction = min(1, $limit / $count); // by what fraction we should cut allPapers
+		$fraction = min(1, $limit / ($count ? $count : 1)); // by what fraction we should cut allPapers
 				
 		$out = array();
 		foreach ($allPapers as $papers)
@@ -55,7 +55,7 @@ abstract class LibraryAdapter
 	
 	// Abstract Methods:
 	
-	abstract function getPapersWithAuthorName($name, $limit);
+	abstract function getPapersWithAuthorName($name, $exactName, $limit);
 	
 	abstract function getBibtexForPaper($paper);
 }
