@@ -19,6 +19,8 @@ class ACMLibraryAdapter extends LibraryAdapter {
 			
 			$paper["source"] = "acm";
 			
+			$paper["id"] = $line["id"];
+			
 			// Query the paper title
 			$paper["title"] = $line["title"];
 			
@@ -47,5 +49,15 @@ class ACMLibraryAdapter extends LibraryAdapter {
 		return $papers;
 	}
 	
+	function getBibtexForPaper($paper) {
+		$url = 'http://dl.acm.org/exportformats.cfm?expformat=bibtex&id=' . $paper["id"];
+		
+		$bibtexHTML = $this->requestManager->request($url);
+		
+		preg_match("/<PRE.*?>\n?(.*)<\/pre>/si", $bibtexHTML, $matches); // extract the bibtex itself
+		
+		return $matches[1];
+	}
+	
 }
-LibraryAdapter::registerLibrary(new ACMLibraryAdapter());
+LibraryAdapter::registerLibrary("acm", new ACMLibraryAdapter());

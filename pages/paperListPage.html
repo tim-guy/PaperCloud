@@ -114,13 +114,20 @@ a {
 		}
 	});
 	
-	$("a.bibtexLink").click(function() {
+	$("a.bibtexLink").click(function(event) {
 		var index = $(this).attr("paperIndex");
+		
+		$(event.delegateTarget).css("cursor", "wait");
+		$("body").css("cursor", "progress");
 		
 		$.post('bibtex.php', papers[index], function(data) {
 			var w = window.open('about:blank', '_blank');
 			w.document.write(data);
 			w.document.close();
+			
+			$(event.delegateTarget).css("cursor", "pointer");
+			$("body").css("cursor", "inherit");
+			
 		}, 'text');
 	});
 	

@@ -22,6 +22,14 @@ class IEEELibraryAdapter extends LibraryAdapter {
 			
 			$paper["source"] = "ieee";
 			
+			// Query the DOI
+			$dois = $xpath->query("./doi", $document);
+			if ($dois->length > 0) {
+				$paper["id"] = $dois[0]->textContent;
+			} else {
+				continue;
+			}
+			
 			// Query the paper title
 			$titles = $xpath->query("./title", $document);
 			if ($titles->length > 0) {
@@ -74,5 +82,13 @@ class IEEELibraryAdapter extends LibraryAdapter {
 		
 		return $papers;
 	}
+	
+	function getBibtexForPaper($paper) {
+		// Get Bibtex
+		$url = 'http://www.doi2bib.org/doi2bib?id=' . urlencode($paper["id"]);
+		$bibtex = @$this->requestManager->request($url);
+		
+		return $bibtex;
+	}
 }
-LibraryAdapter::registerLibrary(new IEEELibraryAdapter());
+LibraryAdapter::registerLibrary("ieee", new IEEELibraryAdapter());

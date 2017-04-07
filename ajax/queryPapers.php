@@ -7,6 +7,7 @@ Should return a JSON object of the form:
 	[
 		{
 			"source": <"ieee" | "acm">,
+			"id": <an ID of relevance to the particular library>,
 			"title": <paper title>,
 			"authors": <authors>,
 			"publication": <publication, maybe a conference>,

@@ -14,9 +14,9 @@ abstract class LibraryAdapter
 	// Static Methods:
 	
 	private static $libraryAdapters = array();
-	static function registerLibrary(LibraryAdapter $library)
+	static function registerLibrary($key, LibraryAdapter $library)
 	{
-		self::$libraryAdapters[] = $library;
+		self::$libraryAdapters[$key] = $library;
 	}
 	
 	static function getPapersWithAuthorNameFromAllLibraries($name, $limit)
@@ -42,8 +42,20 @@ abstract class LibraryAdapter
 		return array_slice($out, 0, $limit);
 	}
 	
+	static function getBibtexForPaperFromLibrary($paper) {
+		
+		foreach (self::$libraryAdapters as $key => $library) {
+			if ($key == $paper['source']) {
+				return $library->getBibtexForPaper($paper);
+				break;
+			}
+		}
+		
+	}
+	
 	// Abstract Methods:
 	
 	abstract function getPapersWithAuthorName($name, $limit);
-
+	
+	abstract function getBibtexForPaper($paper);
 }
