@@ -10,7 +10,7 @@ class ACMLibraryAdapterTest extends TestCase
 	{
 		//$expectedOutputFileName = "unitTests/expected_output/testValidACMGetPapersWithAuthorNameOutput.json";
 		$ACM = new ACMLibraryAdapter();
-		$acmPapers = $ACM->getPapersWithAuthorName("Johnson", false, "10");
+		$acmPapers = $ACM->getPapersWithAuthorName("name", "Johnson", false, "10");
 
 		//$ACMPapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
 		$this->assertEquals(10, sizeof($acmPapers));
@@ -24,7 +24,7 @@ class ACMLibraryAdapterTest extends TestCase
 	public function testValidGetPapersWithExactAuthorName()
 	{
 		$acm = new ACMLibraryAdapter();
-		$acmPapers = $acm->getPapersWithAuthorName("Barry Boehm", true, 10);
+		$acmPapers = $acm->getPapersWithAuthorName("name", "Barry Boehm", true, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($acmPapers));
 
@@ -38,7 +38,7 @@ class ACMLibraryAdapterTest extends TestCase
 	{
 		$expectedOutputFileName = "unitTests/expected_output/testInvalidACMGetPapersWithAuthorNameOutput.json";
 		$ACM = new ACMLibraryAdapter();
-		$ACMPapers = $ACM->getPapersWithAuthorName("Banananana", false, "10");
+		$ACMPapers = $ACM->getPapersWithAuthorName("name", "Banananana", false, "10");
 
 		$ACMPapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
 		$this->assertEquals($ACMPapersExpected, $ACMPapers);

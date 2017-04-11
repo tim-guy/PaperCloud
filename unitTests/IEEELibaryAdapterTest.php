@@ -9,7 +9,7 @@ class IEEELibraryAdapterTest extends TestCase
 	public function testValidGetPapersWithAuthorName()
 	{
 		$ieee = new IEEELibraryAdapter();
-		$ieeePapers = $ieee->getPapersWithAuthorName("Johnson", false, 10);
+		$ieeePapers = $ieee->getPapersWithAuthorName("name", "Johnson", false, 10);
 
 		$this->assertEquals(10, sizeof($ieeePapers));
 
@@ -22,7 +22,7 @@ class IEEELibraryAdapterTest extends TestCase
 	public function testValidGetPapersWithExactAuthorName()
 	{
 		$ieee = new IEEELibraryAdapter();
-		$ieeePapers = $ieee->getPapersWithAuthorName("Barry Boehm", true, 10);
+		$ieeePapers = $ieee->getPapersWithAuthorName("name", "Barry Boehm", true, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($ieeePapers));
 
@@ -38,7 +38,7 @@ class IEEELibraryAdapterTest extends TestCase
 	{
 		$expectedOutputFileName = "unitTests/expected_output/testInvalidGetPapersWithAuthorNameOutput.json";
 		$ieee = new IEEELibraryAdapter();
-		$ieeePapers = $ieee->getPapersWithAuthorName("Banananana", false, 10);
+		$ieeePapers = $ieee->getPapersWithAuthorName("name", "Banananana", false, 10);
 
 		$ieeePapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
 		$this->assertEquals($ieeePapersExpected, $ieeePapers);
