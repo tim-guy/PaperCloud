@@ -2,7 +2,10 @@
 
 	<a id="backToWordCloud">Back to Word Cloud</a>
 	
-	<h1 id="paperListTitle">Paper List Page</h1>
+	<h1	id="paperListTitle">Paper List Page</h1>
+	<div id="listDownloadLinks">
+		<a id="downloadListAsPDF">Download this list as a PDF</a> :: <a id="downloadListAsTXT">Download this list as a text file</a>
+	</div>
 	
 	<table id="paperList">
 		<thead>
@@ -36,6 +39,11 @@
 
 #paperListTitle {
 	margin-top: 25px;
+	margin-bottom: 10px;
+}
+
+#listDownloadLinks {
+	margin-bottom: 20px;
 }
 
 table {
@@ -90,13 +98,15 @@ a {
 
 <script>
 
+	// A global var for this page:
+	var listPapers = [];
+
 	// Set the title (of document and header)
 	var title = word.charAt(0).toUpperCase() + word.substring(1);
 	document.title = title;
 	$("#paperListTitle").text(title);
 	
 	// Set up Paper List
-	
 	$.each(papers, function(index, paper) { // count the word in each paper
 		
 		// Count the occurances of the word
@@ -104,33 +114,34 @@ a {
 		paper.wordCount = 0;
 		if (wordMatches != null) {
 			paper.wordCount = wordMatches.length;
+			if (paper.wordCount > 0) {
+				listPapers.push(paper);
+			}
 		}
 	})
 	
 	// Add each paper to the #paperList
-	$.each(papers, function(index, paper) {
-		if (paper.wordCount > 0) {
-			var tr = $("<tr id=\"row\"></tr>");
-			
-			tr.append("<td id=\"title\"><a class='abstractLink' paperIndex='" + index + "'>" + paper.title + "</a></td>");
-			
-			// Insert <a> tags around each author name
-			var authorsHTML = paper.authors.replace(/((\band\b|;|^)\W*)?(.+?)(?=\W*(\band\b|;|$))/g, function($0, $1, $2, $3){
-				return ($1 ? $1 : "") + '<a class="authorSearch">' + $3 + '</a>';
-			});
-			tr.append("<td id=\"author\">" + authorsHTML + "</td>");
-			
-			tr.append("<td id=\"conference\"><a class='publicationSearch'>" + paper.publication + "</a></td>");
-			
-			tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
-			
-			tr.append("<td id=\"fullText\"><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
-			
-			tr.append("<td id=\"bibtex\"><a target='_blank' class='bibtexLink' paperIndex='" + index + "'>Bibtex</a></td>");
-			
-			console.log("check");
-			$("#paperList > tbody").append(tr);
-		}
+	$.each(listPapers, function(index, paper) {
+		var tr = $("<tr id=\"row\"></tr>");
+		
+		tr.append("<td id=\"title\"><a class='abstractLink' paperIndex='" + index + "'>" + paper.title + "</a></td>");
+		
+		// Insert <a> tags around each author name
+		var authorsHTML = paper.authors.replace(/((\band\b|;|^)\W*)(.+?)(?=\W*(\band\b|;|$))/g, function($0, $1, $2, $3){
+			return ($1 ? $1 : "") + '<a class="authorSearch">' + $3 + '</a>';
+		});
+		tr.append("<td id=\"author\">" + authorsHTML + "</td>");
+		
+		tr.append("<td id=\"conference\"><a class='publicationSearch'>" + paper.publication + "</a></td>");
+		
+		tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
+		
+		tr.append("<td id=\"fullText\"><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
+		
+		tr.append("<td id=\"bibtex\"><a target='_blank' class='bibtexLink' paperIndex='" + index + "'>Bibtex</a></td>");
+		
+		console.log("check");
+		$("#paperList > tbody").append(tr);
 	});
 	
 	// Connect abstract links
@@ -140,7 +151,7 @@ a {
 		$(event.delegateTarget).css("cursor", "wait");
 		$("body").css("cursor", "progress");
 		
-		$.post('ajax/abstract.php', papers[index], function(data) {
+		$.post('ajax/abstract.php', listPapers[index], function(data) {
 			
 			var dialogHTML = data.replace(new RegExp('\\b' + word + '\\b', 'gi'), function($0) {
 				return "<span class='highlight'>" + $0 + "</span>";
@@ -181,7 +192,7 @@ a {
 		$(event.delegateTarget).css("cursor", "wait");
 		$("body").css("cursor", "progress");
 		
-		$.post('bibtex.php', papers[index], function(data) {
+		$.post('bibtex.php', listPapers[index], function(data) {
 			var w = window.open('about:blank', '_blank');
 			w.document.write(data);
 			w.document.close();
@@ -206,6 +217,62 @@ a {
 	$("#abstractDialog").dialog({
 		autoOpen: false,
 		width: 600
+	});
+	
+	// Set up download list as PDF
+	$("#downloadListAsPDF").click(function(event) {
+			
+		// Set a waiting cursor
+		$(event.delegateTarget).css("cursor", "wait");
+		$("body").css("cursor", "progress");
+	
+		// Async:
+		setTimeout(function() {
+			// Make the PDF
+			var table = [[
+				{text: 'Title', bold: true},
+				{text: 'Authors', bold: true},
+				{text: 'Publication/Conference', bold: true}
+			]];
+			$.each(listPapers, function(index, paper) {
+				table.push([paper.title, paper.authors, paper.publication]);
+			});
+			
+			var pdf = {
+			  content: [
+				{
+				  table: {
+					headerRows: 1,
+					widths: [ '50%', '20%', '30%' ],
+					body: table
+				  }
+				}
+			  ]
+			};
+			
+			// Trigger the download
+			pdfMake.createPdf(pdf).download(escape(word) + ".pdf");
+
+			// Fix the cursor
+			$(event.delegateTarget).css("cursor", "pointer");
+			$("body").css("cursor", "inherit");
+
+		}, 100);
+	});
+	
+	// Set up download list as TXT
+	$("#downloadListAsTXT").click(function() {
+		
+		// Make the text
+		var txt = "";
+		$.each(listPapers, function(index, paper) {
+			txt += paper.title + " (BY) " + paper.authors + " (FROM) " + paper.publication + "\r\n";
+		});
+		
+		// Trigger the download
+		var file = new Blob([txt], {type: "text/plain"});
+		$(this).attr("href", URL.createObjectURL(file));
+		$(this).attr("download", escape(word) + ".txt");
 	});
 	
 	// Set up back button
