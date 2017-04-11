@@ -49,8 +49,16 @@ abstract class LibraryAdapter
 				return $library->getBibtexForPaper($paper);
 				break;
 			}
-		}
-		
+		}	
+	}
+	
+	static function getAbstractForPaperFromLibrary($paper) {
+		foreach (self::$libraryAdapters as $key => $library) {
+			if ($key == $paper['source']) {
+				return $library->getAbstractForPaper($paper);
+				break;
+			}
+		}			
 	}
 	
 	// Abstract Methods:
@@ -58,4 +66,6 @@ abstract class LibraryAdapter
 	abstract function getPapersWithAuthorName($field, $value, $exact, $limit);
 	
 	abstract function getBibtexForPaper($paper);
+	
+	abstract function getAbstractForPaper($paper);
 }

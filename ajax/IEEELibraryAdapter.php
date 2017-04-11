@@ -109,5 +109,9 @@ class IEEELibraryAdapter extends LibraryAdapter {
 		
 		return $bibtex;
 	}
+	
+	function getAbstractForPaper($paper) {
+		return $paper["abstract"];
+	}
 }
 LibraryAdapter::registerLibrary("ieee", new IEEELibraryAdapter());

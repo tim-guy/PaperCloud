@@ -160,10 +160,10 @@
 		var title = "Paper Cloud";
 		switch (searchField) {
 			case "name":
-				title = "Author: \"" + searchValue + "\"";
+				title = exactSearch ? searchValue : "Author: \"" + searchValue + "\"";
 				break;
 			case "publication":
-				title = "Publication: \"" + searchValue + "\"";
+				title = searchValue;
 				break;
 		}
 		

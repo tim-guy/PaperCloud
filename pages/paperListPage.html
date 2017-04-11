@@ -19,6 +19,8 @@
 		</tbody>
 	</table>
 	
+	<div id="abstractDialog" title="Abstract"></div>
+	
 </div>
 
 <style>
@@ -76,6 +78,14 @@ a {
 	cursor: pointer;
 }
 
+.ui-dialog-titlebar {
+	background-color: #8dbdd8;
+}
+
+.highlight {
+	background-color: yellow;
+}
+
 </style>
 
 <script>
@@ -102,7 +112,7 @@ a {
 		if (paper.wordCount > 0) {
 			var tr = $("<tr id=\"row\"></tr>");
 			
-			tr.append("<td id=\"title\">" + paper.title + "</td>");
+			tr.append("<td id=\"title\"><a class='abstractLink' paperIndex='" + index + "'>" + paper.title + "</a></td>");
 			
 			// Insert <a> tags around each author name
 			var authorsHTML = paper.authors.replace(/((\band\b|;|^)\W*)?(.+?)(?=\W*(\band\b|;|$))/g, function($0, $1, $2, $3){
@@ -121,6 +131,27 @@ a {
 			console.log("check");
 			$("#paperList > tbody").append(tr);
 		}
+	});
+	
+	// Connect abstract links
+	$("a.abstractLink").click(function(event) {
+		var index = $(this).attr("paperIndex");
+		
+		$(event.delegateTarget).css("cursor", "wait");
+		$("body").css("cursor", "progress");
+		
+		$.post('ajax/abstract.php', papers[index], function(data) {
+			
+			var dialogHTML = data.replace(new RegExp('\\b' + word + '\\b', 'gi'), function($0) {
+				return "<span class='highlight'>" + $0 + "</span>";
+			});
+			
+			$("#abstractDialog").html(dialogHTML);
+			$("#abstractDialog").dialog("open");
+			
+			$(event.delegateTarget).css("cursor", "pointer");
+			$("body").css("cursor", "inherit");
+		});
 	});
 	
 	// Connect author links
@@ -169,7 +200,14 @@ a {
 		},
 		sortList: [[3, 1]] // default sort by frequency, descending
 	});
-		
+	
+	// Set up abstract dialog
+	
+	$("#abstractDialog").dialog({
+		autoOpen: false,
+		width: 600
+	});
+	
 	// Set up back button
 	$("#backToWordCloud").click(function() {
 		loadPage("wordCloud");

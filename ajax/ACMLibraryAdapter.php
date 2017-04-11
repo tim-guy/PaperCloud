@@ -75,5 +75,14 @@ class ACMLibraryAdapter extends LibraryAdapter {
 		return $matches[1];
 	}
 	
+	function getAbstractForPaper($paper) {
+		$url = 'http://dl.acm.org/tab_abstract.cfm?id=' . $paper["id"];
+		
+		$abstractHTML = $this->requestManager->request($url);
+		
+		preg_match("/<p.*?>\n?(.*)<\/p>/si", $abstractHTML, $matches); // extract the abstract itself
+		
+		return $matches[1];
+	}
 }
 LibraryAdapter::registerLibrary("acm", new ACMLibraryAdapter());
