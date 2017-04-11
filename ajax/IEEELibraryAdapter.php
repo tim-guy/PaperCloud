@@ -5,11 +5,21 @@ require_once 'HTTPRequestManager.php';
 
 class IEEELibraryAdapter extends LibraryAdapter {
 
-	function getPapersWithAuthorName($name, $exactName, $limit)
+	function getPapersWithAuthorName($field, $value, $exact, $limit)
 	{
 		$papers = array();
+		
+		$querystring = 'hc=' . $limit;
+		switch ($field) {
+			case 'name':
+				$querystring .= '&au=' . urlencode(str_replace(",", " ", $value));
+				break;
+			case 'publication':
+				$querystring .= '&jn=' . urlencode($value);
+				break;
+		}
 
-		$ieeeURL = 'http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?hc=' . $limit . '&au=' . urlencode(str_replace(",", " ", $name));
+		$ieeeURL = 'http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?' . $querystring;
 		$ieeeXML = $this->requestManager->request($ieeeURL); // this request is a bottleneck
 
 		$doc = new DOMDocument();
@@ -43,7 +53,7 @@ class IEEELibraryAdapter extends LibraryAdapter {
 			if ($authorss->length > 0) {
 				$paper["authors"] = $authorss[0]->textContent;
 				
-				if ($exactName && (stripos($paper["authors"], $name) === false)) {
+				if ($exact && $field == 'name' && (stripos($paper["authors"], $value) === false)) {
 					continue; // This entry doesn't contain the full author name.
 				}
 			} else {
@@ -54,6 +64,11 @@ class IEEELibraryAdapter extends LibraryAdapter {
 			$publications = $xpath->query("./pubtitle", $document);
 			if ($publications->length > 0) {
 				$paper["publication"] = $publications[0]->textContent;
+				
+				if ($exact && $field == "publication" && (stripos($paper["publication"], $value) === false)) {
+					continue;
+				}
+				
 			} else {
 				continue;
 			}

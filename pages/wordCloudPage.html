@@ -156,22 +156,31 @@
 	// call this function when the page first loads, then whenever the artist list changes
 	function setTitle() {
 		// Set the title (of document and header)
-
-		var title = "Author: \"" + name + "\"";
+	
+		var title = "Paper Cloud";
+		switch (searchField) {
+			case "name":
+				title = "Author: \"" + searchValue + "\"";
+				break;
+			case "publication":
+				title = "Publication: \"" + searchValue + "\"";
+				break;
+		}
 		
 		document.title = title;
 		$("#wordCloudTitle").text(title);
 	}
 	
 	// Call this function when the page first loads
-	function queryPapers(name) {
+	function queryPapers() {
 				
 		// Load the papers and generate the word cloud
 		$.ajax({ // Load artist lyrics
 			url: "ajax/queryPapers.php",
 			data: {
-				name: name,
-				exactName: exactName,
+				field: searchField,
+				value: searchValue,
+				exact: exactSearch,
 				limit: limit
 			},
 			dataType: "json",
@@ -221,7 +230,7 @@
 	//ON LOAD:
 	///
 	
-	startProgressBar(Math.max(10000, (papers.length > 0) ? (papers.length * 10) : (limit * 35)));
+	startProgressBar(Math.max(10000, (papers.length > 0) ? (papers.length * 10) : (limit * 35 * (searchField == 'publication' ? 2 : 1))));
 	$("#noResults").hide(0);
 	$("#wordCloudSVG").html("");
 	
@@ -233,7 +242,7 @@
 		if (papers.length > 0) { // we're coming back to this page
 			generateWordCloud();
 		} else { // first time to this page
-			queryPapers(name);
+			queryPapers();
 		}
 	}, 100);
 	

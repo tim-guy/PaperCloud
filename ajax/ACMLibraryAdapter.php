@@ -5,11 +5,21 @@ require_once("CSVParser.php");
 
 class ACMLibraryAdapter extends LibraryAdapter {
 
-	function getPapersWithAuthorName($name, $exactName, $limit)
+	function getPapersWithAuthorName($field, $value, $exact, $limit)
 	{	
 		$papers = array();
 		
-		$acmURL = 'http://dl.acm.org/exportformats_search.cfm?query=persons%2Eauthors%2EpersonName%3A%28%252B' . urlencode($name) . '%29&srt=%5Fscore&expformat=csv';
+		$querystring = '?srt=%5Fscore&expformat=csv';
+		switch ($field) {
+			case 'name':
+				$querystring .= '&query=persons%2Eauthors%2EpersonName%3A%28%252B' . urlencode($value) . '%29';
+				break;
+			case 'publication':
+				$querystring .= '&query=%28(' . urlencode($value) . ')%29&within=owners%2Eowner%3DHOSTED';
+				break;
+		}
+		
+		$acmURL = 'http://dl.acm.org/exportformats_search.cfm?' . $querystring;
 		$acmCSV = $this->requestManager->request($acmURL); // this request is a bottleneck
 
 		$lines = CSVParser::parse($acmCSV);
@@ -26,12 +36,15 @@ class ACMLibraryAdapter extends LibraryAdapter {
 			
 			// Query the paper authors
 			$paper["authors"] = $line["author"];
-			if ($exactName && stripos($paper["authors"], $name) === false) {
+			if ($exact && $field == 'name' && stripos($paper["authors"], $value) === false) {
 				continue; // This entry doesn't contain the full author name.
 			}
 
 			// Query the paper publication name
 			$paper["publication"] = $line["booktitle"];
+			if ($exact && $field == 'publication' && stripos($paper["publication"], $value) === false) {
+				continue;
+			}
 			
 			// Derive the full text URL name from the ID
 			$paper["fullTextURL"] = "http://dl.acm.org/ft_gateway.cfm?id=" . $line["id"];

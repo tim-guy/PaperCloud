@@ -26,13 +26,14 @@ Should return a JSON object of the form:
 
 require_once("LibraryAdapter.php");
 
-$name = $_GET['name'];
+$field = $_GET['field'];
+$value = $_GET['value'];
 $limit = intval($_GET['limit']);
-$exactName = $_GET['exactName'] == 'true';
+$exact = $_GET['exact'] == 'true';
 if ($limit <= 0 || $limit > 1000) { // max limit of 1000
 	$limit = 1000;
 }
 
-$papers = LibraryAdapter::getPapersWithAuthorNameFromAllLibraries($name, $exactName, $limit);
+$papers = LibraryAdapter::getPapersWithAuthorNameFromAllLibraries($field, $value, $exact, $limit);
 
 echo json_encode($papers);

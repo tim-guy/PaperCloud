@@ -105,12 +105,12 @@ a {
 			tr.append("<td id=\"title\">" + paper.title + "</td>");
 			
 			// Insert <a> tags around each author name
-			var authorsHTML = paper.authors.replace(/((and|;|^)\W*)?(.+?)(?=and|;|$)/g, function($0, $1, $2, $3){
+			var authorsHTML = paper.authors.replace(/((\band\b|;|^)\W*)?(.+?)(?=\W*(\band\b|;|$))/g, function($0, $1, $2, $3){
 				return ($1 ? $1 : "") + '<a class="authorSearch">' + $3 + '</a>';
 			});
 			tr.append("<td id=\"author\">" + authorsHTML + "</td>");
 			
-			tr.append("<td id=\"conference\">" + paper.publication + "</td>");
+			tr.append("<td id=\"conference\"><a class='publicationSearch'>" + paper.publication + "</a></td>");
 			
 			tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
 			
@@ -125,10 +125,21 @@ a {
 	
 	// Connect author links
 	$("a.authorSearch").click(function(event) {
-		name = $(this).text();
-		exactName = true;
+		searchField = "name";
+		searchValue = $(this).text();
+		exactSearch = true;
 		papers = [];
 	
+		loadPage("wordCloud");
+	});
+	
+	// Connect publication links
+	$("a.publicationSearch").click(function(event) {
+		searchField = "publication";
+		searchValue = $(this).text();
+		exactSearch = true;
+		papers = [];
+		
 		loadPage("wordCloud");
 	});
 	
