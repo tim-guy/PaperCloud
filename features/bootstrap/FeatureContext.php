@@ -443,4 +443,45 @@ class FeatureContext implements Context
         assertNotEquals(null, $firstFullTextLink);
     }
 
+        /**
+    * @Given the paper list is generated for the "Bib Text" column
+    */
+    public function givenPaperListGeneratedForBibTextColumn()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(10);
+    }
+
+    /**
+    * @Then the paper list contains a "Bib Text" column
+    */
+    public function thenPaperListContainsBibTextColumn()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $bibTextColumnHeader = $this->paperListTable->find("css", "#bibtexColumnHeader");
+        assertNotEquals(null, $bibTextColumnHeader);
+    }
+
+    /**
+    * @Then each paper has a link for its Bib Text
+    */
+    public function thenEachPaperHasLinkForItsBibText()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstBibText = $rows[0]->find("css", "#bibtex");
+        $firstBibTextLink = $firstBibText->find("css", "a");
+        assertNotEquals(null, $firstBibTextLink);
+    }
 }
