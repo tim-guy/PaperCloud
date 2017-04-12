@@ -214,7 +214,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
     }
 
     /**
@@ -240,7 +240,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
     }
 
     /**
@@ -252,7 +252,7 @@ class FeatureContext implements Context
         $this->paperListTable = $this->page->find("css", "#paperList");
         $this->titleColmunHeader = $this->paperListTable->find("css", "#titleColumnHeader");
         $this->titleColmunHeader->click();
-        sleep(10);
+        sleep(1);
     }
 
     /**
@@ -282,7 +282,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
     }
 
     /**
@@ -294,7 +294,7 @@ class FeatureContext implements Context
         $this->paperListTable = $this->page->find("css", "#paperList");
         $this->authorColmunHeader = $this->paperListTable->find("css", "#authorColumnHeader");
         $this->authorColmunHeader->click();
-        sleep(10);
+        sleep(1);
     }
 
     /**
@@ -326,7 +326,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
     }
 
     /**
@@ -338,7 +338,7 @@ class FeatureContext implements Context
         $this->paperListTable = $this->page->find("css", "#paperList");
         $this->conferenceColmunHeader = $this->paperListTable->find("css", "#conferenceColumnHeader");
         $this->conferenceColmunHeader->click();
-        sleep(10);
+        sleep(1);
     }
 
     /**
@@ -370,7 +370,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
     }
 
     /**
@@ -384,7 +384,7 @@ class FeatureContext implements Context
         $this->conferenceColmunHeader->click();
         $this->frequencyColmunHeader = $this->paperListTable->find("css", "#frequencyColumnHeader");
         $this->frequencyColmunHeader->click();
-        sleep(10);
+        sleep(1);
     }
 
     /**
@@ -416,7 +416,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
     }
 
     /**
@@ -443,7 +443,7 @@ class FeatureContext implements Context
         assertNotEquals(null, $firstFullTextLink);
     }
 
-        /**
+    /**
     * @Given the paper list is generated for the "Bib Text" column
     */
     public function givenPaperListGeneratedForBibTextColumn()

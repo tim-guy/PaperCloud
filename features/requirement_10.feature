@@ -5,10 +5,8 @@ Feature: requirement_10 Export Paper List
 
 	Scenario: exporting the paper list as PDFs
 		Given the paper list is generated for exporting as PDFs
-		When the "Export as PDF" button is clicked
-		Then the paper is exported as PDF
+		Then the "Download this list as a PDF" button is clickable
 
 	Scenario: exporting he paper list as plain text
 		Given the paper list is generated for exporting as plain text
-		When the "Export as Plain Text" button is clicked
-		Then the paper is exported as plain text
+		Then the "Download this list as a text file" button is clickable

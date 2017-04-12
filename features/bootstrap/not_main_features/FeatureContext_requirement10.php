@@ -78,7 +78,7 @@ class FeatureContext implements Context
 	public function givenPaperListGeneratedForExportingPDF()
 	{
 		$this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -87,31 +87,17 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
 	}
 
 	/**
-	* @When the "Export as PDF" button is clicked
+	* @Then the "Download this list as a PDF" button is clickable
 	*/
-	public function whenexportPDFButtonClicked()
+	public function thenDownloadThisListPDFButtonClickable()
 	{
 		$this->page = $this->session->getPage();
-
-
-
-		assertEquals(true, true);
-	}
-
-	/**
-	* @Then the paper is exported as PDF
-	*/
-	public function thenPaperExportedPDF()
-	{
-		$this->page = $this->session->getPage();
-
-
-
-		assertEquals(true, true);
+		$downloadListAsPDF = $this->page->find("css", "#downloadListAsPDF");
+		assertnNotEquals('disabled', $downloadListAsPDF->getAttribute('disabled'));
 	}
 
 	/**
@@ -120,7 +106,7 @@ class FeatureContext implements Context
 	public function givenPaperListGeneratedForExportingPlainText()
 	{
 		$this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 
@@ -129,31 +115,17 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
 	}
 
 	/**
-	* @When the "Export as Plain Text" button is clicked
+	* @Then the "Download this list as a text file" button is clickable
 	*/
-	public function whenExportPlainTextButtonClicked()
+	public function thenDownloadThisListTextFileButtonClickable()
 	{
 		$this->page = $this->session->getPage();
-
-
-
-		assertEquals(true, true);
-	}
-
-	/**
-	* @Then the paper is exported as plain text
-	*/
-	public function thenPaperExportedPlainText()
-	{
-		$this->page = $this->session->getPage();
-
-
-
-		assertEquals(true, true);
+		$downloadListAsTXT = $this->page->find("css", "#downloadListAsTXT");
+		assertnNotEquals('disabled', $downloadListAsTXT->getAttribute('disabled'));
 	}
 	
 }
