@@ -211,6 +211,7 @@ class FeatureContext implements Context
         $this->wordCloudPage = $this->session->getPage();
         $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloud");
         $this->noResultsLabel = $this->wordCloud->find("css", "#noResultsID");
+        
         assertEquals("No Results Found", $this->noResultsLabel->getText());
     }
 
