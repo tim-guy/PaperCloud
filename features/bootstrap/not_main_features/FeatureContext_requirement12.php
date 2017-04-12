@@ -87,7 +87,19 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
+	}
+
+	/**
+	* @When the "Search Selected Subset" button is clicked
+	*/
+	public function whenSearchSelectedSubsetButtonClicked()
+	{
+		$this->page = $this->session->getPage();
+		$listDownloadLinks = $this->page->find("css", "#listDownloadLinks");
+		$subsetLink = $listDownloadLinks->find("css", "#subsetLink");
+		$subsetLink->click();
+		sleep(1);
 	}
 
 	/**
@@ -95,7 +107,13 @@ class FeatureContext implements Context
 	*/
 	public function thenEachPaperSelectableOnPaperListPage()
 	{
-		
+		$this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstRowData = $rows[0]->findAll("css", "td");
+        $firstSubsetCheckbox = $firstRowData[0]->find("css", "input");
+
+        assertEquals("subsetCheckbox", $firstSubsetCheckbox->getAttribute('class'));
 	}
 
 	/**
@@ -113,7 +131,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         $this->words[0]->click();
-        sleep(10);
+        sleep(3);
 	}
 
 	/**

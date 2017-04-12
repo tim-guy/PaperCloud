@@ -98,6 +98,8 @@ class FeatureContext implements Context
 	*/
 	public function thenPreviousSearchListShowsRedekopp()
 	{
+		$searchTextFieldDropDown = $this->searchBar->find("css", "#searchTextFieldDropDown");
+        $searchTextFieldDropDown->click();
 		$previousSearches = $this->page->find("css", "#previousSearches");
 		$topOption = $previousSearches->find("css", "option");
 		assertEquals("Redekopp", $topOption->getAttribute('value'));

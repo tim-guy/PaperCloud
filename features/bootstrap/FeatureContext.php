@@ -597,9 +597,55 @@ class FeatureContext implements Context
     */
     public function thenPreviousSearchListShowsRedekopp()
     {
+        $searchTextFieldDropDown = $this->searchBar->find("css", "#searchTextFieldDropDown");
+        $searchTextFieldDropDown->click();
         $previousSearches = $this->page->find("css", "#previousSearches");
         $topOption = $previousSearches->find("css", "option");
         assertEquals("Redekopp", $topOption->getAttribute('value'));
+    }
+
+    /**
+    * @Given the paper list is generated for checking each paper selectable
+    */
+    public function givenPaperListGeneratedForCheckingEachPaperSelectable()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @When the "Search Selected Subset" button is clicked
+    */
+    public function whenSearchSelectedSubsetButtonClicked()
+    {
+        $this->page = $this->session->getPage();
+        $listDownloadLinks = $this->page->find("css", "#listDownloadLinks");
+        $subsetLink = $listDownloadLinks->find("css", "#subsetLink");
+        $subsetLink->click();
+        sleep(1);
+    }
+
+    /**
+    * @Then each paper is selectable on the Paper List Page
+    */
+    public function thenEachPaperSelectableOnPaperListPage()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstRowData = $rows[0]->findAll("css", "td");
+        $firstSubsetCheckbox = $firstRowData[0]->find("css", "input");
+
+        assertEquals("subsetCheckbox", $firstSubsetCheckbox->getAttribute('class'));
     }
 
 }

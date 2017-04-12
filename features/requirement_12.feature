@@ -5,6 +5,7 @@ Feature: requirement_12 Subset Selection
 	
 	Scenario: each paper is selectable on the Paper List Page
 		Given the paper list is generated for checking each paper selectable
+		When the "Search Selected Subset" button is clicked
 		Then each paper is selectable on the Paper List Page
 
 	Scenario: selecting papers to generate a new word cloud
