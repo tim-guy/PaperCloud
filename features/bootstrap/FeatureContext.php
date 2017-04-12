@@ -211,7 +211,7 @@ class FeatureContext implements Context
         $this->wordCloudPage = $this->session->getPage();
         $this->wordCloud = $this->wordCloudPage->find("css", "#wordCloud");
         $this->noResultsLabel = $this->wordCloud->find("css", "#noResultsID");
-        
+
         assertEquals("No Results Found", $this->noResultsLabel->getText());
     }
 
@@ -569,6 +569,37 @@ class FeatureContext implements Context
         $firstBibTextLink = $firstBibText->find("css", "a");
 
         assertNotEquals(null, $firstBibTextLink);
+    }
+
+    /**
+    * @Given the last search is "Redekopp"
+    */
+    public function givenLastSearchRedekopp()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Redekopp');
+        $this->searchButton->click();
+        sleep(10);
+    }
+
+    /**
+    * @When the Search Page is reopened
+    */
+    public function whenSearchPageReopened()
+    {
+        $this->session->visit('http://localhost:80/PaperCloud');
+        $this->page = $this->session->getPage();
+        sleep(3);
+    }
+
+    /**
+    * @Then the list of previous search shows "Redekopp" on the top
+    */
+    public function thenPreviousSearchListShowsRedekopp()
+    {
+        $previousSearches = $this->page->find("css", "#previousSearches");
+        $topOption = $previousSearches->find("css", "option");
+        assertEquals("Redekopp", $topOption->getAttribute('value'));
     }
 
 }

@@ -73,22 +73,6 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given the search page is opened to see previous search
-	*/
-	public function givenSearchPageOpenedToSeePreviousSearch()
-	{
-		assertNotEquals(null, $this->searchBar);
-	}
-
-	/**
-	* @Then the list of previous search exists
-	*/
-	public function thenPreviousSearchListExists()
-	{
-		
-	}
-
-	/**
 	* @Given the last search is "Redekopp"
 	*/
 	public function givenLastSearchRedekopp()
@@ -104,7 +88,9 @@ class FeatureContext implements Context
 	*/
 	public function whenSearchPageReopened()
 	{
-		
+		$this->session->visit('http://localhost:80/PaperCloud');
+        $this->page = $this->session->getPage();
+        sleep(3);
 	}
 
 	/**
@@ -112,7 +98,9 @@ class FeatureContext implements Context
 	*/
 	public function thenPreviousSearchListShowsRedekopp()
 	{
-		
+		$previousSearches = $this->page->find("css", "#previousSearches");
+		$topOption = $previousSearches->find("css", "option");
+		assertEquals("Redekopp", $topOption->getAttribute('value'));
 	}
 	
 }
