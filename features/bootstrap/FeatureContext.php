@@ -181,7 +181,7 @@ class FeatureContext implements Context
         $this->g = $this->wordCloud->find("css", "#g");
         $this->words = $this->g->findAll("css", "#text");
         array_pop($this->words)->click();
-        sleep(1);
+        sleep(3);
         $this->paperListPage = $this->session->getPage();
         $this->table = $this->paperListPage->find("css", "#paperList");
         $this->authors = $this->table->findAll("css", "#author");
@@ -524,6 +524,50 @@ class FeatureContext implements Context
         assertNotEquals(null, $downloadListAsTXT->find("css", "a"));
 
         sleep(10);
+    }
+
+    /**
+    * @Given the paper list is generated for the "Bib Text" column
+    */
+    public function givenPaperListGeneratedForBibTextColumn()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @Then the paper list contains a "Bib Text" column
+    */
+    public function thenPaperListContainsBibTextColumn()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $bibTextColumnHeader = $this->paperListTable->find("css", "#bibtexColumnHeader");
+
+        assertNotEquals(null, $bibTextColumnHeader);
+    }
+
+    /**
+    * @Then each paper has a link for its Bib Text
+    */
+    public function thenEachPaperHasLinkForItsBibText()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstBibText = $rows[0]->find("css", "#bibtex");
+        $firstBibTextLink = $firstBibText->find("css", "a");
+
+        assertNotEquals(null, $firstBibTextLink);
     }
 
 }
