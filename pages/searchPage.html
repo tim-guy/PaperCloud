@@ -4,8 +4,17 @@
 	
 	<div id="searchBar">
 		<input type="text" id="searchTextField" placeholder="Author" />
+		<input type="button" id="searchTextFieldDropDown" tabindex="-1" />
 		<input type="text" id="limitTextField" placeholder="Limit" />
+		
+		<label id="fieldSelectLabel">Search by:</label>
+		<select id="fieldSelect">
+			<option value="name">Author Name</option>
+			<option value="keyword">Keyword</option>
+		</select>
 	</div>
+	
+	<select id="previousSearches"></select>
 	
 	<input type="button" id="search" class="button" value="Search" disabled="true"  />
  
@@ -28,35 +37,141 @@
 	padding: 1em;
 }
 
-#searchTextField, #limitTextField {
+#searchTextField, #limitTextField, #fieldSelect {
 	padding: 5px;
+	padding-right: 20px;
 	border: #16A5F5 2px solid;
 }
 
 #searchTextField {
-	width: 75%;
+	width: 450px;
+}
+
+#searchTextFieldDropDown {
+	margin-left: -30px;
+	width: 20px;
+	height: 20px;
+	top: 1px;
+	position: relative;
+		
+	border: 0;
+	
+	background: rgba(1, 1, 1, 0) url(images/selectmenu-black.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 20px 20px;
+}
+
+#searchTextFieldDropDown:hover {
+	background: rgba(1, 1, 1, 0) url(images/selectmenu-blue.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 20px 20px;
+}
+
+#fieldSelectLabel {
+	font-family: sans-serif;
+	padding-right: 10px;
+	font-weight: bold;
+}
+
+#fieldSelect {
+	margin-top: 15px;
 }
 
 #limitTextField {
 	width: 20%;
+	margin-left: 15px;
+}
+
+.ui-selectmenu-menu {
+	text-align: left;
+	font-size: 12px;
 }
 
 </style>
 
 <script>
 	
-	$("#searchTextField").on('input propertychange paste', function() {
-		name = $("#searchTextField").val();
+	// Read the search history:
+	var searchHistory = getCookie("searchHistory") ? JSON.parse(getCookie("searchHistory")) : [];
+	$.each(searchHistory.reverse().slice(0, 5), function(index, search) {
 		
-		checkInputs();
-	})
-	$("#limitTextField").on('input propertychange paste', function() {
-		limit = parseInt($("#limitTextField").val());
-	
-		checkInputs();
+		var fieldName = $("#fieldSelect option[value='" + search.field + "']").text();
+		
+		$("<option>")
+			.attr("field", search.field)
+			.attr("value", search.value)
+			.attr("limit", search.limit)
+			.html(fieldName + ": \"" + search.value + "\" (" + search.limit + ")")
+			.appendTo("#previousSearches");
 	});
 	
+	// Make the drop-down:
+	var didChange = false;
+	$("#previousSearches").selectmenu({
+			appendTo: "#searchBar",
+			open: function(event) {
+				
+				didChange = false;
+			
+				$("#previousSearches")
+					.val('') // I select nothing!
+					.selectmenu("menuWidget") // position the menu
+					.position({
+						my: "left top",
+						at: "left bottom",
+						"of": "#searchTextField"
+					});
+					
+				$("#previousSearches-menu").css("width", $("#searchTextField").css("width"));
+			},
+			change: function(event, ui) {
+				didChange = true;
+			},
+			close: function(event, ui) { // update the text field
+				if (didChange) {
+											
+					$("#fieldSelect")
+						.val($("#previousSearches option:selected").attr("field"))
+						.trigger("change");
+						
+					$("#searchTextField")
+						.val($("#previousSearches option:selected").attr("value"))
+						.trigger("propertychange");
+
+					$("#limitTextField")
+						.val($("#previousSearches option:selected").attr("limit"))
+						.trigger("propertychange");
+				}
+			}
+		})
+		.selectmenu("widget").hide(0) // hide the button!
+	$("#searchTextFieldDropDown").mousedown(function() { // connect the custom button!		
+		
+		if ($(".ui-selectmenu-menu").hasClass("ui-selectmenu-open")) {
+			$("#previousSearches").selectmenu("close");
+		} else {
+			$("#previousSearches").selectmenu("open");
+		}
+		return false;
+	});
+	if ($("#previousSearches").children().length == 0) { // hide the button
+		$("#searchTextFieldDropDown").hide(0);
+	}
+		
+	// Set up the field select:
+	$("#fieldSelect").change(function() {
+		$("#searchTextField").attr("placeholder", $("#fieldSelect option:selected").text());
+	}).trigger("change"); // Do it once!
+	
+	// Set up the 2 main input boxes
+	$("#searchTextField").on('input propertychange paste', checkInputs)
+	$("#limitTextField").on('input propertychange paste', checkInputs);
+	
 	function checkInputs() {
+		name = $("#searchTextField").val();
+		limit = parseInt($("#limitTextField").val());
 	
 		if (name != "" && limit > 0) { // Good Inputs
 			$("#search").removeProp("disabled");
@@ -67,9 +182,15 @@
 
 	$("#search").click(function() {
 		
-		searchField = "name";
+		searchField = $("#fieldSelect option:selected").attr("value");
 		searchValue = $("#searchTextField").val();
-	
+		limit = parseInt($("#limitTextField").val());
+		
+		// Set our cookie!
+		var searchHistory = getCookie("searchHistory") ?  JSON.parse(getCookie("searchHistory")) : [];
+		searchHistory.push({"field": searchField, "value": searchValue, "limit": limit });
+		setCookie("searchHistory", JSON.stringify(searchHistory));
+		
 		loadPage("wordCloud");
 	});
 
