@@ -427,6 +427,7 @@ class FeatureContext implements Context
         $this->page = $this->session->getPage();
         $this->paperListTable = $this->page->find("css", "#paperList");
         $fullTextColumnHeader = $this->paperListTable->find("css", "#fullTextColumnHeader");
+        
         assertNotEquals(null, $fullTextColumnHeader);
     }
 
@@ -440,9 +441,66 @@ class FeatureContext implements Context
         $rows = $this->paperListTable->findAll("css", "#row");
         $firstFullText = $rows[0]->find("css", "#fullText");
         $firstFullTextLink = $firstFullText->find("css", "a");
+
         assertNotEquals(null, $firstFullTextLink);
     }
 
+    /**
+    * @Given the paper list is generated for exporting as PDFs
+    */
+    public function givenPaperListGeneratedForExportingPDF()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
 
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @Then the "Download this list as a PDF" button is clickable
+    */
+    public function thenDownloadThisListPDFButtonClickable()
+    {
+        $this->page = $this->session->getPage();
+        $listDownloadLinks = $this->page->find("css", "#listDownloadLinks");
+        $downloadListAsPDF = $listDownloadLinks->find("css", "#downloadListAsPDF");
+        assertNotEquals('pointer', $downloadListAsPDF->find("css", "a"));
+    }
+
+    /**
+    * @Given the paper list is generated for exporting as plain text
+    */
+    public function givenPaperListGeneratedForExportingPlainText()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @Then the "Download this list as a text file" button is clickable
+    */
+    public function thenDownloadThisListTextFileButtonClickable()
+    {
+        $this->page = $this->session->getPage();
+        $listDownloadLinks = $this->page->find("css", "#listDownloadLinks");
+        $downloadListAsTXT = $listDownloadLinks->find("css", "#downloadListAsTXT");
+        assertNotEquals(null, $downloadListAsTXT->find("css", "a"));
+    }
 
 }

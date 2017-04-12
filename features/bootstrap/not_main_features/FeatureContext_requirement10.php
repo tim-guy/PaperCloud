@@ -97,7 +97,7 @@ class FeatureContext implements Context
 	{
 		$this->page = $this->session->getPage();
 		$downloadListAsPDF = $this->page->find("css", "#downloadListAsPDF");
-		assertnNotEquals('disabled', $downloadListAsPDF->getAttribute('disabled'));
+		assertNotEquals('disabled', $downloadListAsPDF->getAttribute('disabled'));
 	}
 
 	/**
@@ -125,7 +125,7 @@ class FeatureContext implements Context
 	{
 		$this->page = $this->session->getPage();
 		$downloadListAsTXT = $this->page->find("css", "#downloadListAsTXT");
-		assertnNotEquals('disabled', $downloadListAsTXT->getAttribute('disabled'));
+		assertNotEquals('disabled', $downloadListAsTXT->getAttribute('disabled'));
 	}
 	
 }
