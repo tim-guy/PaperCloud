@@ -9,6 +9,9 @@
 		<canvas id="wordCloudCanvas" width="1200" height="500" style="display:none"></canvas>
     </div>
     
+	<input type="button" id="download" class="button" value="Download Image" disabled="true"  />
+	<a style="display:none" id="downloadLink" download="PaperCloud.png"></a>
+	
 </div>
 
 <style>
@@ -38,6 +41,10 @@
 	height: 500;
 	border: 2px black solid;
 	background-color: white;
+}
+
+#download {
+	margin: 20px;
 }
 
 </style>
@@ -113,7 +120,8 @@
 		  .on("end", function (words) {
 		  
 				completionHandler = function() {
-						$("#wordCloudLoading").hide(0);
+					  $("#wordCloudLoading").hide(0);
+					  $("#download").removeProp('disabled');
 				  
 						// draw in the svg tag
 					  d3.select("#wordCloudSVG")
@@ -245,5 +253,18 @@
 			queryPapers();
 		}
 	}, 100);
+	
+	// Set up the download button
+	$("#download").click(function() {
+		// Get the PNG data
+		var c = document.getElementById('wordCloudCanvas').toDataURL('image/png');
+		var encodedPng = c.substring(c.indexOf(',')+1,c.length);
+		var imageData = Base64Binary.decode(encodedPng);
+		
+		// Trigger the download
+		var file = new Blob([imageData], {type: "image/png"});
+		$("#downloadLink").attr("href", URL.createObjectURL(file));
+		document.getElementById('downloadLink').click();
+	});
 	
 </script>
