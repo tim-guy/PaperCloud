@@ -151,6 +151,27 @@ class FeatureContext implements Context
     }
 
     /**
+     * @Given that the user searches 
+     */
+    public function thatTheUserSearches()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(2);
+    }    
+
+    /**
+     * @Then a progress bar is shown
+     */
+    public function aProgressBarIsShown()
+    {
+        $this->wordCloudPage = $this->session->getPage();
+        $this->progressBar = $this->wordCloudPage->find("css", "#wordCloudLoading");
+        assertNotEquals(null, $this->progressBar);
+    }
+
+    /**
      * @Then the appropriate top papers in the ACM and IEEE libraries are shown in the word cloud
      */
     public function theAppropriateTopPapersInTheAcmAndIeeeLibrariesAreShownInTheWordCloud()
