@@ -599,8 +599,10 @@ class FeatureContext implements Context
     {
         $searchTextFieldDropDown = $this->searchBar->find("css", "#searchTextFieldDropDown");
         $searchTextFieldDropDown->click();
+        sleep(1);
         $previousSearches = $this->page->find("css", "#previousSearches");
         $topOption = $previousSearches->find("css", "option");
+        
         assertEquals("Redekopp", $topOption->getAttribute('value'));
     }
 
@@ -646,6 +648,53 @@ class FeatureContext implements Context
         $firstSubsetCheckbox = $firstRowData[0]->find("css", "input");
 
         assertEquals("subsetCheckbox", $firstSubsetCheckbox->getAttribute('class'));
+    }
+
+    /**
+    * @Given the paper list is generated for selecting papers
+    */
+    public function givenPaperListGeneratedForSelectingPapers()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @When the first paper is selected
+    */
+    public function whenFirstPaperSelected()
+    {
+        $this->page = $this->session->getPage();
+        $listDownloadLinks = $this->page->find("css", "#listDownloadLinks");
+        $subsetLink = $listDownloadLinks->find("css", "#subsetLink");
+        $subsetLink->click();
+        sleep(1);
+
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstRowData = $rows[0]->findAll("css", "td");
+        $firstSubsetCheckbox = $firstRowData[0]->find("css", "input");
+        $firstSubsetCheckbox->click();
+        $subsetLink->click();
+        sleep(5);
+    }
+
+    /**
+    * @Then a new Paper Cloud is generated
+    */
+    public function thenNewPaperCloudGenerated()
+    {
+        assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
     }
 
 }

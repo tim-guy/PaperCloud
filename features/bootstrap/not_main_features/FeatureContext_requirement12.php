@@ -139,10 +139,20 @@ class FeatureContext implements Context
 	*/
 	public function whenFirstPaperSelected()
 	{
-		
+		$this->page = $this->session->getPage();
+		$listDownloadLinks = $this->page->find("css", "#listDownloadLinks");
+		$subsetLink = $listDownloadLinks->find("css", "#subsetLink");
+		$subsetLink->click();
+		sleep(1);
 
-
-		sleep(10);
+		$this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstRowData = $rows[0]->findAll("css", "td");
+        $firstSubsetCheckbox = $firstRowData[0]->find("css", "input");
+        $firstSubsetCheckbox->click();
+        $subsetLink->click();
+		sleep(5);
 	}
 
 	/**
