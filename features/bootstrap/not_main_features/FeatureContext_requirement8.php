@@ -73,25 +73,35 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given
+	* @Given the paper list is already generated for clicking conference
 	*/
-	public function given()
+	public function givenPaperListGeneratedForClickingConference()
+	{
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+	}
+
+	/**
+	* @When a conference is clicked
+	*/
+	public function whenConferenceClicked()
 	{
 		
 	}
 
 	/**
-	* @When
+	* @Then a new word cloud is displayed based on that conference
 	*/
-	public function when()
-	{
-		
-	}
-
-	/**
-	* @Then
-	*/
-	public function then()
+	public function thenNewWordCloudDisplayedBasedOnThatConference()
 	{
 		
 	}
