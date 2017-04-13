@@ -95,7 +95,13 @@ class FeatureContext implements Context
 	*/
 	public function whenConferenceClicked()
 	{
-		
+		$this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstConference = $rows[0]->find("css", "#conference");
+        $firstConferenceSearch = $firstConference->find("css", "a");
+        $firstConferenceSearch->click();
+        sleep(10);
 	}
 
 	/**
@@ -103,7 +109,7 @@ class FeatureContext implements Context
 	*/
 	public function thenNewWordCloudDisplayedBasedOnThatConference()
 	{
-		
+		assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
 	}
 	
 }
