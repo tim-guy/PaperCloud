@@ -697,4 +697,44 @@ class FeatureContext implements Context
         assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
     }
 
+    /**
+    * @Given the paper list is already generated for clicking author
+    */
+    public function givenPaperListGeneratedForClickingAuthor()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @When an author is clicked
+    */
+    public function whenAuthorClicked()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstAuthor = $rows[0]->find("css", "#author");
+        $firstAuthorSearch = $firstAuthor->find("css", "a");
+        $firstAuthorSearch->click();
+        sleep(10);
+    }
+
+    /**
+    * @Then a new word cloud is displayed based on that author
+    */
+    public function thenNewWordCloudDisplayedBasedOnThatAuthor()
+    {
+        assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
+    }
+
 }

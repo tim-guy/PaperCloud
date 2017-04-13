@@ -95,7 +95,13 @@ class FeatureContext implements Context
 	*/
 	public function whenAuthorClicked()
 	{
-		
+		$this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstAuthor = $rows[0]->find("css", "#author");
+        $firstAuthorSearch = $firstAuthor->find("css", "a");
+        $firstAuthorSearch->click();
+        sleep(10);
 	}
 
 	/**
@@ -103,7 +109,7 @@ class FeatureContext implements Context
 	*/
 	public function thenNewWordCloudDisplayedBasedOnThatAuthor()
 	{
-		
+		assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
 	}
 	
 }
