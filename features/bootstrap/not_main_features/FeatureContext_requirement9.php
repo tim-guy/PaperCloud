@@ -73,27 +73,43 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given
+	* @Given the paper list is already generated
 	*/
 	public function given()
 	{
-		
+		$this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
 	}
 
 	/**
-	* @When
+	* @When a paper's title is clicked
 	*/
 	public function when()
 	{
-		
+		$this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstTitle = $rows[0]->find("css", "#title");
+        $firstTitleClick = $firstTitle->find("css", "a");
+        $firstTitleClick->click();
+        sleep(5);
 	}
 
 	/**
-	* @Then
+	* @Then the words in that paper's abstract are highlighted
 	*/
 	public function then()
 	{
-		
+		assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
 	}
 	
 }

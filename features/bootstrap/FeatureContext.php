@@ -104,9 +104,9 @@ class FeatureContext implements Context
         sleep(3);
     }
 
-    /**
+    *
      * @Then the search button is clickable
-     */
+     
     public function theSearchButtonIsClickable()
     {
         assertEquals('disabled', $this->searchButton->getAttribute('disabled'));
@@ -775,6 +775,45 @@ class FeatureContext implements Context
     public function thenNewWordCloudDisplayedBasedOnThatConference()
     {
         assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
+    }
+    /**
+    * @Given the paper list is already generated
+    */
+    public function givenPaperListGeneratedForClickingTitles()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @When a paper's title is clicked
+    */
+    public function whenTheTitleIsClicked()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstTitle = $rows[0]->find("css", "#title");
+        $firstTitleClick = $firstTitle->find("css", "a");
+        $firstTitleClick->click();
+        sleep(5);
+    }
+
+    /**
+    * @Then the words in that paper's abstract are highlighted
+    */
+    public function thenTheWordIsHighlighted()
+    {
+        assertEquals(null, $this->page->find("css", "#wordCloudPage"));
     }
 
 }
