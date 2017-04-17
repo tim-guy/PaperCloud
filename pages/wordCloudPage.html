@@ -118,7 +118,7 @@
 		  //.font("Impact")
 		  .fontSize(function(d) { return d.size; })
 		  .on("end", function (words) {
-		  
+			
 				completionHandler = function() {
 					  $("#wordCloudLoading").hide(0);
 					  $("#download").removeProp('disabled');
@@ -146,7 +146,7 @@
 							word = d.text;
 							loadPage("paperList");
 						});
-						
+												
 						// draw in the canvas tag
 						canvg('wordCloudCanvas', $("#wordCloudSVG").html());
 				}
@@ -238,7 +238,7 @@
 	//ON LOAD:
 	///
 	
-	startProgressBar(Math.max(10000, (papers.length > 0) ? (papers.length * 10) : (limit * 35 * (searchField == 'publication' ? 2 : 1))));
+	startProgressBar(Math.max(10000, (papers.length > 0) ? (papers.length * 10) : (limit * 35 * (searchField == 'publication' ? 8 : 1))));
 	$("#noResults").hide(0);
 	$("#wordCloudSVG").html("");
 	

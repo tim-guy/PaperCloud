@@ -36,15 +36,13 @@ class ACMLibraryAdapter extends LibraryAdapter {
 			
 			// Query the paper authors
 			$paper["authors"] = $line["author"];
-			if ($exact && $field == 'name' && stripos($paper["authors"], $value) === false) {
+			if ($exact && $field == 'name' && stripos($paper["authors"], $value) === false)
 				continue; // This entry doesn't contain the full author name.
-			}
 
 			// Query the paper publication name
 			$paper["publication"] = $line["booktitle"];
-			if ($exact && $field == 'publication' && stripos($paper["publication"], $value) === false) {
+			if ($exact && $field == 'publication' && stripos($paper["publication"], $value) === false)
 				continue;
-			}
 			
 			// Derive the full text URL name from the ID
 			$paper["fullTextURL"] = "http://dl.acm.org/ft_gateway.cfm?id=" . $line["id"];
@@ -57,9 +55,8 @@ class ACMLibraryAdapter extends LibraryAdapter {
 			
 			$papers[] = $paper;
 			
-			if (count($papers) >= $limit) {
+			if (count($papers) >= $limit)
 				break;
-			}
 		}
 		
 		return $papers;

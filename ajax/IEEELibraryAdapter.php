@@ -34,60 +34,52 @@ class IEEELibraryAdapter extends LibraryAdapter {
 			
 			// Query the DOI
 			$dois = $xpath->query("./doi", $document);
-			if ($dois->length > 0) {
+			if ($dois->length > 0)
 				$paper["id"] = $dois[0]->textContent;
-			} else {
+			else
 				continue;
-			}
 			
 			// Query the paper title
 			$titles = $xpath->query("./title", $document);
-			if ($titles->length > 0) {
+			if ($titles->length > 0)
 				$paper["title"] = $titles[0]->textContent;
-			} else {
+			else
 				continue;
-			}
 			
 			// Query the paper authors
 			$authorss = $xpath->query("./authors", $document);
 			if ($authorss->length > 0) {
 				$paper["authors"] = $authorss[0]->textContent;
 				
-				if ($exact && $field == 'name' && (stripos($paper["authors"], $value) === false)) {
+				if ($exact && $field == 'name' && (stripos($paper["authors"], $value) === false))
 					continue; // This entry doesn't contain the full author name.
-				}
-			} else {
+			} else
 				continue;
-			}
 			
 			// Query the paper publication name
 			$publications = $xpath->query("./pubtitle", $document);
 			if ($publications->length > 0) {
 				$paper["publication"] = $publications[0]->textContent;
 				
-				if ($exact && $field == "publication" && (stripos($paper["publication"], $value) === false)) {
+				if ($exact && $field == "publication" && (stripos($paper["publication"], $value) === false))
 					continue;
-				}
 				
-			} else {
+			} else
 				continue;
-			}
-			
+	
 			// Query the full text URL name
 			$fullTextURLs = $xpath->query("./pdf", $document);
-			if ($fullTextURLs->length > 0) {
+			if ($fullTextURLs->length > 0)
 				$paper["fullTextURL"] = $fullTextURLs[0]->textContent;
-			} else {
+			else
 				continue;
-			}
 			
 			// Query the paper abstract
 			$abstracts = $xpath->query("./abstract", $document);
-			if ($abstracts->length > 0) {
+			if ($abstracts->length > 0)
 				$paper["abstract"] = $abstracts[0]->textContent;
-			} else {
+			else
 				continue;
-			}
 			
 			// Query the keyword terms
 			$terms = $xpath->query("./*/term", $document);
