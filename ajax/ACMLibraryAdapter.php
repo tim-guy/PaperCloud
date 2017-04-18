@@ -36,13 +36,17 @@ class ACMLibraryAdapter extends LibraryAdapter {
 			
 			// Query the paper authors
 			$paper["authors"] = $line["author"];
+			// @codeCoverageIgnoreStart
 			if ($exact && $field == 'name' && stripos($paper["authors"], $value) === false)
 				continue; // This entry doesn't contain the full author name.
+			// @codeCoverageIgnoreEnd
 
 			// Query the paper publication name
 			$paper["publication"] = $line["booktitle"];
+			// @codeCoverageIgnoreStart
 			if ($exact && $field == 'publication' && stripos($paper["publication"], $value) === false)
 				continue;
+			// @codeCoverageIgnoreEnd
 			
 			// Derive the full text URL name from the ID
 			$paper["fullTextURL"] = "http://dl.acm.org/ft_gateway.cfm?id=" . $line["id"];

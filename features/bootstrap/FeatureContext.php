@@ -104,9 +104,9 @@ class FeatureContext implements Context
         sleep(3);
     }
 
-    *
+    /**
      * @Then the search button is clickable
-     
+     */
     public function theSearchButtonIsClickable()
     {
         assertEquals('disabled', $this->searchButton->getAttribute('disabled'));

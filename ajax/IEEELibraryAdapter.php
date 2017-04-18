@@ -37,14 +37,18 @@ class IEEELibraryAdapter extends LibraryAdapter {
 			if ($dois->length > 0)
 				$paper["id"] = $dois[0]->textContent;
 			else
+			// @codeCoverageIgnoreStart
 				continue;
-			
+			// @codeCoverageIgnoreEnd
+
 			// Query the paper title
 			$titles = $xpath->query("./title", $document);
 			if ($titles->length > 0)
 				$paper["title"] = $titles[0]->textContent;
 			else
+			// @codeCoverageIgnoreStart
 				continue;
+			// @codeCoverageIgnoreEnd
 			
 			// Query the paper authors
 			$authorss = $xpath->query("./authors", $document);
@@ -54,7 +58,9 @@ class IEEELibraryAdapter extends LibraryAdapter {
 				if ($exact && $field == 'name' && (stripos($paper["authors"], $value) === false))
 					continue; // This entry doesn't contain the full author name.
 			} else
+			// @codeCoverageIgnoreStart
 				continue;
+			// @codeCoverageIgnoreEnd
 			
 			// Query the paper publication name
 			$publications = $xpath->query("./pubtitle", $document);
@@ -65,21 +71,27 @@ class IEEELibraryAdapter extends LibraryAdapter {
 					continue;
 				
 			} else
+			// @codeCoverageIgnoreStart
 				continue;
+			// @codeCoverageIgnoreEnd
 	
 			// Query the full text URL name
 			$fullTextURLs = $xpath->query("./pdf", $document);
 			if ($fullTextURLs->length > 0)
 				$paper["fullTextURL"] = $fullTextURLs[0]->textContent;
 			else
+			// @codeCoverageIgnoreStart
 				continue;
+			// @codeCoverageIgnoreEnd
 			
 			// Query the paper abstract
 			$abstracts = $xpath->query("./abstract", $document);
 			if ($abstracts->length > 0)
 				$paper["abstract"] = $abstracts[0]->textContent;
 			else
+			// @codeCoverageIgnoreStart
 				continue;
+			// @codeCoverageIgnoreEnd
 			
 			// Query the keyword terms
 			$terms = $xpath->query("./*/term", $document);
