@@ -5,7 +5,7 @@ require_once 'HTTPRequestManager.php';
 
 class IEEELibraryAdapter extends LibraryAdapter {
 
-	function getPapersWithAuthorName($field, $value, $exact, $limit)
+	function searchPapers($field, $value, $exact, $limit)
 	{
 		$papers = array();
 		

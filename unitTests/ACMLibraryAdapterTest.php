@@ -6,11 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 class ACMLibraryAdapterTest extends TestCase
 {
-	public function testValidGetPapersWithAuthorName()
+	public function testValidsearchPapers()
 	{
-		//$expectedOutputFileName = "unitTests/expected_output/testValidACMGetPapersWithAuthorNameOutput.json";
+		//$expectedOutputFileName = "unitTests/expected_output/testValidACMsearchPapersOutput.json";
 		$ACM = new ACMLibraryAdapter();
-		$acmPapers = $ACM->getPapersWithAuthorName("name", "Johnson", false, "10");
+		$acmPapers = $ACM->searchPapers("name", "Johnson", false, "10");
 
 		//$ACMPapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
 		$this->assertEquals(10, sizeof($acmPapers));
@@ -24,7 +24,7 @@ class ACMLibraryAdapterTest extends TestCase
 	public function testValidGetPapersWithExactAuthorName()
 	{
 		$acm = new ACMLibraryAdapter();
-		$acmPapers = $acm->getPapersWithAuthorName("name", "Barry Boehm", true, 10);
+		$acmPapers = $acm->searchPapers("name", "Barry Boehm", true, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($acmPapers));
 
@@ -34,11 +34,11 @@ class ACMLibraryAdapterTest extends TestCase
 
 	}
 
-	public function testInvalidGetPapersWithAuthorName()
+	public function testInvalidsearchPapers()
 	{
-		$expectedOutputFileName = "unitTests/expected_output/testInvalidACMGetPapersWithAuthorNameOutput.json";
+		$expectedOutputFileName = "unitTests/expected_output/testInvalidACMsearchPapersOutput.json";
 		$ACM = new ACMLibraryAdapter();
-		$ACMPapers = $ACM->getPapersWithAuthorName("name", "Banananana", false, "10");
+		$ACMPapers = $ACM->searchPapers("name", "Banananana", false, "10");
 
 		$ACMPapersExpected = json_decode(file_get_contents($expectedOutputFileName), true);
 		$this->assertEquals($ACMPapersExpected, $ACMPapers);
@@ -49,7 +49,7 @@ class ACMLibraryAdapterTest extends TestCase
 		$name = 'Proceedings of the 2013 International Symposium on Software Testing and Analysis';
 
 		$acm = new ACMLibraryAdapter();
-		$papers = $acm->getPapersWithAuthorName("publication", $name, true, 10);
+		$papers = $acm->searchPapers("publication", $name, true, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($papers));
 

@@ -5,7 +5,7 @@ require_once("CSVParser.php");
 
 class ACMLibraryAdapter extends LibraryAdapter {
 
-	function getPapersWithAuthorName($field, $value, $exact, $limit)
+	function searchPapers($field, $value, $exact, $limit)
 	{	
 		$papers = array();
 		

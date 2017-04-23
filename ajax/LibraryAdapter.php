@@ -22,13 +22,13 @@ abstract class LibraryAdapter
 		self::$libraryAdapters[$key] = $library;
 	}
 	
-	static function getPapersWithAuthorNameFromAllLibraries($field, $value, $exact, $limit)
+	static function searchPapersFromAllLibraries($field, $value, $exact, $limit)
 	{
 		$allPapers = array(); // an array of arrays of the papers returned by each library
 		$count = 0;
 		foreach (self::$libraryAdapters as $library)
 		{
-			$papers = $library->getPapersWithAuthorName($field, $value, $exact, $limit);
+			$papers = $library->searchPapers($field, $value, $exact, $limit);
 			
 			$count += count($papers);
 			$allPapers[] = $papers;
@@ -67,7 +67,7 @@ abstract class LibraryAdapter
 	
 	// Abstract Methods:
 	
-	abstract function getPapersWithAuthorName($field, $value, $exact, $limit);
+	abstract function searchPapers($field, $value, $exact, $limit);
 	
 	abstract function getBibtexForPaper($paper);
 	

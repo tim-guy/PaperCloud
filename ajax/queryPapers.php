@@ -34,6 +34,6 @@ if ($limit <= 0 || $limit > 1000) { // max limit of 1000
 	$limit = 1000;
 }
 
-$papers = LibraryAdapter::getPapersWithAuthorNameFromAllLibraries($field, $value, $exact, $limit);
+$papers = LibraryAdapter::searchPapersFromAllLibraries($field, $value, $exact, $limit);
 
 echo json_encode($papers);

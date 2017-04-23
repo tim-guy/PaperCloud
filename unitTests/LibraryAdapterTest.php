@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase;
 
 class LibraryAdapterTest extends TestCase
 {
-	public function testValidGetPapersWithAuthorName()
+	public function testValidsearchPapers()
 	{
-		$papers = LibraryAdapter::getPapersWithAuthorNameFromAllLibraries("name", "Johnson", false, 10);
+		$papers = LibraryAdapter::searchPapersFromAllLibraries("name", "Johnson", false, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($papers));
 
@@ -19,7 +19,7 @@ class LibraryAdapterTest extends TestCase
 
 	public function testValidGetPapersWithExactAuthorName()
 	{
-		$papers = LibraryAdapter::getPapersWithAuthorNameFromAllLibraries("name", "Barry Boehm", true, 10);
+		$papers = LibraryAdapter::searchPapersFromAllLibraries("name", "Barry Boehm", true, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($papers));
 
