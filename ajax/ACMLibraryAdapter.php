@@ -104,6 +104,7 @@ class ACMLibraryAdapter extends LibraryAdapter {
 
 		$session->stop();
 
+		//return substr(strstr($blob, ","), 1);
 		return base64_decode(substr(strstr($blob, ","), 1));
 	}
 	
