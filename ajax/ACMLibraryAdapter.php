@@ -15,10 +15,13 @@ class ACMLibraryAdapter extends LibraryAdapter {
 				$querystring .= '&query=persons%2Eauthors%2EpersonName%3A%28%252B' . urlencode($value) . '%29';
 				break;
 			case 'publication':
-				$querystring .= '&query=%28(' . urlencode($value) . ')%29&within=owners%2Eowner%3DHOSTED';
+				$querystring .= '&query=%28(' . urlencode($value) . ')%29';
+				break;
+			case 'keyword':
+				$querystring .= '&query=recordAbstract%3A%28%252B' . urlencode($value) . '%29';
 				break;
 		}
-		
+				
 		$acmURL = 'http://dl.acm.org/exportformats_search.cfm?' . $querystring;
 		$acmCSV = $this->requestManager->request($acmURL); // this request is a bottleneck
 

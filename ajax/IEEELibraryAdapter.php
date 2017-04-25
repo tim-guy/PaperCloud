@@ -17,6 +17,9 @@ class IEEELibraryAdapter extends LibraryAdapter {
 			case 'publication':
 				$querystring .= '&jn=' . urlencode($value);
 				break;
+			case 'keyword':
+				$querystring .= '&ab=' . urlencode($value);
+				break;
 		}
 
 		$ieeeURL = 'http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?' . $querystring;
