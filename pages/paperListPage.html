@@ -189,7 +189,7 @@ td.subsetColumn {
 		
 		tr.append("<td id=\"frequency\">" + paper.wordCount + "</td>");
 		
-		tr.append("<td id=\"fullText\"><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a></td>");
+		tr.append("<td id=\"fullText\"><a target='_blank' href='" + paper.fullTextURL + "'>Full Text</a> (<a target='_blank' class='highlightedFullTextLink' paperIndex='" + index + "'>Highlighted</a>)</td>");
 		
 		tr.append("<td id=\"bibtex\"><a target='_blank' class='bibtexLink' paperIndex='" + index + "'>Bibtex</a></td>");
 		
@@ -254,6 +254,42 @@ td.subsetColumn {
 			$("body").css("cursor", "inherit");
 			
 		}, 'text');
+	});
+
+	// Connect Highlighted Full Text links
+	$("a.highlightedFullTextLink").click(function(event) {
+		var index = $(this).attr("paperIndex");
+		
+/*
+		$(event.delegateTarget).css("cursor", "wait");
+		$("body").css("cursor", "progress");
+		
+		$.post('highlightedFullText.php', listPapers[index], function(data) {
+			var w = window.open('about:blank', '_blank');
+			w.document.write(data);
+			w.document.close();
+			
+			$(event.delegateTarget).css("cursor", "pointer");
+			$("body").css("cursor", "inherit");
+			
+		}, 'text');
+*/
+		var f = $("<form target='_blank' method='POST' style='display:none'></form>").attr({
+			action: "highlightedFullText.php"
+		}).appendTo(document.body);
+
+		for (var i in listPapers[index]) {
+			if (listPapers[index].hasOwnProperty(i)) {
+				$("<input type='hidden' />").attr({
+					name: i,
+					value: listPapers[index][i]
+				}).appendTo(f);
+			}
+		}
+		
+		f.submit();
+		f.remove();
+
 	});
 	
 	// Set up table sorting

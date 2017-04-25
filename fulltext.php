@@ -1,61 +1,68 @@
-<!--
-<iframe id="content" src="http://ieeexplore.ieee.org/ielx7/6969845/6976043/06976078.pdf?tp=&arnumber=6976078&isnumber=6976043"> </iframe>
-
-<style>
-	body {
-		margin: 0;
-		overflow: hidden;
-	}
-	
-	#content {
-		width: 100%;
-		height: 100%;
-	}
-</style>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script>
-
-	$("#content").on("load", function() {
-		
-		$("#content").contents().find("title").text();
-		
-		console.log("Load!");
-	});
-	
-</script>
--->
-
 <?php
 // We'll be outputting a PDF
-//header('Content-Type: application/pdf');
+header('Content-Type: application/pdf');
+//header('Content-Type: text/plain');
 
-// The PDF source is in original.pdf
+ini_set("display_errors", 1);
 
-function curl_get($url, array $get = NULL, array $options = array())
-{   
-    $defaults = array(
-        CURLOPT_URL => $url,
-        CURLOPT_HEADER => 0,
-        CURLOPT_RETURNTRANSFER => TRUE,
-		CURLOPT_FOLLOWLOCATION => TRUE,
-        CURLOPT_TIMEOUT => 30
-    );
-   
-    $ch = curl_init();
-    curl_setopt_array($ch, ($options + $defaults));
-    if( ! $result = curl_exec($ch))
-    {
-        trigger_error(curl_errno($ch));
-    }
-	
-	var_dump(curl_getinfo($ch));
-	
-    curl_close($ch);
-    return $result;
-}
+require_once("vendor/autoload.php");
 
-echo curl_get('https://www.wikipedia.org');
 
-//readfile('http://ieeexplore.ieee.org/ielx7/6969845/6976043/06976078.pdf?tp=&arnumber=6976078&isnumber=6976043');
+use Behat\Behat\Tester\Exception\PendingException;
+use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\PyStringNode;
+use Behat\Gherkin\Node\TableNode;
+
+$driver = new \Behat\Mink\Driver\Selenium2Driver();
+$session = new \Behat\Mink\Session($driver);
+
+$session->start();
+
+$session->visit('http://dl.acm.org.libproxy1.usc.edu/citation.cfm?id=2804356');
+$page = $session->getPage();
+
+$session->wait(
+	10000,
+	"document.URL == 'https://shibboleth.usc.edu/idp/profile/SAML2/POST/SSO?execution=e1s2'"
+);
+
+$page->find('css', '#username')->setValue("pmnazari");
+$page->find('css', '#password')->setValue("organaorgana");
+$page->find('css', 'button[name=_eventId_proceed]')->click();
+
+$session->wait(
+	20000,
+	"document.URL.includes('dl.acm.org')"
+);
+
+$session->executeScript('document.getElementsByName("FullTextPDF")[0].setAttribute("target", "");');
+$page->find('css', 'a[name=FullTextPDF]')->click();
+
+$session->wait(
+	10000,
+	"PDFViewerApplication != null && PDFViewerApplication.pdfDocument != null"
+);
+
+$session->executeScript('
+	PDFViewerApplication.pdfDocument.getData().then(function(d) {
+		window.pdfBlob = PDFJS.createBlob(d);
+		
+		var freader = new FileReader();
+		freader.addEventListener("loadend", function() {
+			window.pdf64 = freader.result;
+		});
+		freader.readAsDataURL(window.pdfBlob);
+	});');
+
+$session->wait(
+	10000,
+	"window.pdf64 != undefined"
+);
+
+$blob = $session->evaluateScript('return window.pdf64;');
+
+echo base64_decode(substr(strstr($blob, ","), 1));;
+
 ?>
+
+

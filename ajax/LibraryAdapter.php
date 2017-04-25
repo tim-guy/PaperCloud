@@ -1,5 +1,7 @@
 <?php
 
+ini_set("display_errors", 1);
+
 include_once "IEEELibraryAdapter.php";
 include_once "ACMLibraryAdapter.php";
 
@@ -54,6 +56,16 @@ abstract class LibraryAdapter
 	// @codeCoverageIgnoreStart			
 	}
 	// @codeCoverageIgnoreEnd
+
+	static function getHighlightedFullTextForPaperFromLibrary($paper) {
+		foreach (self::$libraryAdapters as $key => $library) {
+			if ($key == $paper['source']) {
+				return $library->getFullTextForPaper($paper);
+			}
+		}
+	// @codeCoverageIgnoreStart			
+	}
+	// @codeCoverageIgnoreEnd
 	
 	static function getAbstractForPaperFromLibrary($paper) {
 		foreach (self::$libraryAdapters as $key => $library) {
@@ -70,6 +82,8 @@ abstract class LibraryAdapter
 	abstract function searchPapers($field, $value, $exact, $limit);
 	
 	abstract function getBibtexForPaper($paper);
+
+	abstract function getFullTextForPaper($paper);
 	
 	abstract function getAbstractForPaper($paper);
 }
