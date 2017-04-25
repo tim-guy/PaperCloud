@@ -116,6 +116,10 @@ class IEEELibraryAdapter extends LibraryAdapter {
 		
 		return $bibtex;
 	}
+
+	function getFullTextForPaper($paper) {
+		return 'Unavailable!';
+	}
 	
 	function getAbstractForPaper($paper) {
 		return $paper["abstract"];

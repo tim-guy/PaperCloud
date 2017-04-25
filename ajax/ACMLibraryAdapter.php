@@ -3,6 +3,8 @@
 require_once "LibraryAdapter.php";
 require_once("CSVParser.php");
 
+require_once(__DIR__ . "/../vendor/autoload.php");
+
 class ACMLibraryAdapter extends LibraryAdapter {
 
 	function searchPapers($field, $value, $exact, $limit)
@@ -67,6 +69,42 @@ class ACMLibraryAdapter extends LibraryAdapter {
 		}
 		
 		return $papers;
+	}
+
+	function getFullTextForPaper($paper) {
+
+		$driver = new \Behat\Mink\Driver\Selenium2Driver();
+		$session = new \Behat\Mink\Session($driver);
+
+		$session->start();
+		$session->visit($paper['fullTextURL']);
+
+		$session->wait(
+			10000,
+			"PDFViewerApplication != null && PDFViewerApplication.pdfDocument != null"
+		);
+
+		$session->executeScript('
+			PDFViewerApplication.pdfDocument.getData().then(function(d) {
+				window.pdfBlob = PDFJS.createBlob(d);
+		
+				var freader = new FileReader();
+				freader.addEventListener("loadend", function() {
+					window.pdf64 = freader.result;
+				});
+				freader.readAsDataURL(window.pdfBlob);
+			});');
+
+		$session->wait(
+			10000,
+			"window.pdf64 != undefined"
+		);
+
+		$blob = $session->evaluateScript('return window.pdf64;');
+
+		$session->stop();
+
+		return base64_decode(substr(strstr($blob, ","), 1));
 	}
 	
 	function getBibtexForPaper($paper) {
