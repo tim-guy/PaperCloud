@@ -89,7 +89,7 @@ class FeatureContext implements Context
 		$fieldSelect = $this->page->find("css", "#fieldSelect");
 		$fieldSelectOptions = $fieldSelect->findAll("css", "option");
 
-		assertEquals("keyword", $fieldSelectOptions1[1]->getAttribute('value'));
+		assertEquals("keyword", $fieldSelectOptions[1]->getAttribute('value'));
 	}
 
 	/**

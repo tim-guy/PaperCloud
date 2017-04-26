@@ -816,6 +816,57 @@ class FeatureContext implements Context
         assertEquals(null, $this->page->find("css", "#wordCloudPage"));
     }
 
-    
+    /**
+    * @Given the search page is opened for checking keyword phrase search option
+    */
+    public function givenSearchPageOpenedForCheckingKeywordSeaechOption()
+    {
+        sleep(1);
+    }
+
+    /**
+    * @Then keyword phrase search option is selectable
+    */
+    public function thenKeywordSearchOptionSelectable()
+    {
+        $this->page = $this->session->getPage();
+        $fieldSelect = $this->page->find("css", "#fieldSelect");
+        $fieldSelectOptions = $fieldSelect->findAll("css", "option");
+
+        assertEquals("keyword", $fieldSelectOptions[1]->getAttribute('value'));
+    }
+
+    /**
+    * @Given the search page is opened for searching for keyword phrase "data structure" 
+    */
+    public function givenSearchPageOpenedForSearchingKeywordPhraseDataStructure()
+    {
+        sleep(1);
+    }
+
+    /**
+    * @When search for keyword phrase "data structure" 
+    */
+    public function whenSearchForKeywordPhraseDataStructure()
+    {
+        $this->page = $this->session->getPage();
+        $fieldSelect = $this->page->find("css", "#fieldSelect");
+        $fieldSelectOptions = $fieldSelect->findAll("css", "option");
+        $fieldSelectOptions[1]->click();
+        sleep(1);
+
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('data structure');
+        $this->searchButton->click();
+        sleep(10);
+    }
+
+    /**
+    * @Then the word cloud is displayed for keyword phrase "data structure"
+    */
+    public function thenWordCloudDisplayedForKeywordPhraseDataStructure()
+    {
+        assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
+    }
 
 }
