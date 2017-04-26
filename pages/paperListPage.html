@@ -286,6 +286,10 @@ td.subsetColumn {
 				}).appendTo(f);
 			}
 		}
+		$("<input type='hidden' />").attr({
+			name: "word",
+			value: word
+		}).appendTo(f);
 		
 		f.submit();
 		f.remove();

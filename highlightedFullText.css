@@ -16,7 +16,6 @@ body {
 
 div, td {
 	margin: 0;
-	border: solid thin black;
 	top: 0;
 }
 
@@ -65,7 +64,12 @@ div, td {
 	position: relative;
 }
 
-#overlay {
+.page {
+	margin: 10px;
+	position: relative;
+}
+
+.overlay {
 	position: absolute;
 	border: none;
 	width: 100%;
@@ -73,7 +77,7 @@ div, td {
 	line-height: 1.0;
 }
 
-#overlay > div {
+.overlay > div {
 	position: absolute;
 	border: none;
 	transform-origin: 0% 0%;
