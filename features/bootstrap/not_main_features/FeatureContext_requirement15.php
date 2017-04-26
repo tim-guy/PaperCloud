@@ -73,9 +73,9 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @Given the paper list is generated for downloading the paper
+	* @Given the paper list is generated for downloading the highlighted paper
 	*/
-	public function givenPaperListGeneratedForDownloadingPaper()
+	public function givenPaperListGeneratedForDownloadingHighlightedPaper()
 	{
 		$this->sizeField->setValue('10');
         $this->searchField->setValue('Halfond');
@@ -91,19 +91,16 @@ class FeatureContext implements Context
 	}
 
 	/**
-	* @When the "Download Paper" button is clicked
+	* @Then Then a "Hightlighted" link is displayed
 	*/
-	public function whenDownloadPaperButtonClicked()
+	public function thenHighlightedLinkDisplayed()
 	{
-		
-	}
-
-	/**
-	* @Then the paper is downloaded with the keyword highlighted
-	*/
-	public function thenPaperDownloadedWithKeywordHighlighted()
-	{
-		
+		$this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstFullText = $rows[0]->find("css", "#fullText");
+        $firstFullTextLinks = $firstFullText->findAll("css", "a");
+        assertEquals("highlightedFullTextLink", $firstFullTextLinks[1]->getAttribute('class'));
 	}
 	
 }

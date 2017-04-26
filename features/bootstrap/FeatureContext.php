@@ -869,4 +869,35 @@ class FeatureContext implements Context
         assertNotEquals(null, $this->page->find("css", "#wordCloudPage"));
     }
 
+    /**
+    * @Given the paper list is generated for downloading the highlighted paper
+    */
+    public function givenPaperListGeneratedForDownloadingHighlightedPaper()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+
+        $this->page = $this->session->getPage();
+        $this->wordCloud = $this->page->find("css", "#wordCloudSVG");
+        $this->g = $this->wordCloud->find("css", "#g");
+        $this->words = $this->g->findAll("css", "#text");
+        $this->words[0]->click();
+        sleep(3);
+    }
+
+    /**
+    * @Then a "Hightlighted" link is displayed
+    */
+    public function thenHighlightedLinkDisplayed()
+    {
+        $this->page = $this->session->getPage();
+        $this->paperListTable = $this->page->find("css", "#paperList");
+        $rows = $this->paperListTable->findAll("css", "#row");
+        $firstFullText = $rows[0]->find("css", "#fullText");
+        $firstFullTextLinks = $firstFullText->findAll("css", "a");
+        assertEquals("highlightedFullTextLink", $firstFullTextLinks[1]->getAttribute('class'));
+    }
+
 }
