@@ -118,7 +118,47 @@ class IEEELibraryAdapter extends LibraryAdapter {
 	}
 
 	function getFullTextForPaper($paper) {
-		return 'Unavailable!';
+		$driver = new \Behat\Mink\Driver\Selenium2Driver();
+		$session = new \Behat\Mink\Session($driver);
+
+		$session->start();
+		$session->visit($paper['fullTextURL']);
+
+		$session->wait(
+			10000,
+			'$("frame:eq(1)").length > 0'
+		);
+		$realURL = $session->evaluateScript('return $("frame:eq(1)").attr("src");');
+
+		$session->visit($realURL);
+
+		$session->wait(
+			10000,
+			"PDFViewerApplication != null && PDFViewerApplication.pdfDocument != null"
+		);
+
+		$session->executeScript('
+			PDFViewerApplication.pdfDocument.getData().then(function(d) {
+				window.pdfBlob = PDFJS.createBlob(d);
+		
+				var freader = new FileReader();
+				freader.addEventListener("loadend", function() {
+					window.pdf64 = freader.result;
+				});
+				freader.readAsDataURL(window.pdfBlob);
+			});');
+
+		$session->wait(
+			10000,
+			"window.pdf64 != undefined"
+		);
+
+		$blob = $session->evaluateScript('return window.pdf64;');
+
+		$session->stop();
+
+		//return substr(strstr($blob, ","), 1);
+		return base64_decode(substr(strstr($blob, ","), 1));
 	}
 	
 	function getAbstractForPaper($paper) {
