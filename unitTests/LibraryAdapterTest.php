@@ -6,13 +6,14 @@ use PHPUnit\Framework\TestCase;
 
 class LibraryAdapterTest extends TestCase
 {
-	public function testValidsearchPapers()
+	public function testValidGetPapersWithAuthorName()
 	{
 		$papers = LibraryAdapter::searchPapersFromAllLibraries("name", "Johnson", false, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($papers));
 
 		foreach ($papers as $paper) {
+
 			$this->assertContains("Johnson", $paper['authors']);
 		}
 	}

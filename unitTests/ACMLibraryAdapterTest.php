@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class ACMLibraryAdapterTest extends TestCase
 {
-	public function testValidsearchPapers()
+	public function testValidGetPapersWithAuthorName()
 	{
 		//$expectedOutputFileName = "unitTests/expected_output/testValidACMsearchPapersOutput.json";
 		$ACM = new ACMLibraryAdapter();
@@ -34,9 +34,9 @@ class ACMLibraryAdapterTest extends TestCase
 
 	}
 
-	public function testInvalidsearchPapers()
+	public function testInvalidGetPapersWithAuthorName()
 	{
-		$expectedOutputFileName = "unitTests/expected_output/testInvalidACMsearchPapersOutput.json";
+		$expectedOutputFileName = "unitTests/expected_output/testInvalidACMGetPapersWithAuthorNameOutput.json";
 		$ACM = new ACMLibraryAdapter();
 		$ACMPapers = $ACM->searchPapers("name", "Banananana", false, "10");
 

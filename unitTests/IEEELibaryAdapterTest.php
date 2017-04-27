@@ -6,15 +6,15 @@ use PHPUnit\Framework\TestCase;
 
 class IEEELibraryAdapterTest extends TestCase
 {
-	public function testValidsearchPapers()
+	public function testValidGetPapersWithAuthorName()
 	{
 		$ieee = new IEEELibraryAdapter();
-		$ieeePapers = $ieee->searchPapers("name", "Johnson", false, 10);
+		$ieeePapers = $ieee->searchPapers("name", "Smith", false, 10);
 
 		$this->assertLessThanOrEqual(10, sizeof($ieeePapers));
 
 		foreach ($ieeePapers as $paper) {
-			$this->assertContains("Johnson", $paper['authors']);
+			$this->assertContains("Smith", $paper['authors']);
 		}
 
 	}
@@ -34,9 +34,9 @@ class IEEELibraryAdapterTest extends TestCase
 
 	
 
-	public function testInvalidsearchPapers()
+	public function testInvalidGetPapersWithAuthorName()
 	{
-		$expectedOutputFileName = "unitTests/expected_output/testInvalidsearchPapersOutput.json";
+		$expectedOutputFileName = "unitTests/expected_output/testInvalidGetPapersWithAuthorNameOutput.json";
 		$ieee = new IEEELibraryAdapter();
 		$ieeePapers = $ieee->searchPapers("name", "Banananana", false, 10);
 
