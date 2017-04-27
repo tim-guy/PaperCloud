@@ -900,4 +900,35 @@ class FeatureContext implements Context
         assertEquals("highlightedFullTextLink", $firstFullTextLinks[1]->getAttribute('class'));
     }
 
+    /**
+    * @Given the word cloud is generated for checking the Download button
+    */
+    public function givenWordCloudGeneratedForCheckingDownloadButton()
+    {
+        $this->sizeField->setValue('10');
+        $this->searchField->setValue('Halfond');
+        $this->searchButton->click();
+        sleep(10);
+    }
+
+    /**
+    * @Then a Download button exists on the Word Cloud Page
+    */
+    public function thenDownloadButtonExistsOnWordCloudPage()
+    {
+        $this->page = $this->session->getPage();
+        $downloadButton = $this->page->find("css", "#download");
+        assertEquals("button", $downloadButton->getAttribute('class'));
+    }
+
+    /**
+    * @Then a download link exists behind the scene of the Download button
+    */
+    public function thenDownloadLinkExistsBehindSceneOfDownloadButton()
+    {
+        $this->page = $this->session->getPage();
+        $downloadLink = $this->page->find("css", "#downloadLink");
+        assertNotEquals(null, $downloadLink);
+    }
+
 }
