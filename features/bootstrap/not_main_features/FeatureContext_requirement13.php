@@ -78,7 +78,7 @@ class FeatureContext implements Context
 	public function givenWordCloudGeneratedForCheckingDownloadButton()
 	{
 		$this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
+        $this->searchField->setValue('Halfond');
         $this->searchButton->click();
         sleep(10);
 	}
@@ -88,26 +88,19 @@ class FeatureContext implements Context
 	*/
 	public function thenDownloadButtonExistsOnWordCloudPage()
 	{
-		
+		$this->page = $this->session->getPage();
+        $downloadButton = $this->page->find("css", "#download");
+        assertEquals("button", $downloadButton->getAttribute('class'));
 	}
 
 	/**
-	* @Given the word cloud is generated for clicking the Download button
+	* @Then a download link exists behind the scene of the Download button
 	*/
-	public function givenWordCloudGeneratedForClickingDownloadButton()
+	public function thenDownloadLinkExistsBehindSceneOfDownloadButton()
 	{
-		$this->sizeField->setValue('10');
-        $this->searchField->setValue('Johnson');
-        $this->searchButton->click();
-        sleep(10);
-	}
-
-	/**
-	* @Then
-	*/
-	public function then()
-	{
-		
+		$this->page = $this->session->getPage();
+        $downloadLink = $this->page->find("css", "#downloadLink");
+        assertNotEquals(null, $downloadLink);
 	}
 	
 }
