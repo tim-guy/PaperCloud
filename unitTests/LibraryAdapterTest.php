@@ -79,4 +79,28 @@ class LibraryAdapterTest extends TestCase
 		$expected = "Populating the testing environment with relevant data represents a great challenge in software validation, generally requiring expert knowledge about the system under development, as its data critically impacts the outcome of the tests designed to assess the system. Current practices of populating the testing environments generally focus on developing efficient algorithms for generating synthetic data or use the production environment for testing purposes. The latter is an invaluable strategy to provide real test cases in order to discover issues that critically impact the user of the system. However, the production environment generally consists of large amounts of data that are difficult to handle and analyze. Database sampling from the production environment is a potential solution to overcome these challenges.</p><p>In this research, we propose two database sampling methods, VFDS and CoDS, with the objective of populating the testing environment. The first method is a very fast random sampling approach, while the latter aims at preserving the distribution of data in order to produce a representative sample. In particular, we focus on the dependencies between the data from different tables and the method tries to preserve the distributions of these dependencies.";
 		$this->assertContains(preg_replace('/\s/', '', $expected), preg_replace('/\s/', '', $abstract));
 	}
+
+	public function testGetIEEEPaperFullText()
+	{
+		$paper = array(
+			"source" => "ieee",
+			"fullTextURL" => "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7809317"
+		);
+
+		$pdf = LibraryAdapter::getHighlightedFullTextForPaperFromLibrary($paper);
+
+		$this->assertStringStartsWith("%PDF", $pdf);
+	}
+
+	public function testGetACMPaperFullText()
+	{
+		$paper = array(
+			"source" => "acm",
+			"fullTextURL" => "http://dl.acm.org/ft_gateway.cfm?id=2804356"
+		);
+
+		$pdf = LibraryAdapter::getHighlightedFullTextForPaperFromLibrary($paper);
+
+		$this->assertStringStartsWith("%PDF", $pdf);
+	}
 }

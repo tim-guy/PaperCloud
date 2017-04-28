@@ -84,4 +84,29 @@ class ACMLibraryAdapterTest extends TestCase
 		$this->assertContains(preg_replace('/\s/', '', $expected), preg_replace('/\s/', '', $abstract));
 	}
 
+	public function testGetPapersWithKeyword()
+	{
+		$acm = new ACMLibraryAdapter();
+		$acmPapers = $acm->searchPapers("keyword", "energy", false, 10);
+
+		$this->assertLessThanOrEqual(10, sizeof($acmPapers));
+/*
+		foreach ($acmPapers as $paper) {
+			$this->assertContains("energy", $paper['abstract']);
+		}
+*/
+	}
+
+	public function testGetPaperFullText()
+	{
+		$paper = array(
+			"fullTextURL" => "http://dl.acm.org/ft_gateway.cfm?id=2804356"
+		);
+
+		$acm = new ACMLibraryAdapter();
+		$pdf = $acm->getFullTextForPaper($paper);
+
+		$this->assertStringStartsWith("%PDF", $pdf);
+	}
+
 }

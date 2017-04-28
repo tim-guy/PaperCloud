@@ -82,4 +82,29 @@ class IEEELibraryAdapterTest extends TestCase
 		
 		$this->assertContains("MY ABSTRACT", $abstract);
 	}
+
+	public function testGetPapersWithKeyword()
+	{
+		$ieee = new IEEELibraryAdapter();
+		$ieeePapers = $ieee->searchPapers("keyword", "energy", false, 10);
+
+		$this->assertLessThanOrEqual(10, sizeof($ieeePapers));
+
+		foreach ($ieeePapers as $paper) {
+			$this->assertContains("energy", $paper['abstract']);
+		}
+
+	}
+
+	public function testGetPaperFullText()
+	{
+		$paper = array(
+			"fullTextURL" => "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7809317"
+		);
+
+		$ieee = new IEEELibraryAdapter();
+		$pdf = $ieee->getFullTextForPaper($paper);
+
+		$this->assertStringStartsWith("%PDF", $pdf);
+	}
 }
