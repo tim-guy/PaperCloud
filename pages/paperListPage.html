@@ -323,26 +323,7 @@ td.subsetColumn {
 		// Async:
 		setTimeout(function() {
 			// Make the PDF
-			var table = [[
-				{text: 'Title', bold: true},
-				{text: 'Authors', bold: true},
-				{text: 'Publication/Conference', bold: true}
-			]];
-			$.each(listPapers, function(index, paper) {
-				table.push([paper.title, paper.authors, paper.publication]);
-			});
-			
-			var pdf = {
-			  content: [
-				{
-				  table: {
-					headerRows: 1,
-					widths: [ '50%', '20%', '30%' ],
-					body: table
-				  }
-				}
-			  ]
-			};
+			var pdf = layoutPDFPaperList(listPapers);
 			
 			// Trigger the download
 			pdfMake.createPdf(pdf).download(escape(word) + ".pdf");
@@ -389,11 +370,12 @@ td.subsetColumn {
 			$(this).text("Search Selected Subset").addClass("disabledLink");
 		} else if ($(".subsetCheckbox:checked").length > 0) { // Second Click: button enabled
 			
-			papers = [];
+			var checkboxes = [];
 			$.each($(".subsetCheckbox:checked"), function(index, checkbox) {
-				papers.push(listPapers[$(checkbox).attr("paperIndex")]);
+				checkboxes.push($(checkbox));
 			});
-			
+			papers = selectPaperSubset(listPapers, checkboxes);
+
 			loadPage("wordCloud");
 		}
 	});

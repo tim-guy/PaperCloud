@@ -187,9 +187,9 @@
 		limit = parseInt($("#limitTextField").val());
 		
 		// Set our cookie!
-		var searchHistory = getCookie("searchHistory") ?  JSON.parse(getCookie("searchHistory")) : [];
-		searchHistory.push({"field": searchField, "value": searchValue, "limit": limit });
-		setCookie("searchHistory", JSON.stringify(searchHistory));
+		var searchHistory = getCookie("searchHistory") ? getCookie("searchHistory") : [];
+		searchHistory = updateSearchHistoryCookie(searchHistory, searchField, searchValue, limit);
+		setCookie("searchHistory", searchHistory);
 		
 		loadPage("wordCloud");
 	});

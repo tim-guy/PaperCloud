@@ -232,7 +232,7 @@
 	$("#download").click(function() {
 		// Get the PNG data
 		var c = document.getElementById('wordCloudCanvas').toDataURL('image/png');
-		var encodedPng = c.substring(c.indexOf(',')+1,c.length);
+		var encodedPng = parseDataURL(c);
 		var imageData = Base64Binary.decode(encodedPng);
 		
 		// Trigger the download
