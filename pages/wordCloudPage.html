@@ -207,38 +207,12 @@
 			}
 		});
 	}
-	
-	var completionHandler = false;
-	function startProgressBar(estimatedTime)
-	{
-		var progressbar = $("#wordCloudLoading");
-		progressbar.progressbar({
-			value: 0
-		});
-		progressbar.show(0);
-		
-		var t = 0, dt = 40;
-		completionHandler = false;
-		function progress() {	
-			var val = progressbar.progressbar("value");
-			
-			progressbar.progressbar("value", completionHandler ? (val+5) : (25*Math.log(t/estimatedTime) + 100));
-			
-			if (val < 99 || !completionHandler) {
-				t += dt;
-				setTimeout(progress, dt);
-			} else {
-				completionHandler();
-			}
-		}
-		progress();
-	}
-	
+
 	///
 	//ON LOAD:
 	///
 	
-	startProgressBar(Math.max(10000, (papers.length > 0) ? (papers.length * 10) : (limit * 35 * (searchField == 'publication' ? 8 : 1))));
+	startProgressBar(Math.max(10000, (papers.length > 0) ? (papers.length * 10) : (limit * 35 * (searchField == 'publication' ? 8 : 1))), $("#wordCloudLoading"));
 	$("#noResults").hide(0);
 	$("#wordCloudSVG").html("");
 	
